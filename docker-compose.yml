@@ -1,11 +1,12 @@
 version: "3"
 
-services: 
+services:
   dev-api:
     build: .
     container_name: poker-backend
     command: yarn dev:server
-    ports: 
+    ports:
       - "4500:4500"
-    volumes: 
+    volumes:
       - .:/usr/poker-app-backend
+      - /usr/poker-app-backend/node_modules
