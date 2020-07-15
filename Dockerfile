@@ -1,0 +1,14 @@
+FROM node:12.14.1
+
+WORKDIR /usr/poker-app-backend
+
+COPY package.json yarn.lock ./
+
+RUN yarn 
+
+COPY . .
+
+EXPOSE 4500
+
+CMD ["yarn", "dev:server"]
+
