@@ -15,6 +15,10 @@ export interface IPlayer {
   podiums?: IPodiums;
 }
 
+export interface Player extends IPlayer {
+  _id: string | any;
+}
+
 const playerSchema = new mongoose.Schema({
   name: String,
   dateBirth: String,

@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { MongooseUpdateQuery } from "mongoose";
-import { IPlayer, PlayerSchema } from "../models";
+import { IPlayer, Player, PlayerSchema } from "../models";
 
 interface Request {
   name: string;
@@ -48,8 +48,10 @@ class PlayerService {
     return result;
   }
 
-  private async updatePlayer({ player, _id } : MongooseUpdateQuery<IPlayer>) {
-    const result = await PlayerSchema.update(player, _id);
+  private async updatePlayer({ player, _id } : MongooseUpdateQuery<Player>) {
+    const result = await PlayerSchema.updateOne(player, _id);
+
+    return result;
   }
 
   private async deletePlayer(id: string) {
@@ -84,7 +86,7 @@ class PlayerService {
     return this.fetchPlayers();
   }
 
-  update(player: IPlayer, id: string) {
+  update(player: Player, id: string) {
     if (!id) {
       throw new Error("id is required.");
     }
