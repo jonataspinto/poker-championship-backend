@@ -1,4 +1,3 @@
-import { uuid } from "uuidv4";
 import mongoose from "mongoose";
 
 interface IPodiums {
@@ -8,41 +7,20 @@ interface IPodiums {
 }
 
 export interface IPlayer {
-  id: string;
   name: string;
+  dateBirth: string,
   photoUrl: string;
   points: number;
-  podiums?: IPodiums
+  serie: string,
+  podiums?: IPodiums;
 }
 
-export class Player {
-  id: string;
-
-  name: string;
-
-  photoUrl: string;
-
-  points: number;
-
-  podiums?: IPodiums
-
-  constructor(name: string) {
-    this.id = uuid();
-    this.name = name;
-    this.photoUrl = "";
-    this.points = 0;
-    this.podiums = {
-      first: 0,
-      second: 0,
-      third: 0,
-    };
-  }
-}
-
-const PlayerSchema = new mongoose.Schema({
+const playerSchema = new mongoose.Schema({
   name: String,
+  dateBirth: String,
   photoUrl: String,
   points: Number,
+  serie: String,
   podiums: {
     first: Number,
     second: Number,
@@ -50,4 +28,4 @@ const PlayerSchema = new mongoose.Schema({
   },
 });
 
-export const SPlayer = mongoose.model("Player", PlayerSchema);
+export const PlayerSchema = mongoose.model("Player", playerSchema);

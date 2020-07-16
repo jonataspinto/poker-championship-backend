@@ -1,88 +1,34 @@
 import { Response, Request } from "express";
-import { IPlayer, SPlayer } from "../models";
-import CreatePlayerService from "../services/CreatePlayerService";
+import PlayerService from "../services/PlayerService";
 
-const players: IPlayer[] = [
-  {
-    id: "6a421936-1d17-4078-96a2-0e46dee90875",
-    name: "jonatas pinto",
-    photoUrl: "",
-    points: 0,
-    podiums: {
-      first: 0,
-      second: 0,
-      third: 0,
-    },
-  },
-  {
-    id: "278cc93b-dat8-483a-a290-e34b2784a100",
-    name: "taywan pereira",
-    photoUrl: "",
-    points: 0,
-    podiums: {
-      first: 0,
-      second: 0,
-      third: 0,
-    },
-  },
-];
-
-function FindPlayer(id: string) {
-  const player = players.find((_player) => _player.id === id);
-  return { type: "player", ...player };
-}
-
-function UpdatePlayer(request: Request, response: Response) {
-  const { id } = request.query;
-  const { name } = request.body;
-
-  const playerPosition = players.findIndex((player) => player.id === id);
-
-  players[playerPosition] = {
-    ...players[playerPosition],
-    name,
-  };
-
-  response.json(players[playerPosition]);
-}
-
-function DeletePlayer(request: Request, response: Response) {
-  const { id } = request.params;
-
-  const playerPosition = players.findIndex((player) => player.id === id);
-
-  if (playerPosition < 0) {
-    return response.status(400).json({ error: "player not found" });
-  }
-
-  return players.splice(playerPosition, 1);
-}
+const playerService = new PlayerService();
 
 const playerController = {
   get: async (request: Request, response: Response) => {
-    const { id } = request.query;
+    try {
+      const { id } = request.query;
 
-    if (id) {
-      return response.json(FindPlayer(id as string));
+      if (id) {
+        const result = await playerService.get(id.toString());
+        return response.json(result);
+      }
+      const result = await playerService.fetch();
+
+      return response.json({ data: result });
+    } catch (err) {
+      return response.status(403).json({
+        error: err.message,
+      });
     }
-    const playersMon = await SPlayer.find({});
-
-    return response.json({ players, mongo: playersMon });
   },
 
   post: (request: Request, response: Response) => {
     try {
-      const { name } = request.body;
+      const { name, dateBirth } = request.body;
 
-      const createPlayerService = new CreatePlayerService();
+      const player = playerService.create({ name, dateBirth });
 
-      const player = createPlayerService.run({ name });
-
-      const splay = createPlayerService.create(name);
-
-      players.push(player);
-
-      return response.json({ message: "player created", splay });
+      return response.json({ message: "player created", Newplayer: player });
     } catch (err) {
       return response.status(403).json({
         error: err.message,
@@ -91,17 +37,35 @@ const playerController = {
   },
 
   put: (request: Request, response: Response) => {
-    UpdatePlayer(request, response);
+    try {
+      const { id } = request.query;
+      const { player } = request.body;
 
-    return response.json({
-      message: "player updated",
-    });
+      playerService.update(player, id as string);
+
+      return response.json({
+        message: "player updated",
+        player,
+      });
+    } catch (error) {
+      return response.status(403).json({
+        error: error.message,
+      });
+    }
   },
 
-  delete: (request: Request, response: Response) => {
-    DeletePlayer(request, response);
+  delete: async (request: Request, response: Response) => {
+    try {
+      const { id } = request.query;
 
-    return response.status(204).send();
+      const result = await playerService.destroy(id as string);
+
+      return response.json(result);
+    } catch (err) {
+      return response.status(403).json({
+        error: err.message,
+      });
+    }
   },
 
 };
