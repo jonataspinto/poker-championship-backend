@@ -1,1 +1,2 @@
-export { IPlayer, Player, SPlayer } from "./Player";
+export { IPlayer, Player, PlayerSchema } from "./Player";
+export { Serie } from "./Serie";
