@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import {
   playerRoutes,
   serieRoutes,
@@ -9,6 +10,7 @@ config();
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(playerRoutes);
 app.use(serieRoutes);
