@@ -1,6 +1,4 @@
 import { Response, Request } from "express";
-import { Player, PlayerSchema } from "../models";
-import { Serie } from "../models";
 import { SerieService } from "../services";
 
 const serieService = new SerieService();
