@@ -16,6 +16,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(playerRoutes);
 app.use(serieRoutes);
 
-app.listen(4500, () => {
+app.listen(process.env.PORT || 4500, () => {
   console.log("server in runing in http://localhost:4500/api");
 });
