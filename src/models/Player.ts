@@ -12,7 +12,6 @@ export interface IPlayer {
   dateBirth: string,
   photoURL: string;
   points: number;
-  serie: string,
   podiums?: IPodiums;
 }
 
@@ -27,7 +26,6 @@ const playerSchema = new mongoose.Schema({
   dateBirth: String,
   photoURL: String,
   points: Number,
-  serie: String,
   podiums: {
     first: Number,
     second: Number,

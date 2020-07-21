@@ -19,7 +19,6 @@ class PlayerService {
     dateBirth: "",
     photoURL: "",
     points: 0,
-    serie: "",
     podiums: {
       first: 0,
       second: 0,
@@ -30,7 +29,6 @@ class PlayerService {
   constructor() {
     this.player.photoURL = "";
     this.player.points = 0;
-    this.player.serie = "A";
     this.player.podiums = {
       first: 0,
       second: 0,
