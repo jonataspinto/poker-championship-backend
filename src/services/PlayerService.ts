@@ -1,17 +1,23 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable class-methods-use-this */
 import { MongooseUpdateQuery } from "mongoose";
 import { IPlayer, Player, PlayerSchema } from "../models";
 
 interface Request {
-  name: string;
+  displayName: string;
+  email: string;
   dateBirth: string;
+  uid?: string;
+  photoURL: string;
 }
 
 class PlayerService {
-  player: IPlayer = {
-    name: "",
+  player: Player = {
+    uid: "",
+    displayName: "",
+    email: "",
     dateBirth: "",
-    photoUrl: "",
+    photoURL: "",
     points: 0,
     serie: "",
     podiums: {
@@ -22,7 +28,7 @@ class PlayerService {
   };
 
   constructor() {
-    this.player.photoUrl = "";
+    this.player.photoURL = "";
     this.player.points = 0;
     this.player.serie = "A";
     this.player.podiums = {
@@ -32,7 +38,7 @@ class PlayerService {
     };
   }
 
-  private async insertPlayer(_player: IPlayer) {
+  private async insertPlayer(_player: Player) {
     await PlayerSchema.create(_player);
   }
 
@@ -66,12 +72,21 @@ class PlayerService {
     return result;
   }
 
-  public create({ name, dateBirth }: Request) {
-    if (!name || !dateBirth) {
-      throw new Error("name and dateBirth is required.");
+  public create({
+    displayName,
+    dateBirth,
+    email,
+    uid,
+    photoURL,
+  }: Request) {
+    if (!displayName || !dateBirth || !email) {
+      throw new Error("displayName, email and dateBirth is required.");
     }
-    this.player.name = name;
+    this.player.displayName = displayName;
+    this.player.email = email;
     this.player.dateBirth = dateBirth;
+    this.player.uid = uid;
+    this.player.photoURL = photoURL;
 
     const result = this.insertPlayer(this.player);
 

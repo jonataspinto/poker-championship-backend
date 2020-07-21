@@ -24,9 +24,21 @@ const playerController = {
 
   post: (request: Request, response: Response) => {
     try {
-      const { name, dateBirth } = request.body;
+      const {
+        displayName,
+        dateBirth,
+        email,
+        uid,
+        photoURL,
+      } = request.body;
 
-      const player = playerService.create({ name, dateBirth });
+      const player = playerService.create({
+        displayName,
+        dateBirth,
+        email,
+        uid: uid || "",
+        photoURL: photoURL || "",
+      });
 
       return response.json({ message: "player created", Newplayer: player });
     } catch (err) {
@@ -36,14 +48,15 @@ const playerController = {
     }
   },
 
-  put: (request: Request, response: Response) => {
+  put: async (request: Request, response: Response) => {
     try {
       const { id } = request.query;
       const { player } = request.body;
 
-      playerService.update(player, id as string);
+      const result = await playerService.update(player, id as string);
 
       return response.json({
+        result,
         message: "player updated",
         player,
       });

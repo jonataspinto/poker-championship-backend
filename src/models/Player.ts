@@ -7,22 +7,25 @@ interface IPodiums {
 }
 
 export interface IPlayer {
-  name: string;
+  displayName: string;
+  email: string;
   dateBirth: string,
-  photoUrl: string;
+  photoURL: string;
   points: number;
   serie: string,
   podiums?: IPodiums;
 }
 
 export interface Player extends IPlayer {
-  _id: string | any;
+  uid: string | any;
 }
 
 const playerSchema = new mongoose.Schema({
-  name: String,
+  displayName: String,
+  uid: String,
+  email: String,
   dateBirth: String,
-  photoUrl: String,
+  photoURL: String,
   points: Number,
   serie: String,
   podiums: {
