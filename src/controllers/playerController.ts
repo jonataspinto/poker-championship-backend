@@ -34,7 +34,7 @@ const playerController = {
 
       const player = playerService.create({
         displayName,
-        dateBirth,
+        dateBirth: dateBirth || "",
         email,
         uid: uid || "",
         photoURL: photoURL || "",

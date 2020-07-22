@@ -77,8 +77,8 @@ class PlayerService {
     uid,
     photoURL,
   }: Request) {
-    if (!displayName || !dateBirth || !email) {
-      throw new Error("displayName, email and dateBirth is required.");
+    if (!displayName || !email) {
+      throw new Error("displayName and email is required.");
     }
     this.player.displayName = displayName;
     this.player.email = email;
