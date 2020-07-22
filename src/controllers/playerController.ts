@@ -40,7 +40,7 @@ const playerController = {
         photoURL: photoURL || "",
       });
 
-      return response.json({ message: "player created", Newplayer: player });
+      return response.json(player);
     } catch (err) {
       return response.status(403).json({
         error: err.message,
