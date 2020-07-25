@@ -17,6 +17,7 @@ class PlayerService {
     displayName: "",
     email: "",
     dateBirth: "",
+    isAdmin: false,
     photoURL: "",
     points: 0,
     podiums: {
@@ -26,15 +27,15 @@ class PlayerService {
     },
   };
 
-  constructor() {
-    this.player.photoURL = "";
-    this.player.points = 0;
-    this.player.podiums = {
-      first: 0,
-      second: 0,
-      third: 0,
-    };
-  }
+  // constructor() {
+  //   this.player.photoURL = "";
+  //   this.player.points = 0;
+  //   this.player.podiums = {
+  //     first: 0,
+  //     second: 0,
+  //     third: 0,
+  //   };
+  // }
 
   private async insertPlayer(_player: Player) {
     await PlayerSchema.create(_player);
@@ -52,8 +53,8 @@ class PlayerService {
     return result;
   }
 
-  private async updatePlayer({ player, _id } : MongooseUpdateQuery<Player>) {
-    const result = await PlayerSchema.updateOne(player, _id);
+  private async updatePlayer({ player, id } : MongooseUpdateQuery<Player>) {
+    const result = await PlayerSchema.update({ _id: id }, { ...player });
 
     return result;
   }

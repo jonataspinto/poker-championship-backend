@@ -10,6 +10,7 @@ export interface IPlayer {
   displayName: string;
   email: string;
   dateBirth: string,
+  isAdmin: boolean,
   photoURL: string;
   points: number;
   podiums?: IPodiums;
@@ -24,6 +25,7 @@ const playerSchema = new mongoose.Schema({
   uid: String,
   email: String,
   dateBirth: String,
+  isAdmin: Boolean,
   photoURL: String,
   points: Number,
   podiums: {
