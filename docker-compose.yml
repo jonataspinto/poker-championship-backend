@@ -8,5 +8,5 @@ services:
     ports:
       - "4500:4500"
     volumes:
-      - .:/usr/poker-app-backend
-      - /usr/poker-app-backend/node_modules
+      - .:./usr/poker-app-backend
+      - ./usr/poker-app-backend/node_modules
