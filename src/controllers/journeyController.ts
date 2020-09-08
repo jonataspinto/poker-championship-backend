@@ -19,10 +19,10 @@ const journeyController = {
 
   get: async (request: Request, response: Response) => {
     try {
-      const { id } = request.query;
+      const { _id } = request.query;
 
-      if (id) {
-        const result = await journeyService.get(id.toString());
+      if (_id) {
+        const result = await journeyService.get(_id.toString());
         return response.json(result);
       }
       const result = await journeyService.fetch();
@@ -37,10 +37,10 @@ const journeyController = {
 
   put: async (request: Request, response: Response) => {
     try {
-      const { id } = request.query;
+      const { _id } = request.query;
       const { journey } = request.body;
 
-      const result = await journeyService.update(journey, id as string);
+      const result = await journeyService.update(journey, _id as string);
 
       return response.json({
         result,

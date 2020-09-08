@@ -8,6 +8,6 @@ journeyRoutes.route("/api/journey")
   .put(JourneyController.put)
   .post(JourneyController.post);
 
-journeyRoutes.route("/api/journey/:id")
+journeyRoutes.route("/api/journey/:_id")
   .get(JourneyController.get)
   .put(JourneyController.put);
