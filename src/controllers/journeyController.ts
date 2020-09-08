@@ -9,7 +9,7 @@ const journeyController = {
     try {
       const journey = await journeyService.create();
 
-      return response.json(journey);
+      return response.status(201).json(journey);
     } catch (err) {
       return response.status(403).json({
         error: err.message,
@@ -42,7 +42,7 @@ const journeyController = {
 
       const result = await journeyService.update(journey, _id as string);
 
-      return response.json({
+      return response.status(204).json({
         result,
         message: "journey updated",
         journey,

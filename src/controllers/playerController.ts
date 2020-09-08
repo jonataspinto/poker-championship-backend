@@ -6,10 +6,10 @@ const playerService = new PlayerService();
 const playerController = {
   get: async (request: Request, response: Response) => {
     try {
-      const { id } = request.query;
+      const { _id } = request.query;
 
-      if (id) {
-        const result = await playerService.get(id.toString());
+      if (_id) {
+        const result = await playerService.get(_id.toString());
         return response.json(result);
       }
       const result = await playerService.fetch();
@@ -40,7 +40,7 @@ const playerController = {
         photoURL: photoURL || "",
       });
 
-      return response.json(player);
+      return response.status(201).json(player);
     } catch (err) {
       return response.status(403).json({
         error: err.message,
@@ -50,12 +50,12 @@ const playerController = {
 
   put: async (request: Request, response: Response) => {
     try {
-      const { id } = request.query;
+      const { _id } = request.query;
       const { player } = request.body;
 
-      const result = await playerService.update(player, id as string);
+      const result = await playerService.update(player, _id as string);
 
-      return response.json({
+      return response.status(204).json({
         result,
         message: "player updated",
         player,
@@ -69,18 +69,17 @@ const playerController = {
 
   delete: async (request: Request, response: Response) => {
     try {
-      const { id } = request.query;
+      const { _id } = request.query;
 
-      const result = await playerService.destroy(id as string);
+      const result = await playerService.destroy(_id as string);
 
-      return response.json(result);
+      return response.status(200).json(result);
     } catch (err) {
       return response.status(403).json({
         error: err.message,
       });
     }
   },
-
 };
 
 export default playerController;
