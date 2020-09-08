@@ -17,5 +17,5 @@ app.use(playerRoutes);
 app.use(journeyRoutes);
 
 app.listen(process.env.PORT || 4500, () => {
-  console.log("server in runing in http://localhost:4500/api");
+  console.log("server is runing in http://localhost:4500/api");
 });

@@ -5,9 +5,9 @@ const journeyService = new JourneyService();
 
 const journeyController = {
 
-  post: (request: Request, response: Response) => {
+  post: async (request: Request, response: Response) => {
     try {
-      const journey = journeyService.create();
+      const journey = await journeyService.create();
 
       return response.json(journey);
     } catch (err) {
@@ -16,6 +16,7 @@ const journeyController = {
       });
     }
   },
+
   get: async (request: Request, response: Response) => {
     try {
       const { id } = request.query;
