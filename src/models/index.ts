@@ -1,3 +1,4 @@
-export { IPlayer, Player, PlayerSchema } from "./Player";
-export { IJourney, JourneySchema } from "./Journey";
-export { ITag, TagSchema } from "./Tag";
+export { IJourney, Journey } from "./Journey";
+export { ISpace, Space } from "./Space";
+export { IUser, User } from "./User";
+export { IPodium } from "./Podium";

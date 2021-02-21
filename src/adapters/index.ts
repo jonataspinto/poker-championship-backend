@@ -1,0 +1,1 @@
+export { MongoAdapter } from "./mongoAdapter";

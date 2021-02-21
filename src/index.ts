@@ -1,9 +1,7 @@
 import express from "express";
+import bodyParser from "body-parser";
 import cors from "cors";
-import {
-  playerRoutes,
-  journeyRoutes,
-} from "./routes/index";
+import Routes from "./routes";
 import config from "./config";
 
 config();
@@ -11,10 +9,9 @@ config();
 const app = express();
 
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(playerRoutes);
-app.use(journeyRoutes);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(Routes);
 
 app.listen(process.env.PORT || 4500, () => {
   console.log("server is runing in http://localhost:4500/api");

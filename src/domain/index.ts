@@ -1,0 +1,1 @@
+export { SpaceDomain } from "./spaceDomain";
