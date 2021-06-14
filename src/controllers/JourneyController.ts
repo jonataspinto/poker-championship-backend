@@ -1,23 +1,23 @@
 import { Request, Response } from "express";
-import { User } from "@Domain";
-import { IUser, IDatabase, IIdProvider } from "@Interfaces";
+import { Journey } from "@Domain";
+import { IJourney, IDatabase, IIdProvider } from "@Interfaces";
 import { BaseController } from "./BaseController";
 
-export class UserController implements BaseController<IUser> {
-  private UserDomain: User<IIdProvider>
+export class JourneyController implements BaseController<IJourney> {
+  private JourneyDomain: Journey<IIdProvider>
 
   constructor(
-    private dbAdapter: IDatabase<IUser>,
+    private dbAdapter: IDatabase<IJourney>,
     idProvider: IIdProvider,
   ) {
-    this.UserDomain = new User(idProvider);
+    this.JourneyDomain = new Journey(idProvider);
   }
 
   async save(request: Request, response: Response): Promise<Response> {
     const data = request.body;
-    const user = this.UserDomain.create(data);
-    const newUser = await this.dbAdapter.save(user);
-    return response.status(200).json(newUser);
+    const journey = this.JourneyDomain.create(data);
+    const newJourney = await this.dbAdapter.save(journey);
+    return response.status(200).json(newJourney);
   }
 
   async getAll(request: Request, response: Response): Promise<Response> {

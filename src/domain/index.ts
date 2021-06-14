@@ -1,1 +1,2 @@
-export { SpaceDomain } from "./spaceDomain";
+export { User } from "./User";
+export { Journey } from "./Journey";
