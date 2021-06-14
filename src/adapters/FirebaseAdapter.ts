@@ -1,15 +1,16 @@
-import { IDatabase } from "@Interfaces";
+// import { IDatabase } from "@Interfaces";
 import * as dataBase from "firebase-admin";
 import "dotenv/config";
+import { IDatabase } from "src/interfaces/Database";
 // const  serviceAccount = require('../../serviceAccountKey.json')
 
 dataBase.initializeApp({
   credential: dataBase.credential.cert({
-    projectId: process.env.APP_PROJECT_ID,
-    privateKey: process.env.APP_PRIVATE_KEY,
-    clientEmail: process.env.APP_CLIENT_EMAIL,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
   } /* or serviceAccount */),
-  databaseURL: process.env.APP_DATABASE_URL,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
 });
 
 const basePath = "/root_collection/document";
