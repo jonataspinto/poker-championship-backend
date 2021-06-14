@@ -34,13 +34,5 @@
     "mongoose": "^5.9.22",
     "uuid": "^8.3.2",
     "uuidv4": "^6.2.0"
-  },
-  "_moduleAliases": {
-    "@Interfaces": "src/interfaces/index.ts",
-    "@Services": "src/services/index.ts",
-    "@Routes": "src/routes/index.ts",
-    "@Controllers": "src/controllers/index.ts",
-    "@Domain": "src/domain/index.ts",
-    "@Adapters": "src/adapters/index.ts"
   }
 }
