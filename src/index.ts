@@ -1,6 +1,7 @@
 import "module-alias/register";
 import express from "express";
-import { journeyRouter, userRouter } from "@Routes";
+import { userRouter } from "./routes/UserRouter";
+import { journeyRouter } from "./routes/JourneyRouter";
 import { AppConfig } from "./config";
 
 const app = express();

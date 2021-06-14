@@ -1,5 +1,7 @@
-import { IUser, IIdProvider } from "@Interfaces";
+// import { IUser, IIdProvider } from "@Interfaces";
 import { IAddress } from "src/interfaces/Address";
+import { IIdProvider } from "src/interfaces/IdProvider";
+import { IUser } from "src/interfaces/User";
 import { BaseEntity } from "./BaseEntity";
 
 export class User<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {

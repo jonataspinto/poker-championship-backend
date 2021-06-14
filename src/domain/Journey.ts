@@ -1,5 +1,7 @@
-import { IJourney, IIdProvider } from "@Interfaces";
+// import { IJourney, IIdProvider } from "@Interfaces";
 // import { IAddress } from "src/interfaces/Address";
+import { IIdProvider } from "src/interfaces/IdProvider";
+import { IJourney } from "src/interfaces/Journey";
 import { BaseEntity } from "./BaseEntity";
 
 export class Journey<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {

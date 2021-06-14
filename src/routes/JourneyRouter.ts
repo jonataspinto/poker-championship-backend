@@ -1,7 +1,11 @@
 import { Request, Response, Router } from "express";
-import { FirestoreAdapter, IdProviderAdapter } from "@Adapters";
-import { JourneyController } from "@Controllers";
-import { IJourney } from "@Interfaces";
+// import { FirestoreAdapter, IdProviderAdapter } from "@Adapters";
+// import { JourneyController } from "@Controllers";
+// import { IJourney } from "@Interfaces";
+import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
+import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
+import { JourneyController } from "../controllers/JourneyController";
+import { IJourney } from "../interfaces/Journey";
 
 class JourneyRoutes {
   private journeyController: JourneyController

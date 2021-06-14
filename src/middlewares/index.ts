@@ -1,1 +1,1 @@
-export { journeyUpdateValidation } from "./journeyUpdateValidation";
+// export { journeyUpdateValidation } from "./journeyUpdateValidation";

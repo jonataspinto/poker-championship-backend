@@ -1,9 +1,13 @@
 import { Request, Response } from "express";
-import { User } from "@Domain";
-import { IUser, IDatabase, IIdProvider } from "@Interfaces";
+// import { User } from "@Domain";
+// import { IUser, IDatabase, IIdProvider } from "@Interfaces";
+import { IUser } from "../interfaces/User";
+import { IIdProvider } from "../interfaces/IdProvider";
+import { IDatabase } from "../interfaces/Database";
+import { User } from "../domain/User";
 import { BaseController } from "./BaseController";
 
-export class UserController implements BaseController<IUser> {
+export default class UserController implements BaseController<IUser> {
   private UserDomain: User<IIdProvider>
 
   constructor(

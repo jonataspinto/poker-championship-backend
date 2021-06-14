@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
-import { Journey } from "@Domain";
-import { IJourney, IDatabase, IIdProvider } from "@Interfaces";
+// import { Journey } from "@Domain";
+// import { IJourney, IDatabase, IIdProvider } from "@Interfaces";
+import { IJourney } from "../interfaces/Journey";
+import { IIdProvider } from "../interfaces/IdProvider";
+import { IDatabase } from "../interfaces/Database";
+import { Journey } from "../domain/Journey";
 import { BaseController } from "./BaseController";
 
 export class JourneyController implements BaseController<IJourney> {
