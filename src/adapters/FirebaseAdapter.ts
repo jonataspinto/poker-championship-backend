@@ -1,7 +1,11 @@
 // import { IDatabase } from "@Interfaces";
 import * as dataBase from "firebase-admin";
-import "dotenv/config";
+// import "dotenv/config";
+import dotenv from "dotenv";
+
 import { IDatabase } from "src/interfaces/Database";
+
+dotenv.config();
 // const  serviceAccount = require('../../serviceAccountKey.json')
 
 dataBase.initializeApp({
