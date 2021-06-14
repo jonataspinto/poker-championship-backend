@@ -5,7 +5,7 @@ import { Request, Response, Router } from "express";
 import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
 import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
 import { IUser } from "../interfaces/User";
-import UserController from "../controllers/UserController";
+import { UserController } from "../controllers/UserController";
 // import { IUser } from "@Interfaces";
 
 class UserRoutes {

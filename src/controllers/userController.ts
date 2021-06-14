@@ -7,7 +7,7 @@ import { IDatabase } from "../interfaces/Database";
 import { User } from "../domain/User";
 import { BaseController } from "./BaseController";
 
-export default class UserController implements BaseController<IUser> {
+export class UserController implements BaseController<IUser> {
   private UserDomain: User<IIdProvider>
 
   constructor(
