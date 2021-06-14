@@ -3,6 +3,8 @@ import express, { Express, Response } from "express";
 import cors from "cors";
 
 export const AppConfig = (app: Express) => {
+  dotenv.config();
+
   app.use(cors({ origin: true }));
 
   app.use(express.json());
@@ -13,9 +15,9 @@ export const AppConfig = (app: Express) => {
     });
   });
 
-  app.listen(3333, () => {
+  app.listen(process.env.PORT || 3333, () => {
     console.log("serever is run in http://localhost:3333");
   });
 
-  return dotenv.config();
+  return app;
 };
