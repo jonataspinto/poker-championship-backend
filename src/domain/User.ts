@@ -1,7 +1,6 @@
-// import { IUser, IIdProvider } from "@Interfaces";
-import { IAddress } from "src/interfaces/Address";
-import { IIdProvider } from "src/interfaces/IdProvider";
-import { IUser } from "src/interfaces/User";
+import { IAddress } from "../interfaces/Address";
+import { IIdProvider } from "../interfaces/IdProvider";
+import { IUser } from "../interfaces/User";
 import { BaseEntity } from "./BaseEntity";
 
 export class User<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {
@@ -13,11 +12,11 @@ export class User<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDPr
   }
 
   create(userData: IUser) {
-    this.user.uuid = this.uuid;
+    this.user.uuid = userData.uuid || this.uuid;
     this.user.name = userData.name;
     this.user.dateBirth = userData.dateBirth || "";
     this.user.email = userData.email || "";
-    this.user.imgSrc = userData.imgSrc || "";
+    this.user.photoURL = userData.photoURL || "";
     this.user.address = userData.address || {
       city: "",
       neighborhood: "",

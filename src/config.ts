@@ -5,7 +5,10 @@ import cors from "cors";
 export const AppConfig = (app: Express) => {
   dotenv.config();
 
-  app.use(cors({ origin: true }));
+  app.use(cors({
+    origin: "*",
+    methods: ["GET", "PUT", "POST", "DELETE"],
+  }));
 
   app.use(express.json());
 
@@ -16,7 +19,7 @@ export const AppConfig = (app: Express) => {
   });
 
   app.listen(process.env.PORT || 3333, () => {
-    console.log("serever is run in http://localhost:3333");
+    console.log("serever is run 👽");
   });
 
   return app;

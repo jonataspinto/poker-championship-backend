@@ -1,9 +1,7 @@
-// import { IDatabase } from "@Interfaces";
 import * as dataBase from "firebase-admin";
-// import "dotenv/config";
 import dotenv from "dotenv";
 
-import { IDatabase } from "src/interfaces/Database";
+import { IDatabase } from "../interfaces/Database";
 
 dotenv.config();
 // const  serviceAccount = require('../../serviceAccountKey.json')
@@ -72,6 +70,22 @@ export class FirestoreAdapter<T> implements IDatabase<T> {
       .catch((err: Error) => err);
 
     return data;
+  }
+
+  async getByKey(key = "", value = ""): Promise<T | Error> {
+    const list: T[] = [];
+    const query = await dataBase
+      .firestore()
+      .collection(`${basePath}/${this.path}`)
+      .where(`${key}`, "==", `${value}`)
+      .get();
+
+    query.forEach((snapshot) => list.push({
+      ...(snapshot.data() as T),
+      id: snapshot.id,
+    }));
+
+    return list[0];
   }
 
   async update(id: string, newData: T): Promise<T | Error> {

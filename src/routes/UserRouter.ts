@@ -1,12 +1,8 @@
 import { Request, Response, Router } from "express";
-// import { FirestoreAdapter, IdProviderAdapter } from "@Adapters";
-// import { UserController } from "@Controllers";
-// import { IUser } from "@Interfaces";
 import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
 import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
 import { IUser } from "../interfaces/User";
 import { UserController } from "../controllers/UserController";
-// import { IUser } from "@Interfaces";
 
 class UserRoutes {
   private userController: UserController
@@ -28,7 +24,11 @@ class UserRoutes {
       this.userController.getAll(request, response);
     });
 
-    this.userRouter.get("/users/:id", (request: Request, response: Response) => {
+    this.userRouter.get("/user-by-key", (request: Request, response: Response) => {
+      this.userController.getByKey(request, response);
+    });
+
+    this.userRouter.get("/users/:key", (request: Request, response: Response) => {
       this.userController.getById(request, response);
     });
 

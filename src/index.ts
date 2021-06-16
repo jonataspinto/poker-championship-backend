@@ -4,9 +4,7 @@ import { userRouter } from "./routes/UserRouter";
 import { journeyRouter } from "./routes/JourneyRouter";
 import { AppConfig } from "./config";
 
-const app = express();
-
-AppConfig(app);
+const app = AppConfig(express());
 
 app.use(userRouter);
 app.use(journeyRouter);
