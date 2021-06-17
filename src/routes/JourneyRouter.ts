@@ -1,9 +1,11 @@
 import { Request, Response, Router } from "express";
 import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
+import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
 import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
 import { JourneyController } from "../controllers/JourneyController";
 import { IJourney } from "../interfaces/Journey";
 import { IsAuthenticated } from "../middlewares/Auth";
+import { JourneyUpdateValidation } from "../middlewares/JourneyUpdateValidation";
 
 class JourneyRoutes {
   private journeyController: JourneyController
@@ -13,7 +15,11 @@ class JourneyRoutes {
     dbAdapter = new FirestoreAdapter<IJourney>("journeys"),
     idProvider = new IdProviderAdapter(),
   ) {
-    this.journeyController = new JourneyController(dbAdapter, idProvider);
+    this.journeyController = new JourneyController(
+      idProvider,
+      dbAdapter,
+      new FirebaseAuthAdapter(),
+    );
   }
 
   execute() {
@@ -29,13 +35,27 @@ class JourneyRoutes {
       this.journeyController.save(request, response);
     });
 
-    this.journeyRouter.put("/journeys/:id", IsAuthenticated, (request: Request, response: Response) => {
-      this.journeyController.update(request, response);
-    });
+    this.journeyRouter.put(
+      "/journeys/:id",
+      IsAuthenticated,
+      JourneyUpdateValidation,
+      (request: Request, response: Response) => {
+        this.journeyController.update(request, response);
+      },
+    );
 
     this.journeyRouter.delete("/journeys/:id", IsAuthenticated, (request: Request, response: Response) => {
       this.journeyController.delete(request, response);
     });
+
+    this.journeyRouter.put(
+      "/journeys/close/:id",
+      IsAuthenticated,
+      JourneyUpdateValidation,
+      (request: Request, response: Response) => {
+        this.journeyController.closeJourney(request, response);
+      },
+    );
 
     return this.journeyRouter;
   }

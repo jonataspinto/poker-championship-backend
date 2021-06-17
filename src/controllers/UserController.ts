@@ -12,7 +12,7 @@ export class UserController implements BaseController<IUser> {
     private dbAdapter: IDatabase<IUser>,
     idProvider: IIdProvider,
   ) {
-    this.UserDomain = new User(idProvider);
+    this.UserDomain = new User(idProvider, dbAdapter);
   }
 
   async save(request: Request, response: Response): Promise<Response> {
@@ -23,8 +23,13 @@ export class UserController implements BaseController<IUser> {
   }
 
   async getAll(request: Request, response: Response): Promise<Response> {
-    const list = await this.dbAdapter.getAll();
-    return response.status(200).json(list);
+    try {
+      const list = await this.dbAdapter.getAll();
+      const orderedList = Array.from(list as IUser[]).sort((a, b) => (b.points - a.points));
+      return response.status(200).json(orderedList);
+    } catch (error) {
+      return response.status(400).json({ message: error.message });
+    }
   }
 
   async getById(request: Request, response: Response): Promise<Response> {

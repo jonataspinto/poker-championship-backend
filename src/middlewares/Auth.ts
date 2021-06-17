@@ -17,7 +17,7 @@ export const IsAuthenticated = async (
       return next();
     }
 
-    return response.status(401).send({ message: "Vish! nada feito.. 🙁" });
+    return response.status(401).json({ message: "Vish! nada feito.. 🙁" });
   } catch ({ message }) {
     return response.status(400).send({ message });
   }

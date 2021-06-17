@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-export const journeyUpdateValidation = async (
+export const JourneyUpdateValidation = async (
   request: Request,
   response: Response,
   next: NextFunction,
@@ -9,10 +9,14 @@ export const journeyUpdateValidation = async (
     hasClosed,
   } = request.body;
 
-  console.log("middle", request.body);
+  const { id } = request.params;
 
   if (hasClosed) {
-    return response.send(" jornada fechada!");
+    return response.status(400).json({ message: "jornada fechada!" });
+  }
+
+  if (!id) {
+    return response.status(400).json({ message: "id é obrigatório! 😉" });
   }
 
   return next();

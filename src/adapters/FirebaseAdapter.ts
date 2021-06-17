@@ -60,7 +60,7 @@ export class FirestoreAdapter<T> implements IDatabase<T> {
     }
   }
 
-  async getById(id: string): Promise<T | Error> {
+  async getById(id: string): Promise<T> {
     const data: T | Error = await dataBase
       .firestore()
       .collection(`${basePath}/${this.path}`)
@@ -69,7 +69,7 @@ export class FirestoreAdapter<T> implements IDatabase<T> {
       .then((snapshot) => snapshot.data() as T)
       .catch((err: Error) => err);
 
-    return data;
+    return data as T;
   }
 
   async getByKey(key = "", value = ""): Promise<T | Error> {
