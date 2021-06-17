@@ -5,7 +5,7 @@ import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
 import { JourneyController } from "../controllers/JourneyController";
 import { IJourney } from "../interfaces/Journey";
 import { IsAuthenticated } from "../middlewares/Auth";
-import { JourneyUpdateValidation } from "../middlewares/JourneyUpdateValidation";
+import { JourneyUpdateValidation } from "../middlewares/UpdateJourneyValidation";
 
 class JourneyRoutes {
   private journeyController: JourneyController
