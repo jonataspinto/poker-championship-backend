@@ -3,6 +3,7 @@ import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
 import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
 import { IUser } from "../interfaces/User";
 import { UserController } from "../controllers/UserController";
+import { IsAuthenticated } from "../middlewares/Auth";
 
 class UserRoutes {
   private userController: UserController
@@ -16,10 +17,6 @@ class UserRoutes {
   }
 
   execute() {
-    this.userRouter.post("/users", (request: Request, response: Response) => {
-      this.userController.save(request, response);
-    });
-
     this.userRouter.get("/users", (request: Request, response: Response) => {
       this.userController.getAll(request, response);
     });
@@ -28,15 +25,19 @@ class UserRoutes {
       this.userController.getByKey(request, response);
     });
 
-    this.userRouter.get("/users/:key", (request: Request, response: Response) => {
+    this.userRouter.get("/users/:id", (request: Request, response: Response) => {
       this.userController.getById(request, response);
     });
 
-    this.userRouter.put("/users/:id", (request: Request, response: Response) => {
+    this.userRouter.post("/users", (request: Request, response: Response) => {
+      this.userController.save(request, response);
+    });
+
+    this.userRouter.put("/users/:id", IsAuthenticated, (request: Request, response: Response) => {
       this.userController.update(request, response);
     });
 
-    this.userRouter.delete("/users/:id", (request: Request, response: Response) => {
+    this.userRouter.delete("/users/:id", IsAuthenticated, (request: Request, response: Response) => {
       this.userController.delete(request, response);
     });
 
