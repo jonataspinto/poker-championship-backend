@@ -4,6 +4,7 @@ import { IIdProvider } from "../interfaces/IdProvider";
 import { IDatabase } from "../interfaces/Database";
 import { User } from "../domain/User";
 import { BaseController } from "./BaseController";
+import { DeliveryPodiumsByPlayer } from "../helpers/DeliveryPodiumsByPlayer";
 
 export class UserController implements BaseController<IUser> {
   private UserDomain: User<IIdProvider>
@@ -25,7 +26,13 @@ export class UserController implements BaseController<IUser> {
   async getAll(request: Request, response: Response): Promise<Response> {
     try {
       const list = await this.dbAdapter.getAll();
-      const orderedList = Array.from(list as IUser[]).sort((a, b) => (b.points - a.points));
+
+      const deliveryPodiumsByPlayer = new DeliveryPodiumsByPlayer(list as IUser[]);
+
+      const mappedUsers = await deliveryPodiumsByPlayer.mapPodiumByPlayer();
+
+      const orderedList = Array.from(mappedUsers).sort((a, b) => (b.points - a.points));
+
       return response.status(200).json(orderedList);
     } catch (error) {
       return response.status(400).json({ message: error.message });

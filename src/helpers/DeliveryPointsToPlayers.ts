@@ -1,4 +1,3 @@
-/* eslint-disable no-plusplus */
 import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
 import { IDatabase } from "../interfaces/Database";
 import { IJourney } from "../interfaces/Journey";
