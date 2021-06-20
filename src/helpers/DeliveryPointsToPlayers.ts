@@ -33,7 +33,7 @@ export class DeliveryPointsToPlayers {
   }
 
   async deliveryPodium(): Promise<void> {
-    const podium = Object.entries(this.podium as IPodium);
+    const podium = Object.entries(this.podium);
 
     podium.forEach(async (podiumPosition: Array<string>) => {
       const key = podiumPosition[0];

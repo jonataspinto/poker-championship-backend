@@ -17,7 +17,13 @@ export class Journey<IDProviderAdapter extends IIdProvider> extends BaseEntity<I
     this.journey.closedBy = journeyData.closedBy || "";
     this.journey.hasClosed = journeyData.hasClosed || false;
     this.journey.players = journeyData.players || [];
-    this.journey.podium = journeyData.podium;
+    this.journey.podium = journeyData.podium || {
+      first: "",
+      second: "",
+      third: "",
+      fourth: "",
+      fifth: "",
+    };
     this.journey.tag = journeyData.tag;
 
     return this.journey;

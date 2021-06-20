@@ -4,11 +4,11 @@ import { IJourney } from "../interfaces/Journey";
 import { IUser } from "../interfaces/User";
 
 interface IPlayerPodium {
-  first: 0;
-  second: 0;
-  third: 0;
-  fourth: 0;
-  fifth: 0;
+  first: number;
+  second: number;
+  third: number;
+  fourth: number;
+  fifth: number;
 }
 
 export class DeliveryPodiumsByPlayer {
@@ -36,7 +36,7 @@ export class DeliveryPodiumsByPlayer {
         third: 0,
         fourth: 0,
         fifth: 0,
-      } as IPlayerPodium;
+      };
 
       closedJouneys.forEach((journey) => {
         if (uuid === journey.podium?.first) {
