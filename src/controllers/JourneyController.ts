@@ -20,7 +20,11 @@ export class JourneyController implements BaseController<IJourney> {
 
   async save(request: Request, response: Response): Promise<Response> {
     const data = request.body;
-    const journey = this.JourneyDomain.create(data);
+    const list = await this.dbAdapter.getAll();
+    const journey = this.JourneyDomain.create({
+      ...data,
+      tag: Array.from(list as IJourney[]).length + 1,
+    });
     const newJourney = await this.dbAdapter.save(journey);
     return response.status(200).json(newJourney);
   }
