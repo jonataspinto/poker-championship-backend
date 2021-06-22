@@ -31,7 +31,8 @@ export class JourneyController implements BaseController<IJourney> {
 
   async getAll(request: Request, response: Response): Promise<Response> {
     const list = await this.dbAdapter.getAll();
-    return response.status(200).json(list);
+    const orderedList = Array.from(list as IJourney[]).sort((a, b) => (b.tag - a.tag));
+    return response.status(200).json(orderedList);
   }
 
   async getById(request: Request, response: Response): Promise<Response> {
