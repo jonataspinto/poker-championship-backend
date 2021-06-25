@@ -25,6 +25,7 @@ export class Journey<IDProviderAdapter extends IIdProvider> extends BaseEntity<I
       fifth: "",
     };
     this.journey.tag = journeyData.tag;
+    this.journey.createdAt = journeyData.createdAt;
 
     return this.journey;
   }
