@@ -29,6 +29,7 @@ export class User<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDPr
       zipCode: "",
     } as IAddress;
     this.user.points = userData.points || 0;
+    this.user.isAdmin = false;
 
     return this.user;
   }

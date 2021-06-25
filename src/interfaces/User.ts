@@ -9,5 +9,6 @@ export interface IUser {
   email: string;
   photoURL?: string;
   address?: IAddress;
-  points: number
+  points: number;
+  isAdmin: boolean
 }
