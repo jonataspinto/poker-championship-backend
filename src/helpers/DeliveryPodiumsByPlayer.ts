@@ -1,15 +1,8 @@
 import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
 import { IDatabase } from "../interfaces/Database";
 import { IJourney } from "../interfaces/Journey";
+import { IPlayerPodium } from "../interfaces/Podium";
 import { IUser } from "../interfaces/User";
-
-interface IPlayerPodium {
-  first: number;
-  second: number;
-  third: number;
-  fourth: number;
-  fifth: number;
-}
 
 export class DeliveryPodiumsByPlayer {
   private dbAdapter: IDatabase<IJourney>
