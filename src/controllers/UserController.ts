@@ -31,9 +31,7 @@ export class UserController implements BaseController<IUser> {
 
       const mappedUsers = await deliveryPodiumsByPlayer.mapPodiumByPlayer();
 
-      const orderedList = Array.from(mappedUsers).sort((a, b) => (b.points - a.points));
-
-      return response.status(200).json(orderedList);
+      return response.status(200).json(mappedUsers);
     } catch (error) {
       return response.status(400).json({ message: error.message });
     }
