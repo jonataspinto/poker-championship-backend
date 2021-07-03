@@ -2,7 +2,7 @@ import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
 import { IDatabase } from "../interfaces/Database";
 import { IJourney } from "../interfaces/Journey";
 import { IPlayerPodium } from "../interfaces/Podium";
-import { IUser } from "../interfaces/User";
+import { IUser, IUserWithPodium } from "../interfaces/User";
 
 export class DeliveryPodiumsByPlayer {
   private dbAdapter: IDatabase<IJourney>
@@ -13,7 +13,7 @@ export class DeliveryPodiumsByPlayer {
     this.dbAdapter = new FirestoreAdapter<IJourney>("journeys");
   }
 
-  async mapPodiumByPlayer(): Promise<IUser[]> {
+  async mapPodiumByPlayer(): Promise<IUserWithPodium[]> {
     const journeys = await this.dbAdapter.getAll();
 
     const closedJouneys = Array
@@ -59,6 +59,26 @@ export class DeliveryPodiumsByPlayer {
       };
     });
 
-    return mappedUsers;
+    const mappedUsersOrdered = mappedUsers
+      .sort((a, b) => (
+        b.podiums.fifth - a.podiums.fifth
+      ))
+      .sort((a, b) => (
+        b.podiums.fourth - a.podiums.fourth
+      ))
+      .sort((a, b) => (
+        b.podiums.third - a.podiums.third
+      ))
+      .sort((a, b) => (
+        b.podiums.second - a.podiums.second
+      ))
+      .sort((a, b) => (
+        b.podiums.first - a.podiums.first
+      ))
+      .sort((a, b) => (
+        b.points - a.points
+      ));
+
+    return mappedUsersOrdered;
   }
 }
