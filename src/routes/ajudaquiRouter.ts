@@ -1,8 +1,8 @@
 /* eslint-disable no-empty-function */
 /* eslint-disable no-useless-constructor */
 import { Request, Response, Router } from "express";
-import { NodeMailerAdapter } from "adapters/NodeMailerAdapter";
-import { ajudaquiWelcome } from "utils/email/ajudaqui";
+import { NodeMailerAdapter } from "../adapters/NodeMailerAdapter";
+import { ajudaquiWelcome } from "../utils/email/ajudaqui";
 
 class AjudaquiRoutes {
   constructor(
