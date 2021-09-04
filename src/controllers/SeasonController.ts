@@ -22,7 +22,7 @@ export class SeasonController implements BaseController<ISeason> {
     const list = await this.dbAdapter.getAll();
     const season = this.SeasonDomain.create({
       ...data,
-      tag: `#${Array.from(list as ISeason[]).length + 1}`,
+      tag: Array.from(list as ISeason[]).length + 1,
     });
     const newSeason = await this.dbAdapter.save(season);
     return response.status(200).json(newSeason);

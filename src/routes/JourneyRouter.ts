@@ -5,7 +5,7 @@ import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
 import { JourneyController } from "../controllers/JourneyController";
 import { IJourney } from "../interfaces/Journey";
 import { IsAuthenticated } from "../middlewares/Auth";
-import { JourneyUpdateValidation } from "../middlewares/UpdateJourneyValidation";
+import { UpdateValidation, CreateValidation } from "../middlewares/JourneyValidation";
 
 class JourneyRoutes {
   private journeyController: JourneyController
@@ -31,14 +31,19 @@ class JourneyRoutes {
       this.journeyController.getById(request, response);
     });
 
-    this.journeyRouter.post("/journeys", IsAuthenticated, (request: Request, response: Response) => {
-      this.journeyController.save(request, response);
-    });
+    this.journeyRouter.post(
+      "/journeys",
+      IsAuthenticated,
+      CreateValidation,
+      (request: Request, response: Response) => {
+        this.journeyController.save(request, response);
+      },
+    );
 
     this.journeyRouter.put(
       "/journeys/:id",
       IsAuthenticated,
-      JourneyUpdateValidation,
+      UpdateValidation,
       (request: Request, response: Response) => {
         this.journeyController.update(request, response);
       },
@@ -51,7 +56,7 @@ class JourneyRoutes {
     this.journeyRouter.put(
       "/journeys/close/:id",
       IsAuthenticated,
-      JourneyUpdateValidation,
+      UpdateValidation,
       (request: Request, response: Response) => {
         this.journeyController.closeJourney(request, response);
       },
