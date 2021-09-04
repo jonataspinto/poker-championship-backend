@@ -19,7 +19,7 @@ export const AppConfig = (app: Express) => {
   });
 
   app.listen(process.env.PORT || 3333, () => {
-    console.log("serever is run 👽");
+    console.log(`serever is run 👽 in localhost:${process.env.PORT || 3333}`);
   });
 
   return app;
