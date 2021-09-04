@@ -10,4 +10,5 @@ export interface IJourney {
   podium?: IPodium;
   tag: number;
   createdAt: string;
+  seasonId: string;
 }
