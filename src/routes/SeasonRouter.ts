@@ -5,7 +5,7 @@ import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
 import { SeasonController } from "../controllers/SeasonController";
 import { ISeason } from "../interfaces/Season";
 import { IsAuthenticated } from "../middlewares/Auth";
-import { SeasonUpdateValidation } from "../middlewares/UpdateSeasonValidation";
+import { UpdateSeasonValidation } from "../middlewares/SeasonValidation";
 
 class SeasonRoutes {
   private seasonController: SeasonController
@@ -38,7 +38,7 @@ class SeasonRoutes {
     this.seasonRouter.put(
       "/season/:id",
       IsAuthenticated,
-      SeasonUpdateValidation,
+      UpdateSeasonValidation,
       (request: Request, response: Response) => {
         this.seasonController.update(request, response);
       },
@@ -51,7 +51,7 @@ class SeasonRoutes {
     this.seasonRouter.put(
       "/season/close/:id",
       IsAuthenticated,
-      SeasonUpdateValidation,
+      UpdateSeasonValidation,
       (request: Request, response: Response) => {
         this.seasonController.closeSeason(request, response);
       },

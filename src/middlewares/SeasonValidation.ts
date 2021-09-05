@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-export const SeasonUpdateValidation = async (
+export const UpdateSeasonValidation = async (
   request: Request,
   response: Response,
   next: NextFunction,
