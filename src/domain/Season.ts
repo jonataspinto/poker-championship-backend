@@ -13,7 +13,7 @@ export class Season<IDProviderAdapter extends IIdProvider> extends BaseEntity<ID
   create(seasonData: ISeason) {
     this.season.uuid = this.uuid;
     this.season.tag = seasonData.tag;
-    this.season.journeys = [];
+    this.season.journeys = seasonData.journeys || [];
     this.season.hasClosed = seasonData.hasClosed || false;
     this.season.closedBy = seasonData.closedBy || "";
     this.season.createdAt = seasonData.createdAt;
