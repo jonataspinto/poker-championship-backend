@@ -18,14 +18,22 @@ export class SeasonController implements BaseController<ISeason> {
   }
 
   async save(request: Request, response: Response): Promise<Response> {
-    const data = request.body;
-    const list = await this.dbAdapter.getAll();
-    const season = this.SeasonDomain.create({
-      ...data,
-      tag: Array.from(list as ISeason[]).length + 1,
-    });
-    const newSeason = await this.dbAdapter.save(season);
-    return response.status(200).json(newSeason);
+    try {
+      const data = request.body;
+      const list = await this.dbAdapter.getAll();
+      const hasOpenSeason = !!list.find((season) => !season.hasClosed);
+      if (hasOpenSeason) {
+        throw new Error("Existe(m) temporada(s) em andamento.");
+      }
+      const season = this.SeasonDomain.create({
+        ...data,
+        tag: Array.from(list as ISeason[]).length + 1,
+      });
+      const newSeason = await this.dbAdapter.save(season);
+      return response.status(200).json(newSeason);
+    } catch ({ message }) {
+      return response.status(200).send({ message });
+    }
   }
 
   async getAll(request: Request, response: Response): Promise<Response> {
