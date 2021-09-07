@@ -36,7 +36,7 @@ class SeasonRoutes {
     });
 
     this.seasonRouter.put(
-      "/season/:id",
+      "/seasons/:id",
       IsAuthenticated,
       UpdateSeasonValidation,
       (request: Request, response: Response) => {
@@ -44,12 +44,12 @@ class SeasonRoutes {
       },
     );
 
-    this.seasonRouter.delete("/season/:id", IsAuthenticated, (request: Request, response: Response) => {
+    this.seasonRouter.delete("/seasons/:id", IsAuthenticated, (request: Request, response: Response) => {
       this.seasonController.delete(request, response);
     });
 
     this.seasonRouter.put(
-      "/season/close/:id",
+      "/seasons/close/:id",
       IsAuthenticated,
       UpdateSeasonValidation,
       (request: Request, response: Response) => {
