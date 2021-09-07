@@ -25,39 +25,31 @@ export class FirestoreAdapter<T> implements IDatabase<T> {
   }
 
   async save(data: T): Promise<T> {
-    try {
-      const newData = await dataBase
-        .firestore()
-        .collection(`${basePath}/${this.path}`)
-        .add(data);
+    const newData = await dataBase
+      .firestore()
+      .collection(`${basePath}/${this.path}`)
+      .add(data);
 
-      const response = await newData.get().then((snapshot) => ({
-        ...snapshot.data() as T,
-        id: snapshot.id,
-      }));
+    const response = await newData.get().then((snapshot) => ({
+      ...snapshot.data() as T,
+      id: snapshot.id,
+    }));
 
-      return response as T;
-    } catch (error) {
-      return error;
-    }
+    return response as T;
   }
 
-  async getAll(): Promise<T[] | Error> {
-    try {
-      const list: T[] = [];
-      const query = await dataBase
-        .firestore()
-        .collection(`${basePath}/${this.path}`)
-        .get();
+  async getAll(): Promise<T[]> {
+    const list: T[] = [];
+    const query = await dataBase
+      .firestore()
+      .collection(`${basePath}/${this.path}`)
+      .get();
 
-      query.forEach((snapshot) => list.push({
-        ...(snapshot.data() as T),
-        id: snapshot.id,
-      }));
-      return list;
-    } catch (error) {
-      return error;
-    }
+    query.forEach((snapshot) => list.push({
+      ...(snapshot.data() as T),
+      id: snapshot.id,
+    }));
+    return list;
   }
 
   async getById(id: string): Promise<T> {
