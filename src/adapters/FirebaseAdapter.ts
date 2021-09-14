@@ -38,12 +38,23 @@ export class FirestoreAdapter<T> implements IDatabase<T> {
     return response as T;
   }
 
-  async getAll(): Promise<T[]> {
+  async getAll(key: string = "", queryParam: string | number = ""): Promise<T[]> {
     const list: T[] = [];
-    const query = await dataBase
-      .firestore()
-      .collection(`${basePath}/${this.path}`)
-      .get();
+
+    let query;
+
+    if (queryParam) {
+      query = await dataBase
+        .firestore()
+        .collection(`${basePath}/${this.path}`)
+        .where(`${key}`, "==", queryParam)
+        .get();
+    } else {
+      query = await dataBase
+        .firestore()
+        .collection(`${basePath}/${this.path}`)
+        .get();
+    }
 
     query.forEach((snapshot) => list.push({
       ...(snapshot.data() as T),

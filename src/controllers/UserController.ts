@@ -33,7 +33,7 @@ export class UserController implements BaseController<IUser> {
 
       return response.status(200).json(mappedUsers);
     } catch (error) {
-      return response.status(400).json({ message: error.message });
+      return response.status(400).json({ message: error });
     }
   }
 
