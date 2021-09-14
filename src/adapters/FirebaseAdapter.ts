@@ -43,7 +43,7 @@ export class FirestoreAdapter<T> implements IDatabase<T> {
 
     let query;
 
-    if (queryParam) {
+    if (key && queryParam) {
       query = await dataBase
         .firestore()
         .collection(`${basePath}/${this.path}`)

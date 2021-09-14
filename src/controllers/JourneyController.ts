@@ -19,14 +19,22 @@ export class JourneyController implements BaseController<IJourney> {
   }
 
   async save(request: Request, response: Response): Promise<Response> {
-    const data = request.body;
-    const list = await this.dbAdapter.getAll();
-    const journey = this.JourneyDomain.create({
-      ...data,
-      tag: Array.from(list as IJourney[]).length + 1,
-    });
-    const newJourney = await this.dbAdapter.save(journey);
-    return response.status(200).json(newJourney);
+    try {
+      const data = request.body;
+
+      const list = await this.dbAdapter.getAll("seasonId", data.seasonId);
+
+      const journey = this.JourneyDomain.create({
+        ...data,
+        tag: Array.from(list as IJourney[]).length + 1,
+      });
+
+      const newJourney = await this.dbAdapter.save(journey);
+
+      return response.status(200).json(newJourney);
+    } catch (error) {
+      return response.status(400).json(error);
+    }
   }
 
   async getAll(request: Request, response: Response): Promise<Response> {
