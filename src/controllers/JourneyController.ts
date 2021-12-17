@@ -1,21 +1,26 @@
 import { Request, Response } from "express";
-import { IJourney } from "../interfaces/Journey";
-import { IIdProvider } from "../interfaces/IdProvider";
-import { IDatabase } from "../interfaces/Database";
-import { Journey } from "../domain/Journey";
+import {
+  IJourney, IIdProvider, IDatabase, IAuth,
+} from "../interfaces";
+import { Journey } from "../domain";
 import { BaseController } from "./BaseController";
-import { IAuth } from "../interfaces/Auth";
 import { DeliveryPointsToPlayers } from "../helpers/DeliveryPointsToPlayers";
 
 export class JourneyController implements BaseController<IJourney> {
-  private JourneyDomain: Journey<IIdProvider>
+  private idProvider: IIdProvider;
+
+  private dbAdapter: IDatabase<IJourney>;
+
+  private auth: IAuth;
 
   constructor(
+    dbAdapter: IDatabase<IJourney>,
+    auth: IAuth,
     idProvider: IIdProvider,
-    private dbAdapter: IDatabase<IJourney>,
-    private auth: IAuth,
   ) {
-    this.JourneyDomain = new Journey(idProvider);
+    this.dbAdapter = dbAdapter;
+    this.auth = auth;
+    this.idProvider = idProvider;
   }
 
   async save(request: Request, response: Response): Promise<Response> {
@@ -24,10 +29,13 @@ export class JourneyController implements BaseController<IJourney> {
 
       const list = await this.dbAdapter.getAll("seasonId", data.seasonId);
 
-      const journey = this.JourneyDomain.create({
-        ...data,
-        tag: Array.from(list as IJourney[]).length + 1,
-      });
+      const journey = new Journey(
+        {
+          ...data,
+          tag: Array.from(list as IJourney[]).length + 1,
+        },
+        this.idProvider,
+      );
 
       const newJourney = await this.dbAdapter.save(journey);
 

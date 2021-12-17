@@ -1,7 +1,7 @@
+import { IdProviderAdapter } from "adapters/IdProviderAdapter";
 import { Request, Response, Router } from "express";
 import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
 import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
-import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
 import { JourneyController } from "../controllers/JourneyController";
 import { IJourney } from "../interfaces/Journey";
 import { IsAuthenticated } from "../middlewares/Auth";
@@ -12,13 +12,11 @@ class JourneyRoutes {
 
   constructor(
     private journeyRouter = Router(),
-    dbAdapter = new FirestoreAdapter<IJourney>("journeys"),
-    idProvider = new IdProviderAdapter(),
   ) {
     this.journeyController = new JourneyController(
-      idProvider,
-      dbAdapter,
+      new FirestoreAdapter<IJourney>("journeys"),
       new FirebaseAuthAdapter(),
+      new IdProviderAdapter(),
     );
   }
 

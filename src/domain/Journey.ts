@@ -1,33 +1,41 @@
-import { IIdProvider } from "../interfaces/IdProvider";
-import { IJourney } from "../interfaces/Journey";
+import { IIdProvider, IPodium, IJourney } from "../interfaces";
 import { BaseEntity } from "./BaseEntity";
 
 export class Journey<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {
-  private journey: IJourney
+  players: string[];
 
-  constructor(idProvider: IDProviderAdapter) {
+  bestHand: string;
+
+  biggestEliminator: string;
+
+  hasClosed: boolean;
+
+  closedBy: string;
+
+  podium?: IPodium;
+
+  tag: number;
+
+  createdAt: string;
+
+  seasonId: string;
+
+  constructor(journey: IJourney, idProvider: IDProviderAdapter) {
     super(idProvider);
-    this.journey = {} as IJourney;
-  }
-
-  create(journeyData: IJourney) {
-    this.journey.uuid = this.uuid;
-    this.journey.bestHand = journeyData.bestHand || "";
-    this.journey.biggestEliminator = journeyData.biggestEliminator || "";
-    this.journey.closedBy = journeyData.closedBy || "";
-    this.journey.hasClosed = journeyData.hasClosed || false;
-    this.journey.players = journeyData.players || [];
-    this.journey.podium = journeyData.podium || {
+    this.bestHand = journey.bestHand || "";
+    this.biggestEliminator = journey.biggestEliminator || "";
+    this.closedBy = journey.closedBy || "";
+    this.hasClosed = journey.hasClosed || false;
+    this.players = journey.players || [];
+    this.podium = journey.podium || {
       first: "",
       second: "",
       third: "",
       fourth: "",
       fifth: "",
     };
-    this.journey.tag = journeyData.tag;
-    this.journey.createdAt = journeyData.createdAt;
-    this.journey.seasonId = journeyData.seasonId;
-
-    return this.journey;
+    this.tag = journey.tag;
+    this.createdAt = journey.createdAt;
+    this.seasonId = journey.seasonId;
   }
 }
