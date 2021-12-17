@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es2020": true
+    "es2020": true,
+    "jest": true
   },
   "extends": [
     "airbnb-base"
@@ -14,6 +15,7 @@
   "plugins": [
     "@typescript-eslint"
   ],
+
   "rules": {
     "quotes": ["error", "double"],
     "import/no-unresolved": "off",
