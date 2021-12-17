@@ -5,20 +5,19 @@ import { IDatabase } from "../interfaces/Database";
 import { User } from "../domain/User";
 import { BaseController } from "./BaseController";
 import { DeliveryPodiumsByPlayer } from "../helpers/DeliveryPodiumsByPlayer";
+import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
 
 export class UserController implements BaseController<IUser> {
-  private UserDomain: User<IIdProvider>
-
   constructor(
     private dbAdapter: IDatabase<IUser>,
-    idProvider: IIdProvider,
+    private idProvider: IIdProvider,
   ) {
-    this.UserDomain = new User(idProvider, dbAdapter);
+    this.idProvider = new IdProviderAdapter();
   }
 
   async save(request: Request, response: Response): Promise<Response> {
     const data = request.body;
-    const user = this.UserDomain.create(data);
+    const user = new User(data, this.idProvider);
     const newUser = await this.dbAdapter.save(user);
     return response.status(200).json(newUser);
   }

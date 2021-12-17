@@ -1,36 +1,35 @@
-import { IAddress } from "../interfaces/Address";
-import { IDatabase } from "../interfaces/Database";
-import { IIdProvider } from "../interfaces/IdProvider";
-import { IUser } from "../interfaces/User";
+import { IAddress, IIdProvider, IUser } from "../interfaces";
 import { BaseEntity } from "./BaseEntity";
 
 export class User<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {
-  private user: IUser
+  name: string;
+
+  displayName?: string = "";
+
+  dateBirth?: Date | string = "";
+
+  email: string;
+
+  photoURL?: string = "";
+
+  address?: IAddress = {
+    city: "",
+    neighborhood: "",
+    state: "",
+    street: "",
+    zipCode: "",
+  };
+
+  points: number = 0;
+
+  isAdmin: boolean = false;
 
   constructor(
+    userData: IUser,
     idProvider: IDProviderAdapter,
-    dbAdapter: IDatabase<IUser>,
   ) {
     super(idProvider);
-    this.user = {} as IUser;
-  }
-
-  create(userData: IUser) {
-    this.user.uuid = userData.uuid || this.uuid;
-    this.user.name = userData.name;
-    this.user.dateBirth = userData.dateBirth || "";
-    this.user.email = userData.email || "";
-    this.user.photoURL = userData.photoURL || "";
-    this.user.address = userData.address || {
-      city: "",
-      neighborhood: "",
-      state: "",
-      street: "",
-      zipCode: "",
-    } as IAddress;
-    this.user.points = userData.points || 0;
-    this.user.isAdmin = false;
-
-    return this.user;
+    this.name = userData.name;
+    this.email = userData.email;
   }
 }
