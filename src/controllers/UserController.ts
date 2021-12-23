@@ -1,18 +1,20 @@
 import { Request, Response } from "express";
-import { IUser } from "../interfaces/User";
-import { IIdProvider } from "../interfaces/IdProvider";
-import { IDatabase } from "../interfaces/Database";
-import { User } from "../domain/User";
+import { IUser, IIdProvider, IDatabase } from "../interfaces";
+import { User } from "../domain";
 import { BaseController } from "./BaseController";
 import { DeliveryPodiumsByPlayer } from "../helpers/DeliveryPodiumsByPlayer";
-import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
 
 export class UserController implements BaseController<IUser> {
+  private dbAdapter: IDatabase<IUser>;
+
+  private idProvider: IIdProvider;
+
   constructor(
-    private dbAdapter: IDatabase<IUser>,
-    private idProvider: IIdProvider,
+    dbAdapter: IDatabase<IUser>,
+    idProvider: IIdProvider,
   ) {
-    this.idProvider = new IdProviderAdapter();
+    this.dbAdapter = dbAdapter;
+    this.idProvider = idProvider;
   }
 
   async save(request: Request, response: Response): Promise<Response> {

@@ -9,11 +9,12 @@ class UserRoutes {
   private userController: UserController
 
   constructor(
-    dbAdapter = new FirestoreAdapter<IUser>("users"),
-    idProvider = new IdProviderAdapter(),
     private userRouter = Router(),
   ) {
-    this.userController = new UserController(dbAdapter, idProvider);
+    this.userController = new UserController(
+      new FirestoreAdapter<IUser>("users"),
+      new IdProviderAdapter(),
+    );
   }
 
   execute() {
