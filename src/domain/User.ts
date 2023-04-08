@@ -1,5 +1,4 @@
-import { IAddress, IIdProvider, IUser } from "../interfaces";
-import { BaseEntity } from "./BaseEntity";
+import { BaseEntity } from "@Domains/BaseEntity";
 
 export class User<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {
   name: string;

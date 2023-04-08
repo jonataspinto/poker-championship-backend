@@ -1,5 +1,4 @@
-import { IIdProvider, IUser } from "interfaces";
-import { User } from "./User";
+import { User } from "@Domains/User";
 
 const uuidMock = "poker";
 
