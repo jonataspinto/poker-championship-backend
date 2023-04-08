@@ -1,5 +1,4 @@
-import { IIdProvider } from "../interfaces";
-import { BaseEntity } from "./BaseEntity";
+import { BaseEntity } from "@Domains/BaseEntity";
 
 const uuidMock = "poker";
 
