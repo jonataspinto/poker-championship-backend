@@ -1,0 +1,3 @@
+interface IIdProvider {
+  getNew: () => string;
+}
