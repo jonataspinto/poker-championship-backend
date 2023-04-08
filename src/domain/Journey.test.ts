@@ -1,5 +1,4 @@
-import { IIdProvider, IJourney } from "../interfaces";
-import { Journey } from "./Journey";
+import { Journey } from "@Domains/Journey";
 
 const uuidMock = "poker";
 

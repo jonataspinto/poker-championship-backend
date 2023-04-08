@@ -1,5 +1,4 @@
-import { IIdProvider, IPodium, IJourney } from "../interfaces";
-import { BaseEntity } from "./BaseEntity";
+import { BaseEntity } from "@Domains/BaseEntity";
 
 export class Journey<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {
   players: string[];
