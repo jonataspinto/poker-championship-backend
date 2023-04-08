@@ -1,4 +1,4 @@
-export interface IPodium {
+interface IPodium {
   first: string;
   second: string;
   third: string;
@@ -6,7 +6,7 @@ export interface IPodium {
   fifth: string;
 }
 
-export interface IPlayerPodium {
+interface IPlayerPodium {
   first: number;
   second: number;
   third: number;

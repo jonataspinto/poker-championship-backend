@@ -1,7 +1,4 @@
-import { IAddress } from "./Address";
-import { IPlayerPodium } from "./Podium";
-
-export interface IUser {
+interface IUser {
   id?: string;
   uuid: string;
   name: string;
@@ -14,6 +11,6 @@ export interface IUser {
   isAdmin: boolean
 }
 
-export interface IUserWithPodium extends IUser {
+interface IUserWithPodium extends IUser {
   podiums: IPlayerPodium;
 }

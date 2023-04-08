@@ -1,4 +1,4 @@
-export interface ISeason {
+interface ISeason {
   uuid: string;
   tag: number;
   journeys: string[];

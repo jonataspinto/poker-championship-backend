@@ -1,6 +1,4 @@
-import { IPodium } from "./Podium";
-
-export interface IJourney {
+interface IJourney {
   uuid: string,
   players: string[],
   bestHand: string,

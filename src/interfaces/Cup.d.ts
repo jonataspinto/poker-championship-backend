@@ -1,6 +1,4 @@
-import { IPodium } from "./Podium";
-
-export interface ICup {
+interface ICup {
   uuid: string;
   seasonId: string;
   createdAt: string;

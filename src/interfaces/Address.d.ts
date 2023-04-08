@@ -1,4 +1,4 @@
-export interface IAddress {
+interface IAddress {
   zipCode: number | string;
   city: string;
   state: string;
@@ -6,7 +6,7 @@ export interface IAddress {
   street: string;
 }
 
-export interface ILocation {
+interface ILocation {
   lat: number;
   lng: number;
 }

@@ -1,4 +1,4 @@
-export interface IMessage {
+interface IMessage {
   to: Array<string> | string;
   from: string;
   subject: string;
@@ -6,6 +6,6 @@ export interface IMessage {
   html: string;
 }
 
-export interface IMailProvider {
+interface IMailProvider {
   sendEmail(message: IMessage): Promise<void>
 }
