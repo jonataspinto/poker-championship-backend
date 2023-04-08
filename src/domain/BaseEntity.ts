@@ -1,5 +1,3 @@
-import { IIdProvider } from "../interfaces";
-
 export class BaseEntity<IDProviderAdapter extends IIdProvider> {
   uuid: string;
 
