@@ -1,8 +1,4 @@
 import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
-import { IDatabase } from "../interfaces/Database";
-import { IJourney } from "../interfaces/Journey";
-import { IPodium } from "../interfaces/Podium";
-import { IUser } from "../interfaces/User";
 
 enum Points {
   "first" = 12,
