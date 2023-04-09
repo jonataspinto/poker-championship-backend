@@ -3,12 +3,14 @@ import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
 import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
 import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
 import { CupController } from "../controllers/CupController";
-import { ICup } from "../interfaces/Cup";
 import { IsAuthenticated } from "../middlewares/Auth";
-import { UpdateCupValidation, CreateCupValidation } from "../middlewares/CupValidation";
+import {
+  UpdateCupValidation,
+  CreateCupValidation,
+} from "../middlewares/CupValidation";
 
 class CupRoutes {
-  private cupController: CupController
+  private cupController: CupController;
 
   constructor(
     private cupRouter = Router(),
@@ -49,9 +51,13 @@ class CupRoutes {
       },
     );
 
-    this.cupRouter.delete("/cups/:id", IsAuthenticated, (request: Request, response: Response) => {
-      this.cupController.delete(request, response);
-    });
+    this.cupRouter.delete(
+      "/cups/:id",
+      IsAuthenticated,
+      (request: Request, response: Response) => {
+        this.cupController.delete(request, response);
+      },
+    );
 
     this.cupRouter.put(
       "/cups/close/:id",

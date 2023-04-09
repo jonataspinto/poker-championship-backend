@@ -1,8 +1,6 @@
 import * as dataBase from "firebase-admin";
 import dotenv from "dotenv";
 
-import { IDatabase } from "../interfaces/Database";
-
 dotenv.config();
 // const  serviceAccount = require('../../serviceAccountKey.json')
 
@@ -28,7 +26,7 @@ export class FirestoreAdapter<T> implements IDatabase<T> {
     const newData = await dataBase
       .firestore()
       .collection(`${basePath}/${this.path}`)
-      .add(data);
+      .add(data as FirebaseFirestore.DocumentData);
 
     const response = await newData.get().then((snapshot) => ({
       ...snapshot.data() as T,
@@ -96,7 +94,7 @@ export class FirestoreAdapter<T> implements IDatabase<T> {
       .firestore()
       .collection(`${basePath}/${this.path}`)
       .doc(id)
-      .update(newData);
+      .update(newData as FirebaseFirestore.UpdateData);
 
     return newData;
   }

@@ -1,5 +1,3 @@
-import { IDatabase } from "@Interfaces";
-
 export class TestAdapter<T extends {id: string}> implements IDatabase<T> {
   dataBase: Array<T> = []
 
@@ -8,6 +6,7 @@ export class TestAdapter<T extends {id: string}> implements IDatabase<T> {
       this.dataBase.push(data);
       return data;
     } catch (error) {
+      // @ts-ignore
       return error;
     }
   }
@@ -18,6 +17,7 @@ export class TestAdapter<T extends {id: string}> implements IDatabase<T> {
 
       return list;
     } catch (error) {
+      // @ts-ignore
       return error;
     }
   }

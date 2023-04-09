@@ -1,6 +1,5 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import { IMailProvider, IMessage } from "../interfaces/MailProvider";
 
 dotenv.config();
 

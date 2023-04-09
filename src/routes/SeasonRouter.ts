@@ -3,7 +3,6 @@ import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
 import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
 import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
 import { SeasonController } from "../controllers/SeasonController";
-import { ISeason } from "../interfaces/Season";
 import { IsAuthenticated } from "../middlewares/Auth";
 import { UpdateSeasonValidation } from "../middlewares/SeasonValidation";
 

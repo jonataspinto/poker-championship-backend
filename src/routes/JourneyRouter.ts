@@ -3,7 +3,6 @@ import { Request, Response, Router } from "express";
 import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
 import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
 import { JourneyController } from "../controllers/JourneyController";
-import { IJourney } from "../interfaces/Journey";
 import { IsAuthenticated } from "../middlewares/Auth";
 import { UpdateJourneyValidation, CreateJourneyValidation } from "../middlewares/JourneyValidation";
 

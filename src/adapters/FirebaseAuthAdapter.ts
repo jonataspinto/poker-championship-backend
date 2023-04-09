@@ -1,5 +1,4 @@
 import { auth } from "firebase-admin";
-import { IAuth } from "../interfaces/Auth";
 
 export class FirebaseAuthAdapter implements IAuth {
   private isAuhenticated: boolean
