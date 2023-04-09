@@ -1,10 +1,6 @@
 import { Request, Response } from "express";
-import { ISeason } from "../interfaces/Season";
-import { IIdProvider } from "../interfaces/IdProvider";
-import { IDatabase } from "../interfaces/Database";
 import { Season } from "../domain/Season";
 import { BaseController } from "./BaseController";
-import { IAuth } from "../interfaces/Auth";
 
 export class SeasonController implements BaseController<ISeason> {
   private SeasonDomain: Season<IIdProvider>
@@ -31,6 +27,7 @@ export class SeasonController implements BaseController<ISeason> {
       });
       const newSeason = await this.dbAdapter.save(season);
       return response.status(200).json(newSeason);
+      // @ts-ignore
     } catch ({ message }) {
       return response.status(200).send({ message });
     }
@@ -58,6 +55,7 @@ export class SeasonController implements BaseController<ISeason> {
       }
       const updatedData = await this.dbAdapter.update(id, data);
       return response.json(updatedData);
+      // @ts-ignore
     } catch ({ message }) {
       return response.status(400).send({ message });
     }
@@ -91,6 +89,7 @@ export class SeasonController implements BaseController<ISeason> {
       const updatedData = await this.dbAdapter.update(id, season);
 
       return response.json(updatedData);
+      // @ts-ignore
     } catch ({ message }) {
       return response.status(400).send({ message });
     }

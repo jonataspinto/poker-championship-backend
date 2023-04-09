@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { IUser, IIdProvider, IDatabase } from "../interfaces";
 import { User } from "../domain";
 import { BaseController } from "./BaseController";
 import { DeliveryPodiumsByPlayer } from "../helpers/DeliveryPodiumsByPlayer";

@@ -1,10 +1,6 @@
 import { Request, Response } from "express";
-import { ICup } from "../interfaces/Cup";
-import { IIdProvider } from "../interfaces/IdProvider";
-import { IDatabase } from "../interfaces/Database";
 import { Cup } from "../domain/Cup";
 import { BaseController } from "./BaseController";
-import { IAuth } from "../interfaces/Auth";
 
 export class CupController implements BaseController<ICup> {
   private cupDomain: Cup<IIdProvider>
@@ -48,6 +44,7 @@ export class CupController implements BaseController<ICup> {
       }
       const updatedData = await this.dbAdapter.update(id, data);
       return response.json(updatedData);
+    // @ts-ignore
     } catch ({ message }) {
       return response.status(400).send({ message });
     }
@@ -80,6 +77,7 @@ export class CupController implements BaseController<ICup> {
       const updatedData = await this.dbAdapter.update(id, cup);
 
       return response.json(updatedData);
+    // @ts-ignore
     } catch ({ message }) {
       return response.status(400).send({ message });
     }

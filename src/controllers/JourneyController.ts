@@ -1,7 +1,4 @@
 import { Request, Response } from "express";
-import {
-  IJourney, IIdProvider, IDatabase, IAuth,
-} from "../interfaces";
 import { Journey } from "../domain";
 import { BaseController } from "./BaseController";
 import { DeliveryPointsToPlayers } from "../helpers/DeliveryPointsToPlayers";
@@ -75,6 +72,7 @@ export class JourneyController implements BaseController<IJourney> {
       }
       const updatedData = await this.dbAdapter.update(id, data);
       return response.json(updatedData);
+    // @ts-ignore
     } catch ({ message }) {
       return response.status(400).send({ message });
     }
@@ -109,6 +107,7 @@ export class JourneyController implements BaseController<IJourney> {
       await deliveryPointsToPlayers.deliveryBiggestEliminator();
 
       return response.json(updatedData);
+    // @ts-ignore
     } catch ({ message }) {
       return response.status(400).send({ message });
     }
