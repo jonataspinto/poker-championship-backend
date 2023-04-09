@@ -1,6 +1,4 @@
-import { IIdProvider } from "../interfaces/IdProvider";
-import { ICup } from "../interfaces/Cup";
-import { BaseEntity } from "./BaseEntity";
+import { BaseEntity } from "@Domains/BaseEntity";
 
 export class Cup<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {
   private cup: ICup
