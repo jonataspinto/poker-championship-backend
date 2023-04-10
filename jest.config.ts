@@ -9,6 +9,7 @@ const config: Config = {
     "@Controllers(.*)": "<rootDir>/src/controllers/$1",
     "@Domains(.*)": "<rootDir>/src/domain/$1",
     "@Adapters(.*)": "<rootDir>/src/adapters/$1",
+    "@/(.*)": "<rootDir>/src/$1",
   },
   collectCoverageFrom: [
     "src/controllers/*.ts",

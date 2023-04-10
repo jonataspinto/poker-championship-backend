@@ -15,7 +15,8 @@
       "@Routes/*": ["../src/routes/*"],
       "@Controllers/*": ["../src/controllers/*"],
       "@Domains/*": ["../src/domain/*"],
-      "@Adapters/*": ["../src/adapters/*"]
+      "@Adapters/*": ["../src/adapters/*"],
+      "@/*": ["../src/*"]
     },
   },
   "include": ["src"],
