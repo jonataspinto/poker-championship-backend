@@ -1,10 +1,5 @@
 import { BaseEntity } from "@Domains/BaseEntity";
-
-const uuidMock = "poker";
-
-const idProviderMock: IIdProvider = {
-  getNew: jest.fn(() => uuidMock),
-};
+import { idProviderMock, uuidMock } from "tests/idProviderMock";
 
 describe("Base entity", () => {
   const baseEntity = new BaseEntity(idProviderMock);

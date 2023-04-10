@@ -1,15 +1,10 @@
 import { User } from "@Domains/User";
-
-const uuidMock = "poker";
+import { idProviderMock, uuidMock } from "tests/idProviderMock";
 
 const userDataMock: IUser = {
   name: "mark",
   email: "mark@email.com",
 } as IUser;
-
-const idProviderMock: IIdProvider = {
-  getNew: jest.fn(() => uuidMock),
-};
 
 describe("User domain", () => {
   const user = new User(userDataMock, idProviderMock);

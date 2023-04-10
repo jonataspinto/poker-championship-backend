@@ -1,6 +1,5 @@
 import { Journey } from "@Domains/Journey";
-
-const uuidMock = "poker";
+import { idProviderMock, uuidMock } from "tests/idProviderMock";
 
 const journeyDataMock: IJourney = {
   players: [
@@ -14,10 +13,6 @@ const journeyDataMock: IJourney = {
   seasonId: "jdksodjskodmoknd",
   createdAt: "2021-06-30T00:42:58-03:00",
 } as IJourney;
-
-const idProviderMock: IIdProvider = {
-  getNew: jest.fn(() => uuidMock),
-};
 
 describe("Journey domain", () => {
   const journey = new Journey(journeyDataMock, idProviderMock);
