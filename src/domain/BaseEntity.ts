@@ -1,7 +1,11 @@
 export class BaseEntity<IDProviderAdapter extends IIdProvider> {
-  uuid: string;
+  private idProvider: IDProviderAdapter;
 
-  constructor(idProvider: IDProviderAdapter) {
-    this.uuid = idProvider.getNew();
+  constructor(IdProvider: IDProviderAdapter) {
+    this.idProvider = IdProvider;
+  }
+
+  generateUuid() {
+    return this.idProvider.getNew();
   }
 }
