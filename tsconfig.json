@@ -8,15 +8,9 @@
     "strict": true,
     "noImplicitAny": true,
     "strictPropertyInitialization": true,
-    "rootDirs": ["src"],
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
-      "@Services/*": ["../src/services/*"],
-      "@Routes/*": ["../src/routes/*"],
-      "@Controllers/*": ["../src/controllers/*"],
-      "@Domains/*": ["../src/domain/*"],
-      "@Adapters/*": ["../src/adapters/*"],
-      "@/*": ["../src/*"]
+      "@/*": ["./*"]
     },
   },
   "include": ["src"],
