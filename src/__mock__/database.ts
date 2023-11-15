@@ -32,6 +32,12 @@ class DATABASE_MOCK implements IDBProvider {
     });
   }
 
+  async getByEmail<T>(email: string): Promise<T> {
+    return new Promise((resolve) => {
+      resolve(this.data.find((row) => row.email === email) as T);
+    });
+  }
+
   async delete(id: string): Promise<string> {
     return new Promise((resolve) => {
       this.data = this.data.filter((row) => row.id !== id);
