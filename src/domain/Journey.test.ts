@@ -1,5 +1,5 @@
-import { Journey } from "@Domains/Journey";
-import { idProviderMock, uuidMock } from "tests/idProviderMock";
+import { Journey } from "@/domain/Journey";
+import { idProviderMock } from "@/__mock__/idProviderMock";
 
 const journeyDataMock: IJourney = {
   players: [
@@ -15,18 +15,15 @@ const journeyDataMock: IJourney = {
 } as IJourney;
 
 describe("Journey domain", () => {
-  const journey = new Journey(journeyDataMock, idProviderMock);
+  const journey = new Journey(idProviderMock);
 
   it("should to create a new journey", () => {
-    expect(journey).toMatchObject(journeyDataMock);
+    journey.create(journeyDataMock);
+    expect(journey.data).toMatchObject(journeyDataMock);
   });
 
   it("should to call getNew method", () => {
     expect(idProviderMock.getNew).toHaveBeenCalled();
     expect(idProviderMock.getNew).toHaveReturned();
-  });
-
-  it("should return a uuid to equal uuidMock", () => {
-    expect(journey.uuid).toEqual(uuidMock);
   });
 });

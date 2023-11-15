@@ -7,8 +7,8 @@ interface IUser {
   email: string;
   photoURL?: string;
   address?: IAddress;
-  points: number;
-  isAdmin: boolean
+  points?: number;
+  isAdmin?: boolean
 }
 
 interface IUserWithPodium extends IUser {

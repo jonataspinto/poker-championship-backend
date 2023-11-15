@@ -1,7 +1,9 @@
-import { BaseEntity } from "@Domains/BaseEntity";
+import { BaseEntity } from "./BaseEntity";
 
 export class User<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {
   name: string;
+
+  uuid: string;
 
   displayName?: string = "";
 
@@ -30,5 +32,6 @@ export class User<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDPr
     super(idProvider);
     this.name = userData.name;
     this.email = userData.email;
+    this.uuid = this.generateUuid();
   }
 }

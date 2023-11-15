@@ -1,40 +1,34 @@
-import { BaseEntity } from "@Domains/BaseEntity";
+import { BaseEntity } from "./BaseEntity";
 
 export class Journey<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {
-  players: string[];
+  data?: IJourney;
 
-  bestHand: string;
-
-  biggestEliminator: string;
-
-  hasClosed: boolean;
-
-  closedBy: string;
-
-  podium?: IPodium;
-
-  tag: number;
-
-  createdAt: string;
-
-  seasonId: string;
-
-  constructor(journey: IJourney, idProvider: IDProviderAdapter) {
+  constructor(idProvider: IDProviderAdapter, journey?: IJourney) {
     super(idProvider);
-    this.bestHand = journey.bestHand || "";
-    this.biggestEliminator = journey.biggestEliminator || "";
-    this.closedBy = journey.closedBy || "";
-    this.hasClosed = journey.hasClosed || false;
-    this.players = journey.players || [];
-    this.podium = journey.podium || {
+
+    if (journey?.uuid) {
+      this.data = { ...journey };
+    }
+  }
+
+  create(journey: IJourney) {
+    const draft: IJourney = {} as IJourney;
+    draft.uuid = this.generateUuid();
+    draft.bestHand = journey.bestHand || "";
+    draft.biggestEliminator = journey.biggestEliminator || "";
+    draft.closedBy = journey.closedBy || "";
+    draft.hasClosed = journey.hasClosed || false;
+    draft.players = journey.players || [];
+    draft.podium = journey.podium || {
       first: "",
       second: "",
       third: "",
       fourth: "",
       fifth: "",
     };
-    this.tag = journey.tag;
-    this.createdAt = journey.createdAt;
-    this.seasonId = journey.seasonId;
+    draft.tag = journey.tag;
+    draft.createdAt = journey.createdAt;
+    draft.seasonId = journey.seasonId;
+    this.data = { ...draft };
   }
 }

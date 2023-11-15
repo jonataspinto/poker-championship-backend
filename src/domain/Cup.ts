@@ -1,4 +1,4 @@
-import { BaseEntity } from "@Domains/BaseEntity";
+import { BaseEntity } from "./BaseEntity";
 
 export class Cup<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {
   private cup: ICup
@@ -8,8 +8,8 @@ export class Cup<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDPro
     this.cup = {} as ICup;
   }
 
-  create(cupData: ICup) {
-    this.cup.uuid = this.uuid;
+  create(cupData: Omit<ICup, "uuid">) {
+    this.cup.uuid = this.generateUuid();
     this.cup.seasonId = cupData.seasonId;
     this.cup.tag = cupData.tag;
     this.cup.createdAt = cupData.createdAt;

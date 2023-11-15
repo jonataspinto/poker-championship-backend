@@ -1,4 +1,4 @@
-import { BaseEntity } from "@Domains/BaseEntity";
+import { BaseEntity } from "./BaseEntity";
 
 export class Season<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {
   private season: ISeason

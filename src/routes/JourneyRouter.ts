@@ -1,5 +1,5 @@
-import { IdProviderAdapter } from "adapters/IdProviderAdapter";
 import { Request, Response, Router } from "express";
+import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
 import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
 import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
 import { JourneyController } from "../controllers/JourneyController";
