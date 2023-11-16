@@ -1,8 +1,11 @@
 interface ISeason {
-  uuid: string;
   tag: number;
-  journeys: string[];
   hasClosed: boolean;
-  closedBy: string;
+  journeys: string[];
+  closedBy?: string;
+}
+
+interface ISeasonDTO extends ISeason {
+  id: string;
   createdAt: string;
 }
