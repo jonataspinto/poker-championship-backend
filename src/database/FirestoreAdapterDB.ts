@@ -22,7 +22,7 @@ export class FirestoreAdapterDB<T> implements IDBProvider {
     this.path = reference;
   }
 
-  async save<T>(data: T): Promise<T> {
+  async save<T, DTO>(data: T): Promise<DTO> {
     const newData = await dataBase
       .firestore()
       .collection(`${basePath}/${this.path}`)
@@ -33,7 +33,7 @@ export class FirestoreAdapterDB<T> implements IDBProvider {
       id: snapshot.id,
     }));
 
-    return response as T;
+    return response as DTO;
   }
 
   async getAll<T>(key: string = "", queryParam: string | number = ""): Promise<T[]> {
