@@ -1,8 +1,7 @@
-interface Repository<T> {
-  create: (payload: T)=> Promise<T>
-  findAll: () => Promise<Array<T>>
-  findById: (id: string) => Promise<T>
-  findByEmail: (email: string) => Promise<T>
+interface Repository<T, DTO> {
+  create: (payload: T)=> Promise<DTO>
+  findAll: () => Promise<Array<DTO>>
+  findById: (id: string) => Promise<DTO>
   delete: (id: string) => Promise<string>
-  update: (id: string, payload: T) => Promise<T>
+  update: (id: string, payload: DTO) => Promise<DTO>
 }
