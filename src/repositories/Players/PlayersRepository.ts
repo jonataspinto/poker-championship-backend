@@ -1,5 +1,5 @@
-import DATABASE_MOCK from "@/__mock__/database";
-import { FirestoreAdapterDB } from "@/database/FirestoreAdapterDB";
+import DATABASE_MOCK from "../../__mock__/database";
+import { FirestoreAdapterDB } from "../../database/FirestoreAdapterDB";
 
 class PlayersRepository implements Repository<IPlayer, IPlayerDTO> {
   private dbProvider
