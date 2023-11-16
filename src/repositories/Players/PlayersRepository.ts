@@ -1,6 +1,6 @@
 import DATABASE_MOCK from "@/__mock__/database";
 
-class PlayersRepository implements Repository<IPlayer> {
+class PlayersRepository implements Repository<IPlayer, IPlayerDTO> {
   private dbProvider
 
   constructor(dbProvider: IDBProvider) {
@@ -8,17 +8,17 @@ class PlayersRepository implements Repository<IPlayer> {
   }
 
   async create(payload: IPlayer) {
-    const data = await this.dbProvider.save(payload);
+    const data = await this.dbProvider.save<IPlayer, IPlayerDTO>(payload);
     return data;
   }
 
   async findAll() {
-    const data = await this.dbProvider.getAll<IPlayer>();
+    const data = await this.dbProvider.getAll<IPlayerDTO>();
     return data;
   }
 
   async findById(id: string) {
-    const data = await this.dbProvider.getById<IPlayer>(id);
+    const data = await this.dbProvider.getById<IPlayerDTO>(id);
     return data;
   }
 
@@ -32,8 +32,8 @@ class PlayersRepository implements Repository<IPlayer> {
     return data;
   }
 
-  async update(id: string, payload: IPlayer) {
-    const data = await this.dbProvider.update<IPlayer>(id, payload);
+  async update(id: string, payload: IPlayerDTO) {
+    const data = await this.dbProvider.update<IPlayerDTO>(id, payload);
     return data;
   }
 }
