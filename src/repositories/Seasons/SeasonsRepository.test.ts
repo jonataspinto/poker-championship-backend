@@ -1,4 +1,4 @@
-import SeasonRepository from "./SeasonRepository";
+import SeasonRepository from "./SeasonsRepository";
 
 const seasonDataMock: ISeason = {
   tag: 1,
