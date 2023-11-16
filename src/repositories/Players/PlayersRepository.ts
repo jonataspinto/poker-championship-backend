@@ -23,7 +23,7 @@ class PlayersRepository implements Repository<IPlayer, IPlayerDTO> {
   }
 
   async findByEmail(email: string) {
-    const data = await this.dbProvider.getByEmail<IPlayer>(email);
+    const data = await this.dbProvider.getByEmail<IPlayerDTO>(email);
     return data;
   }
 
