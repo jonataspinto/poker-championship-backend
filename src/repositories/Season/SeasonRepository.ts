@@ -1,4 +1,5 @@
 import DATABASE_MOCK from "@/__mock__/database";
+import { FirestoreAdapterDB } from "@/database/FirestoreAdapterDB";
 
 class SeasonRepository implements Repository<ISeason, ISeasonDTO> {
   private dbProvider
@@ -33,4 +34,8 @@ class SeasonRepository implements Repository<ISeason, ISeasonDTO> {
   }
 }
 
-export default new SeasonRepository(DATABASE_MOCK);
+export default new SeasonRepository(
+  process.env.NODE_ENV === "test"
+    ? DATABASE_MOCK
+    : new FirestoreAdapterDB("seasons"),
+);
