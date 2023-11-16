@@ -1,12 +1,12 @@
 class DATABASE_MOCK implements IDBProvider {
   private data: Array<any> = [];
 
-  async save<T>(payload: T): Promise<T> {
+  async save<T, DTO>(payload: T): Promise<DTO> {
     return new Promise((resolve) => {
       const value = {
         ...payload,
         id: this.getUUID(),
-      };
+      } as DTO;
       this.data.push(value);
       resolve(value);
     });

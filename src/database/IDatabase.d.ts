@@ -1,8 +1,8 @@
 interface IDBProvider {
-  save: <T>(data: T) => Promise<T>
-  update: <T>(id: string, payload: T) => Promise<T>
+  save: <T, DTO>(data: T) => Promise<DTO>
+  update: <DTO>(id: string, payload: DTO) => Promise<DTO>
   delete: (id: string) => Promise<string>
-  getAll: <T>() => Promise<Array<T>>
-  getById: <T>(id: string) => Promise<T>
-  getByEmail: <T>(email: string) => Promise<T>
+  getAll: <DTO>() => Promise<Array<DTO>>
+  getById: <DTO>(id: string) => Promise<DTO>
+  getByEmail: <DTO>(email: string) => Promise<DTO>
 }
