@@ -15,7 +15,7 @@ dataBase.initializeApp({
 
 const basePath = "/root_collection/document";
 
-export class FirestoreAdapterDB<T> implements IDBProvider {
+export class FirestoreAdapterDB implements IDBProvider {
   private path: string
 
   constructor(reference: string) {
