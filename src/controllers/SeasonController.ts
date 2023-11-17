@@ -1,97 +1,108 @@
 import { Request, Response } from "express";
-import { Season } from "../domain/Season";
-import { BaseController } from "./BaseController";
+import { Controller } from "./Controller";
+import SeasonsRepository from "../repositories/Seasons/SeasonsRepository";
+import { FirebaseAuthAdapter } from "@/adapters/FirebaseAuthAdapter";
 
-export class SeasonController implements BaseController<ISeason> {
-  private SeasonDomain: Season<IIdProvider>
+class SeasonController implements Controller {
+  constructor(readonly auth: IAuth) {}
 
-  constructor(
-    idProvider: IIdProvider,
-    private dbAdapter: IDatabase<ISeason>,
-    private auth: IAuth,
-  ) {
-    this.SeasonDomain = new Season(idProvider);
+  async index(request: Request, response: Response) {
+    const seasons = await SeasonsRepository.findAll();
+
+    const orderedList = seasons.sort((a, b) => b.tag - a.tag);
+
+    response.json(orderedList);
   }
 
-  async save(request: Request, response: Response): Promise<Response> {
-    try {
-      const data = request.body;
-      const list = await this.dbAdapter.getAll();
-      const hasOpenSeason = !!list.find((season) => !season.hasClosed);
-      if (hasOpenSeason) {
-        throw new Error("Existe(m) temporada(s) em andamento.");
-      }
-      const season = this.SeasonDomain.create({
-        ...data,
-        tag: Array.from(list as ISeason[]).length + 1,
-      });
-      const newSeason = await this.dbAdapter.save(season);
-      return response.status(200).json(newSeason);
-      // @ts-ignore
-    } catch ({ message }) {
-      return response.status(200).send({ message });
+  async store(request: Request, response: Response) {
+    const payload = request.body as ISeason;
+
+    const seasons = await SeasonsRepository.findAll();
+
+    const hasOpenSeason = !!seasons.find((season) => !season.hasClosed);
+
+    if (hasOpenSeason) {
+      response.status(400).send({ error: "has opened season" });
+      return;
     }
+
+    const newSeason = await SeasonsRepository.create(payload);
+
+    response.status(201).json(newSeason);
   }
 
-  async getAll(request: Request, response: Response): Promise<Response> {
-    const list = await this.dbAdapter.getAll();
-    const orderedList = Array.from(list as ISeason[]).sort((a, b) => (b.tag - a.tag));
-    return response.status(200).json(orderedList);
-  }
-
-  async getById(request: Request, response: Response): Promise<Response> {
+  async show(request: Request, response: Response) {
     const { id } = request.params;
-    const data = await this.dbAdapter.getById(id);
-    return response.status(200).json(data);
-  }
 
-  async update(request: Request, response: Response): Promise<Response> {
-    try {
-      const data = request.body;
-      const { id } = request.params;
-      const { hasClosed } = await this.dbAdapter.getById(id);
-      if (hasClosed) {
-        return response.status(400).json({ message: "temporada fechada!" });
-      }
-      const updatedData = await this.dbAdapter.update(id, data);
-      return response.json(updatedData);
-      // @ts-ignore
-    } catch ({ message }) {
-      return response.status(400).send({ message });
+    const season = await SeasonsRepository.findById(id);
+
+    if (!season) {
+      response.status(404).send({ error: "season not found" });
+      return;
     }
+
+    response.json(season);
   }
 
-  async delete(request: Request, response: Response): Promise<Response> {
+  async update(request: Request, response: Response) {
     const { id } = request.params;
-    const deletedItemId = await this.dbAdapter.delete(id);
-    return response.json(deletedItemId);
+    const payload = request.body;
+
+    const seasonExists = await SeasonsRepository.findById(id);
+
+    if (!seasonExists) {
+      response.status(404).send({ error: "season not found" });
+      return;
+    }
+
+    if (seasonExists.hasClosed) {
+      response.status(400).json({ error: "this season is closed" });
+      return;
+    }
+
+    const updatedSeason = await SeasonsRepository.update(id, payload);
+
+    response.json(updatedSeason);
   }
 
-  async closeSeason(request: Request, response: Response): Promise<Response> {
-    try {
-      const { id } = request.params;
-      const { authorization } = request.headers;
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
 
-      const season = await this.dbAdapter.getById(id);
+    await SeasonsRepository.delete(id);
 
-      // TODO aqui deve disparar a criação de uma nova copa adicionando os 10 primeiros colocados.
+    response.sendStatus(204);
+  }
 
-      if (season.hasClosed) {
-        return response.status(400).json({ message: "jornada fechada!" });
-      }
+  async closeSeason(request: Request, response: Response) {
+    const { id } = request.params;
+    const { authorization } = request.headers;
 
-      if (authorization) {
-        const userId = await this.auth.getUuidByToken(authorization.split(" ")[1]);
-        season.hasClosed = true;
-        season.closedBy = userId;
-      }
+    const season = await SeasonsRepository.findById(id);
 
-      const updatedData = await this.dbAdapter.update(id, season);
-
-      return response.json(updatedData);
-      // @ts-ignore
-    } catch ({ message }) {
-      return response.status(400).send({ message });
+    if (!season) {
+      response.status(404).send({ error: "Season not found" });
+      return;
     }
+
+    if (season.hasClosed) {
+      response.status(400).json({ error: "This season is closed" });
+      return;
+    }
+
+    if (!authorization) {
+      response.status(403).send({ error: "authorization token is required" });
+      return;
+    }
+
+    const userId = await this.auth.getUuidByToken(authorization);
+
+    season.hasClosed = true;
+    season.closedBy = userId;
+
+    const updatedSeason = await SeasonsRepository.update(id, season);
+
+    response.json(updatedSeason);
   }
 }
+
+export default new SeasonController(new FirebaseAuthAdapter());
