@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Controller } from "./Controller";
 import SeasonsRepository from "../repositories/Seasons/SeasonsRepository";
-import { FirebaseAuthAdapter } from "@/adapters/FirebaseAuthAdapter";
+import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
 
 class SeasonController implements Controller {
   constructor(readonly auth: IAuth) {}
