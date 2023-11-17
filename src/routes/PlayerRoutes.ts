@@ -1,6 +1,6 @@
 import { Router } from "express";
 import PlayerController from "../controllers/PlayerController";
-import { IsAuthenticated } from "@/middlewares/Auth";
+import { IsAuthenticated } from "../middlewares/Auth";
 
 class PlayerRoutes {
   private router: Router
