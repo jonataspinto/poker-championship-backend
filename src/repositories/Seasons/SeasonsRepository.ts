@@ -2,11 +2,7 @@ import DATABASE_MOCK from "../../__mock__/database";
 import { FirestoreAdapterDB } from "../../database/FirestoreAdapterDB";
 
 class SeasonRepository implements Repository<ISeason, ISeasonDTO> {
-  private dbProvider
-
-  constructor(dbProvider: IDBProvider) {
-    this.dbProvider = dbProvider;
-  }
+  constructor(private dbProvider: IDBProvider) {}
 
   async create(payload: ISeason) {
     const data = await this.dbProvider.save<ISeason, ISeasonDTO>(payload);
