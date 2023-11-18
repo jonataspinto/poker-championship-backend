@@ -1,115 +1,88 @@
 import { Request, Response } from "express";
-import { Journey } from "../domain";
-import { BaseController } from "./BaseController";
-import { DeliveryPointsToPlayers } from "../helpers/DeliveryPointsToPlayers";
+import { Controller } from "./Controller";
+import JourneysRepository from "../repositories/Journeys/JourneysRepository";
+import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
 
-export class JourneyController implements BaseController<IJourney> {
-  private idProvider: IIdProvider;
+class JourneyController implements Controller {
+  constructor(readonly auth: IAuth) {}
 
-  private dbAdapter: IDatabase<IJourney>;
+  async index(request: Request, response: Response) {
+    const journeys = await JourneysRepository.findAll();
 
-  private auth: IAuth;
+    const orderedList = Array.from(journeys).sort((a, b) => (b.tag - a.tag));
 
-  constructor(
-    dbAdapter: IDatabase<IJourney>,
-    auth: IAuth,
-    idProvider: IIdProvider,
-  ) {
-    this.dbAdapter = dbAdapter;
-    this.auth = auth;
-    this.idProvider = idProvider;
+    response.json(orderedList);
   }
 
-  async save(request: Request, response: Response): Promise<Response> {
-    try {
-      const data = request.body;
+  async store(request: Request, response: Response) {
+    const payload = request.body;
 
-      const list = await this.dbAdapter.getAll("seasonId", data.seasonId);
+    const newJourney = await JourneysRepository.create(payload);
 
-      const journey = new Journey(
-        {
-          ...data,
-          tag: Array.from(list as IJourney[]).length + 1,
-        },
-        this.idProvider,
-      );
-
-      const newJourney = await this.dbAdapter.save(journey);
-
-      return response.status(200).json(newJourney);
-    } catch (error) {
-      return response.status(400).json(error);
-    }
+    response.status(201).json(newJourney);
   }
 
-  async getAll(request: Request, response: Response): Promise<Response> {
-    try {
-      const { seasonId } = request.query;
-
-      const list = await this.dbAdapter.getAll("seasonId", seasonId as string);
-
-      const orderedList = Array.from(list as IJourney[]).sort((a, b) => (b.tag - a.tag));
-
-      return response.status(200).json(orderedList);
-    } catch (error) {
-      return response.status(400).json(error);
-    }
-  }
-
-  async getById(request: Request, response: Response): Promise<Response> {
+  async show(request: Request, response: Response) {
     const { id } = request.params;
-    const data = await this.dbAdapter.getById(id);
-    return response.status(200).json(data);
-  }
+    const journey = await JourneysRepository.findById(id);
 
-  async update(request: Request, response: Response): Promise<Response> {
-    try {
-      const data = request.body;
-      const { id } = request.params;
-      const { hasClosed } = await this.dbAdapter.getById(id);
-      if (hasClosed) {
-        return response.status(400).json({ message: "jornada fechada!" });
-      }
-      const updatedData = await this.dbAdapter.update(id, data);
-      return response.json(updatedData);
-    // @ts-ignore
-    } catch ({ message }) {
-      return response.status(400).send({ message });
+    if (!journey) {
+      response.status(404).send({ error: "journey not found" });
+      return;
     }
+    response.json(journey);
   }
 
-  async delete(request: Request, response: Response): Promise<Response> {
+  async update(request: Request, response: Response) {
+    const payload = request.body;
     const { id } = request.params;
-    const deletedItemId = await this.dbAdapter.delete(id);
-    return response.json(deletedItemId);
+    const journeyExists = await JourneysRepository.findById(id);
+
+    if (!journeyExists) {
+      response.status(404).send({ error: "journey not found" });
+      return;
+    }
+
+    if (journeyExists.hasClosed) {
+      response.status(400).send({ error: "this journey in closed" });
+      return;
+    }
+    const updatedData = await JourneysRepository.update(id, payload);
+
+    response.json(updatedData);
   }
 
-  async closeJourney(request: Request, response: Response): Promise<Response> {
-    try {
-      const { id } = request.params;
-      const { authorization } = request.headers;
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
 
-      const journey = await this.dbAdapter.getById(id);
+    await JourneysRepository.delete(id);
 
-      const deliveryPointsToPlayers = new DeliveryPointsToPlayers(journey);
+    response.sendStatus(204);
+  }
 
-      if (journey.hasClosed) {
-        return response.status(400).json({ message: "jornada fechada!" });
-      }
-      if (authorization) {
-        const userId = await this.auth.getUuidByToken(authorization.split(" ")[1]);
-        journey.hasClosed = true;
-        journey.closedBy = userId;
-      }
+  async closeJourney(request: Request, response: Response) {
+    const { id } = request.params;
+    const { authorization } = request.headers;
 
-      const updatedData = await this.dbAdapter.update(id, journey);
+    const journey = await JourneysRepository.findById(id);
 
-      await deliveryPointsToPlayers.deliveryBiggestEliminator();
-
-      return response.json(updatedData);
-    // @ts-ignore
-    } catch ({ message }) {
-      return response.status(400).send({ message });
+    if (journey.hasClosed) {
+      return response.status(400).json({ error: "this journey in closed" });
     }
+    // const deliveryPointsToPlayers = new DeliveryPointsToPlayers(journey);
+
+    if (authorization) {
+      const userId = await this.auth.getUuidByToken(authorization.split(" ")[1]);
+      journey.hasClosed = true;
+      journey.closedBy = userId;
+    }
+
+    const updatedData = await JourneysRepository.update(id, journey);
+
+    // await deliveryPointsToPlayers.deliveryBiggestEliminator();
+
+    response.json(updatedData);
   }
 }
+
+export default new JourneyController(new FirebaseAuthAdapter());
