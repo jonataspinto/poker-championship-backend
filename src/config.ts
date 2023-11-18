@@ -1,26 +1,22 @@
 import dotenv from "dotenv";
-import express, { Express, Response } from "express";
+import express, { Express } from "express";
 import cors from "cors";
+import { Routes } from "./routes";
+import { ErrorHandler } from "./middlewares/ErrorHandler";
 
 export const AppConfig = (app: Express) => {
   dotenv.config();
+
+  app.use(express.json());
 
   app.use(cors({
     origin: "*",
     methods: ["GET", "PUT", "POST", "DELETE"],
   }));
 
-  app.use(express.json());
+  Routes.use(app);
 
-  app.get("/", (_, response: Response) => {
-    response.status(200).json({
-      message: "Welcome!",
-    });
-  });
-
-  app.listen(process.env.PORT || 3333, () => {
-    console.log(`serever is run 👽 in localhost:${process.env.PORT || 3333}`);
-  });
+  app.use(ErrorHandler);
 
   return app;
 };
