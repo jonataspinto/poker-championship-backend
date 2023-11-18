@@ -1,5 +1,4 @@
 interface IJourney {
-  uuid: string,
   players: string[],
   bestHand: string,
   biggestEliminator: string,
@@ -7,6 +6,11 @@ interface IJourney {
   closedBy: string,
   podium?: IPodium;
   tag: number;
-  createdAt: string;
   seasonId: string;
+}
+
+interface IJourneyDTO extends IJourney {
+  uuid: string
+  id: string
+  createdAt: string
 }
