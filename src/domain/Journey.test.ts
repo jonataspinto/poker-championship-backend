@@ -8,10 +8,10 @@ const journeyDataMock: IJourney = {
     "BohJFMqP9JOQATmXAnQVbsohp6t2",
     "y1hDyMJJbfdBz1o76czI4mHidss1",
     "VSkdeH6PxrgFS1L4e0YcashyWfz2",
-    "YzAXWUMnFeaR1N1EqrM80dtD8HI3",
+    "YzAXWUMnFeaR1N1EqrM80dtD8HI3"
   ],
   seasonId: "jdksodjskodmoknd",
-  createdAt: "2021-06-30T00:42:58-03:00",
+  createdAt: "2021-06-30T00:42:58-03:00"
 } as IJourney;
 
 describe("Journey domain", () => {

@@ -7,7 +7,7 @@ const journeyDataMock: IJourney = {
   bestHand: "",
   biggestEliminator: "",
   closedBy: "",
-  seasonId: "5675785ghdvaj",
+  seasonId: "5675785ghdvaj"
 };
 
 describe("JourneysRepository", () => {

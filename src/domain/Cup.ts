@@ -1,7 +1,9 @@
 import { BaseEntity } from "./BaseEntity";
 
-export class Cup<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {
-  private cup: ICup
+export class Cup<
+  IDProviderAdapter extends IIdProvider
+> extends BaseEntity<IDProviderAdapter> {
+  private cup: ICup;
 
   constructor(idProvider: IDProviderAdapter) {
     super(idProvider);
@@ -23,7 +25,7 @@ export class Cup<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDPro
       second: "",
       third: "",
       fourth: "",
-      fifth: "",
+      fifth: ""
     };
 
     return this.cup;

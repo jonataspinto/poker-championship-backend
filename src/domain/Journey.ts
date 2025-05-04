@@ -1,6 +1,8 @@
 import { BaseEntity } from "./BaseEntity";
 
-export class Journey<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {
+export class Journey<
+  IDProviderAdapter extends IIdProvider
+> extends BaseEntity<IDProviderAdapter> {
   data?: IJourney;
 
   constructor(idProvider: IDProviderAdapter, journey?: IJourney) {
@@ -24,7 +26,7 @@ export class Journey<IDProviderAdapter extends IIdProvider> extends BaseEntity<I
       second: "",
       third: "",
       fourth: "",
-      fifth: "",
+      fifth: ""
     };
     draft.tag = journey.tag;
     draft.createdAt = journey.createdAt;

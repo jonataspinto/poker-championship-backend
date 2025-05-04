@@ -1,7 +1,9 @@
 import { BaseEntity } from "./BaseEntity";
 
-export class Season<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {
-  private season: ISeason
+export class Season<
+  IDProviderAdapter extends IIdProvider
+> extends BaseEntity<IDProviderAdapter> {
+  private season: ISeason;
 
   constructor(idProvider: IDProviderAdapter) {
     super(idProvider);

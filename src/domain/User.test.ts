@@ -4,7 +4,7 @@ import { idProviderMock, uuidMock } from "@/__mock__/idProviderMock";
 const userDataMock: IUser = {
   name: "mark",
   email: "mark@email.com",
-  uuid: "uuid",
+  uuid: "uuid"
 };
 
 describe("User domain", () => {

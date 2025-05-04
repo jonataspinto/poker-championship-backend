@@ -33,5 +33,5 @@ class SeasonRepository implements Repository<ISeason, ISeasonDTO> {
 export default new SeasonRepository(
   process.env.NODE_ENV === "test"
     ? DATABASE_MOCK
-    : new FirestoreAdapterDB("seasons"),
+    : new FirestoreAdapterDB("seasons")
 );

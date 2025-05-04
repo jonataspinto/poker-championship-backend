@@ -9,10 +9,12 @@ export const AppConfig = (app: Express) => {
 
   app.use(express.json());
 
-  app.use(cors({
-    origin: "*",
-    methods: ["GET", "PUT", "POST", "DELETE"],
-  }));
+  app.use(
+    cors({
+      origin: "*",
+      methods: ["GET", "PUT", "POST", "DELETE"]
+    })
+  );
 
   Routes.use(app);
 

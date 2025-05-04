@@ -1,20 +1,18 @@
 import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
 
 export class DeliveryPodiumsByPlayer {
-  private dbAdapter: IDatabase<IJourney>
+  private dbAdapter: IDatabase<IJourney>;
 
-  constructor(
-    private users: IUser[],
-  ) {
+  constructor(private users: IUser[]) {
     this.dbAdapter = new FirestoreAdapter<IJourney>("journeys");
   }
 
   async mapPodiumByPlayer(): Promise<IUserWithPodium[]> {
     const journeys = await this.dbAdapter.getAll();
 
-    const closedJouneys = Array
-      .from(journeys as IJourney[])
-      .filter((journey) => journey.hasClosed);
+    const closedJouneys = Array.from(journeys as IJourney[]).filter(
+      (journey) => journey.hasClosed
+    );
 
     const mappedUsers = this.users.map((user) => {
       const { uuid } = user;
@@ -24,7 +22,7 @@ export class DeliveryPodiumsByPlayer {
         second: 0,
         third: 0,
         fourth: 0,
-        fifth: 0,
+        fifth: 0
       };
 
       closedJouneys.forEach((journey) => {
@@ -51,29 +49,17 @@ export class DeliveryPodiumsByPlayer {
 
       return {
         ...user,
-        podiums,
+        podiums
       };
     });
 
     const mappedUsersOrdered = mappedUsers
-      .sort((a, b) => (
-        b.podiums.fifth - a.podiums.fifth
-      ))
-      .sort((a, b) => (
-        b.podiums.fourth - a.podiums.fourth
-      ))
-      .sort((a, b) => (
-        b.podiums.third - a.podiums.third
-      ))
-      .sort((a, b) => (
-        b.podiums.second - a.podiums.second
-      ))
-      .sort((a, b) => (
-        b.podiums.first - a.podiums.first
-      ))
-      .sort((a, b) => (
-        b.points - a.points
-      ));
+      .sort((a, b) => b.podiums.fifth - a.podiums.fifth)
+      .sort((a, b) => b.podiums.fourth - a.podiums.fourth)
+      .sort((a, b) => b.podiums.third - a.podiums.third)
+      .sort((a, b) => b.podiums.second - a.podiums.second)
+      .sort((a, b) => b.podiums.first - a.podiums.first)
+      .sort((a, b) => b.points - a.points);
 
     return mappedUsersOrdered;
   }

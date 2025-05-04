@@ -29,7 +29,10 @@ class JourneysRepository implements Repository<IJourney, IJourneyDTO> {
   }
 
   async update(id: string, payload: IJourneyDTO) {
-    const updatedJourney = await this.dbProvider.update<IJourneyDTO>(id, payload);
+    const updatedJourney = await this.dbProvider.update<IJourneyDTO>(
+      id,
+      payload
+    );
     return updatedJourney;
   }
 }
@@ -37,5 +40,5 @@ class JourneysRepository implements Repository<IJourney, IJourneyDTO> {
 export default new JourneysRepository(
   process.env.NODE_ENV === "test"
     ? DATABASE_MOCK
-    : new FirestoreAdapterDB("journeys"),
+    : new FirestoreAdapterDB("journeys")
 );

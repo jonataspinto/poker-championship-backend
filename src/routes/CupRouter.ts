@@ -6,7 +6,7 @@ import { CupController } from "../controllers/CupController";
 import { IsAuthenticated } from "../middlewares/Auth";
 import {
   UpdateCupValidation,
-  CreateCupValidation,
+  CreateCupValidation
 } from "../middlewares/CupValidation";
 
 class CupRoutes {
@@ -15,12 +15,12 @@ class CupRoutes {
   constructor(
     private cupRouter = Router(),
     dbAdapter = new FirestoreAdapter<ICup>("journeys"),
-    idProvider = new IdProviderAdapter(),
+    idProvider = new IdProviderAdapter()
   ) {
     this.cupController = new CupController(
       idProvider,
       dbAdapter,
-      new FirebaseAuthAdapter(),
+      new FirebaseAuthAdapter()
     );
   }
 
@@ -39,7 +39,7 @@ class CupRoutes {
       CreateCupValidation,
       (request: Request, response: Response) => {
         this.cupController.save(request, response);
-      },
+      }
     );
 
     this.cupRouter.put(
@@ -48,7 +48,7 @@ class CupRoutes {
       UpdateCupValidation,
       (request: Request, response: Response) => {
         this.cupController.update(request, response);
-      },
+      }
     );
 
     this.cupRouter.delete(
@@ -56,7 +56,7 @@ class CupRoutes {
       IsAuthenticated,
       (request: Request, response: Response) => {
         this.cupController.delete(request, response);
-      },
+      }
     );
 
     this.cupRouter.put(
@@ -65,7 +65,7 @@ class CupRoutes {
       UpdateCupValidation,
       (request: Request, response: Response) => {
         this.cupController.closeCup(request, response);
-      },
+      }
     );
 
     return this.cupRouter;

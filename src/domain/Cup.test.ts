@@ -10,13 +10,13 @@ const mockCupData = {
     "BohJFMqP9JOQATmXAnQVbsohp6t2",
     "y1hDyMJJbfdBz1o76czI4mHidss1",
     "VSkdeH6PxrgFS1L4e0YcashyWfz2",
-    "YzAXWUMnFeaR1N1EqrM80dtD8HI3",
+    "YzAXWUMnFeaR1N1EqrM80dtD8HI3"
   ],
   bestHand: "",
   biggestEliminator: "",
   hasClosed: false,
   closedBy: "",
-  tag: 0,
+  tag: 0
 };
 
 describe("Cup entity", () => {

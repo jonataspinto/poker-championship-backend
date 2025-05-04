@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   UpdateJourneyValidation,
-  CreateJourneyValidation,
+  CreateJourneyValidation
 } from "../middlewares/JourneyValidation";
 import { IsAuthenticated } from "../middlewares/Auth";
 import JourneyController from "../controllers/JourneyController";

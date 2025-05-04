@@ -1,6 +1,8 @@
 import { BaseEntity } from "./BaseEntity";
 
-export class User<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDProviderAdapter> {
+export class User<
+  IDProviderAdapter extends IIdProvider
+> extends BaseEntity<IDProviderAdapter> {
   name: string;
 
   uuid: string;
@@ -18,17 +20,14 @@ export class User<IDProviderAdapter extends IIdProvider> extends BaseEntity<IDPr
     neighborhood: "",
     state: "",
     street: "",
-    zipCode: "",
+    zipCode: ""
   };
 
   points: number = 0;
 
   isAdmin: boolean = false;
 
-  constructor(
-    userData: IUser,
-    idProvider: IDProviderAdapter,
-  ) {
+  constructor(userData: IUser, idProvider: IDProviderAdapter) {
     super(idProvider);
     this.name = userData.name;
     this.email = userData.email;

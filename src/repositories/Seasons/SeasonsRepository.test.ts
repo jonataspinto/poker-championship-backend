@@ -4,7 +4,7 @@ const seasonDataMock: ISeason = {
   tag: 1,
   hasClosed: true,
   journeys: [],
-  closedBy: undefined,
+  closedBy: undefined
 };
 
 describe("SeasonRepository", () => {
@@ -35,15 +35,12 @@ describe("SeasonRepository", () => {
   });
 
   it("should to update season correctly", async () => {
-    const updatedSeason = await SeasonRepository.update(
-      createdSeasonId,
-      {
-        ...seasonDataMock,
-        hasClosed: false,
-        id: createdSeasonId,
-        createdAt: createdSeasonCreatedAt,
-      },
-    );
+    const updatedSeason = await SeasonRepository.update(createdSeasonId, {
+      ...seasonDataMock,
+      hasClosed: false,
+      id: createdSeasonId,
+      createdAt: createdSeasonCreatedAt
+    });
 
     expect(updatedSeason.hasClosed).toBeFalsy();
   });

@@ -1,12 +1,10 @@
-import {
-  ErrorRequestHandler, NextFunction, Request, Response,
-} from "express";
+import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 
 export const ErrorHandler = (
   error: ErrorRequestHandler,
   request: Request,
   response: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   console.log("Error: ", error);
   response.sendStatus(500);

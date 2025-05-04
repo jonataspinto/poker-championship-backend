@@ -1,9 +1,9 @@
 import { auth } from "firebase-admin";
 
 export class FirebaseAuthAdapter implements IAuth {
-  private isAuhenticated: boolean
+  private isAuhenticated: boolean;
 
-  private userId: string
+  private userId: string;
 
   constructor() {
     this.isAuhenticated = false;

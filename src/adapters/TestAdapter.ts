@@ -1,5 +1,5 @@
-export class TestAdapter<T extends {id: string}> implements IDatabase<T> {
-  dataBase: Array<T> = []
+export class TestAdapter<T extends { id: string }> implements IDatabase<T> {
+  dataBase: Array<T> = [];
 
   async save(data: T): Promise<T> {
     try {

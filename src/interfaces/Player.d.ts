@@ -6,9 +6,9 @@ interface IPlayer {
   photoURL?: string;
   address?: IAddress;
   points?: number;
-  isAdmin?: boolean
+  isAdmin?: boolean;
 }
 
 interface IPlayerDTO extends IPlayer {
-  id: string
+  id: string;
 }

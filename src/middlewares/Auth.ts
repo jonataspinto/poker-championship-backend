@@ -6,7 +6,7 @@ const Auth = new FirebaseAuthAdapter();
 export const IsAuthenticated = async (
   request: Request,
   response: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { authorization } = request.headers;

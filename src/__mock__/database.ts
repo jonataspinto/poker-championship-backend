@@ -5,7 +5,7 @@ class DATABASE_MOCK implements IDBProvider {
     return new Promise((resolve) => {
       const value = {
         ...payload,
-        id: this.getUUID(),
+        id: this.getUUID()
       } as DTO;
       this.data.push(value);
       resolve(value);
@@ -20,7 +20,7 @@ class DATABASE_MOCK implements IDBProvider {
 
   async update<T>(id: string, payload: T): Promise<T> {
     return new Promise((resolve) => {
-      const updatedValue = ({ id, ...payload });
+      const updatedValue = { id, ...payload };
       this.data = this.data.map((row) => (row?.id === id ? updatedValue : row));
       resolve(updatedValue);
     });

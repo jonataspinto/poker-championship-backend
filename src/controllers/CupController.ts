@@ -3,12 +3,12 @@ import { Cup } from "../domain/Cup";
 import { BaseController } from "./BaseController";
 
 export class CupController implements BaseController<ICup> {
-  private cupDomain: Cup<IIdProvider>
+  private cupDomain: Cup<IIdProvider>;
 
   constructor(
     idProvider: IIdProvider,
     private dbAdapter: IDatabase<ICup>,
-    private auth: IAuth,
+    private auth: IAuth
   ) {
     this.cupDomain = new Cup(idProvider);
   }
@@ -16,7 +16,7 @@ export class CupController implements BaseController<ICup> {
   async save(request: Request, response: Response): Promise<Response> {
     const data = request.body;
     const cup = this.cupDomain.create({
-      ...data,
+      ...data
     });
     const newCup = await this.dbAdapter.save(cup);
     return response.status(200).json(newCup);
@@ -24,7 +24,9 @@ export class CupController implements BaseController<ICup> {
 
   async getAll(request: Request, response: Response): Promise<Response> {
     const list = await this.dbAdapter.getAll();
-    const orderedList = Array.from(list as ICup[]).sort((a, b) => (b.tag - a.tag));
+    const orderedList = Array.from(list as ICup[]).sort(
+      (a, b) => b.tag - a.tag
+    );
     return response.status(200).json(orderedList);
   }
 
@@ -44,7 +46,7 @@ export class CupController implements BaseController<ICup> {
       }
       const updatedData = await this.dbAdapter.update(id, data);
       return response.json(updatedData);
-    // @ts-ignore
+      // @ts-ignore
     } catch ({ message }) {
       return response.status(400).send({ message });
     }
@@ -69,7 +71,9 @@ export class CupController implements BaseController<ICup> {
         return response.status(400).json({ message: "copa fechada!" });
       }
       if (authorization) {
-        const userId = await this.auth.getUuidByToken(authorization.split(" ")[1]);
+        const userId = await this.auth.getUuidByToken(
+          authorization.split(" ")[1]
+        );
         cup.hasClosed = true;
         cup.closedBy = userId;
       }
@@ -77,7 +81,7 @@ export class CupController implements BaseController<ICup> {
       const updatedData = await this.dbAdapter.update(id, cup);
 
       return response.json(updatedData);
-    // @ts-ignore
+      // @ts-ignore
     } catch ({ message }) {
       return response.status(400).send({ message });
     }

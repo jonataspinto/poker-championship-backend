@@ -9,7 +9,7 @@ class JourneyController implements Controller {
   async index(request: Request, response: Response) {
     const journeys = await JourneysRepository.findAll();
 
-    const orderedList = Array.from(journeys).sort((a, b) => (b.tag - a.tag));
+    const orderedList = Array.from(journeys).sort((a, b) => b.tag - a.tag);
 
     response.json(orderedList);
   }
@@ -72,7 +72,9 @@ class JourneyController implements Controller {
     // const deliveryPointsToPlayers = new DeliveryPointsToPlayers(journey);
 
     if (authorization) {
-      const userId = await this.auth.getUuidByToken(authorization.split(" ")[1]);
+      const userId = await this.auth.getUuidByToken(
+        authorization.split(" ")[1]
+      );
       journey.hasClosed = true;
       journey.closedBy = userId;
     }

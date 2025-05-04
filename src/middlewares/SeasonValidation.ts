@@ -3,11 +3,9 @@ import { Request, Response, NextFunction } from "express";
 export const UpdateSeasonValidation = async (
   request: Request,
   response: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
-  const {
-    hasClosed,
-  } = request.body;
+  const { hasClosed } = request.body;
 
   const { id } = request.params;
 

@@ -3,7 +3,7 @@ import PlayersRepository from "./PlayersRepository";
 const playerMock = {
   id: "1",
   name: "John Doe",
-  email: "john@email",
+  email: "john@email"
 };
 
 describe("PlayersRepository", () => {
@@ -36,8 +36,15 @@ describe("PlayersRepository", () => {
   });
 
   it("should to update player value", async () => {
-    const updatedPlayerValue = { ...playerMock, id: playerIdMock, name: "Michael" };
-    const response = await PlayersRepository.update(playerIdMock, updatedPlayerValue);
+    const updatedPlayerValue = {
+      ...playerMock,
+      id: playerIdMock,
+      name: "Michael"
+    };
+    const response = await PlayersRepository.update(
+      playerIdMock,
+      updatedPlayerValue
+    );
 
     expect(response).toMatchObject(updatedPlayerValue);
   });

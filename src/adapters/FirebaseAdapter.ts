@@ -5,18 +5,23 @@ dotenv.config();
 // const  serviceAccount = require('../../serviceAccountKey.json')
 
 dataBase.initializeApp({
-  credential: dataBase.credential.cert({
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    privateKey: (process.env.FIREBASE_PRIVATE_KEY || "").replace(/\\n/g, "\n"),
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-  } /* or serviceAccount */),
-  databaseURL: process.env.FIREBASE_DATABASE_URL,
+  credential: dataBase.credential.cert(
+    {
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      privateKey: (process.env.FIREBASE_PRIVATE_KEY || "").replace(
+        /\\n/g,
+        "\n"
+      ),
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL
+    } /* or serviceAccount */
+  ),
+  databaseURL: process.env.FIREBASE_DATABASE_URL
 });
 
 const basePath = "/root_collection/document";
 
 export class FirestoreAdapter<T> implements IDatabase<T> {
-  private path: string
+  private path: string;
 
   constructor(reference: string) {
     this.path = reference;
@@ -29,14 +34,17 @@ export class FirestoreAdapter<T> implements IDatabase<T> {
       .add(data as FirebaseFirestore.DocumentData);
 
     const response = await newData.get().then((snapshot) => ({
-      ...snapshot.data() as T,
-      id: snapshot.id,
+      ...(snapshot.data() as T),
+      id: snapshot.id
     }));
 
     return response as T;
   }
 
-  async getAll(key: string = "", queryParam: string | number = ""): Promise<T[]> {
+  async getAll(
+    key: string = "",
+    queryParam: string | number = ""
+  ): Promise<T[]> {
     const list: T[] = [];
 
     let query;
@@ -54,10 +62,12 @@ export class FirestoreAdapter<T> implements IDatabase<T> {
         .get();
     }
 
-    query.forEach((snapshot) => list.push({
-      ...(snapshot.data() as T),
-      id: snapshot.id,
-    }));
+    query.forEach((snapshot) =>
+      list.push({
+        ...(snapshot.data() as T),
+        id: snapshot.id
+      })
+    );
     return list;
   }
 
@@ -81,10 +91,12 @@ export class FirestoreAdapter<T> implements IDatabase<T> {
       .where(`${key}`, "==", `${value}`)
       .get();
 
-    query.forEach((snapshot) => list.push({
-      ...(snapshot.data() as T),
-      id: snapshot.id,
-    }));
+    query.forEach((snapshot) =>
+      list.push({
+        ...(snapshot.data() as T),
+        id: snapshot.id
+      })
+    );
 
     return list[0];
   }
