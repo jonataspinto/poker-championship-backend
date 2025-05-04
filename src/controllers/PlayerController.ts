@@ -29,9 +29,15 @@ class PlayerController implements Controller {
   }
 
   async show(request: Request, response: Response) {
+    let player = null;
+
     const { id } = request.params;
 
-    const player = await PlayersRepository.findById(id);
+    if (id.includes("@")) {
+      player = await PlayersRepository.findByEmail(id);
+    } else {
+      player = await PlayersRepository.findById(id);
+    }
 
     if (!player) {
       response.status(404).send({ error: "Player not found" });
@@ -57,7 +63,9 @@ class PlayerController implements Controller {
       return;
     }
 
-    const playerExistsByEmail = await PlayersRepository.findByEmail(payload.email);
+    const playerExistsByEmail = await PlayersRepository.findByEmail(
+      payload.email
+    );
 
     if (playerExistsByEmail && playerExistsByEmail.id !== id) {
       response.status(400).send({ error: "This email is already in use" });
