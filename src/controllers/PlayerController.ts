@@ -76,6 +76,13 @@ class PlayerController implements Controller {
   async delete(request: Request, response: Response) {
     const { id } = request.params;
 
+    const playerExists = await PlayersRepository.findById(id);
+
+    if (!playerExists) {
+      response.status(404).send({ error: "Player not found" });
+      return;
+    }
+
     await PlayersRepository.delete(id);
 
     response.sendStatus(204);
