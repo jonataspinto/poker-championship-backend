@@ -22,6 +22,7 @@
     "class-methods-use-this": "off",
     "consistent-return": "off",
     "no-useless-constructor": "off",
-    "no-empty-function": "off"
+    "no-empty-function": "off",
+    "comma-dangle": "off"
   }
 }
