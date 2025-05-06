@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { Controller } from "./Controller";
 import PlayersRepository from "../repositories/Players/PlayersRepository";
-import { PlayerMapper } from "@/mappers/players";
-import { sanitizeObject } from "@/utils";
+import { PlayerMapper } from "../mappers/players";
+import { sanitizeObject } from "../utils";
 
 class PlayerController implements Controller {
   async index(request: Request, response: Response) {
