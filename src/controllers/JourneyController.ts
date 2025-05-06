@@ -67,7 +67,8 @@ class JourneyController implements Controller {
     const journey = await JourneysRepository.findById(id);
 
     if (journey.hasClosed) {
-      return response.status(400).json({ error: "this journey in closed" });
+      response.status(400).json({ error: "this journey in closed" });
+      return;
     }
     // const deliveryPointsToPlayers = new DeliveryPointsToPlayers(journey);
 

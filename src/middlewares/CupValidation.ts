@@ -8,24 +8,24 @@ export const CreateCupValidation = async (
   const { seasonId, tag, players } = request.body;
 
   if (!seasonId) {
-    return response
+    response
       .status(400)
       .json({ message: "id da temporada deve ser fornecido!" });
   }
 
   if (!tag) {
-    return response
+    response
       .status(400)
       .json({ message: "tag da temporada deve ser fornecido!" });
   }
 
   if (!players) {
-    return response
+    response
       .status(400)
       .json({ message: "lista de jogadores deve ser fornecido!" });
   }
 
-  return next();
+  next();
 };
 
 export const UpdateCupValidation = async (
@@ -38,12 +38,12 @@ export const UpdateCupValidation = async (
   const { id } = request.params;
 
   if (hasClosed) {
-    return response.status(400).json({ message: "copa fechada!" });
+    response.status(400).json({ message: "copa fechada!" });
   }
 
   if (!id) {
-    return response.status(400).json({ message: "id é obrigatório! 😉" });
+    response.status(400).json({ message: "id é obrigatório! 😉" });
   }
 
-  return next();
+  next();
 };

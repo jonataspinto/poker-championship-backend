@@ -8,17 +8,17 @@ export const CreateJourneyValidation = async (
   const { seasonId, players } = request.body;
 
   if (!seasonId) {
-    return response
+    response
       .status(400)
       .json({ message: "id da temporada deve ser fornecido!" });
   }
 
   if (!players) {
-    return response
+    response
       .status(400)
       .json({ message: "lista de jogadores deve ser fornecido!" });
   }
-  return next();
+  next();
 };
 
 export const UpdateJourneyValidation = async (
@@ -31,12 +31,12 @@ export const UpdateJourneyValidation = async (
   const { id } = request.params;
 
   if (hasClosed) {
-    return response.status(400).json({ message: "jornada fechada!" });
+    response.status(400).json({ message: "jornada fechada!" });
   }
 
   if (!id) {
-    return response.status(400).json({ message: "id é obrigatório! 😉" });
+    response.status(400).json({ message: "id é obrigatório! 😉" });
   }
 
-  return next();
+  next();
 };

@@ -14,11 +14,11 @@ export const IsAuthenticated = async (
     if (authorization) {
       await Auth.verifyToken(authorization.split(" ")[1]);
 
-      return next();
+      next();
     }
 
-    return response.status(401).json({ message: "Vish! nada feito.. 🙁" });
+    response.status(401).json({ message: "Vish! nada feito.. 🙁" });
   } catch (error) {
-    return response.status(400).json(error);
+    response.status(400).json(error);
   }
 };
