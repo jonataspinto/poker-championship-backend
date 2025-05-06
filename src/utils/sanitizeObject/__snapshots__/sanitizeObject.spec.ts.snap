@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sanitizeObject should sanitize object with empty values 1`] = `
+{
+  "name": "John Doe",
+  "photoUrl": "",
+}
+`;
+
+exports[`sanitizeObject should sanitize object with null values 1`] = `
+{
+  "name": "John Doe",
+}
+`;
+
+exports[`sanitizeObject should sanitize object with undefined values 1`] = `
+{
+  "name": "John Doe",
+}
+`;
