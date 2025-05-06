@@ -72,7 +72,7 @@ export class FirestoreAdapterDB implements IDBProvider {
   }
 
   async getById<T>(id: string): Promise<T> {
-    const data: T | Error = await dataBase
+    const data: T | Error | null = await dataBase
       .firestore()
       .collection(`${basePath}/${this.path}`)
       .doc(id)
@@ -81,7 +81,7 @@ export class FirestoreAdapterDB implements IDBProvider {
         const value = snapshot.data();
 
         if (!value) {
-          throw new Error("Document not found");
+          return null;
         }
 
         return { ...(value as T), id: snapshot.id };
