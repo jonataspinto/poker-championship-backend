@@ -3,5 +3,5 @@ interface Repository<T, DTO> {
   findAll: () => Promise<Array<DTO>>;
   findById: (id: string) => Promise<DTO>;
   delete: (id: string) => Promise<string>;
-  update: (id: string, payload: DTO) => Promise<DTO>;
+  update: (id: string, payload: T) => Promise<DTO>;
 }

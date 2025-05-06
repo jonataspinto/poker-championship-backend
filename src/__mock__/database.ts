@@ -18,11 +18,11 @@ class DATABASE_MOCK implements IDBProvider {
     });
   }
 
-  async update<T>(id: string, payload: T): Promise<T> {
+  async update<T, DTO>(id: string, payload: T): Promise<DTO> {
     return new Promise((resolve) => {
       const updatedValue = { id, ...payload };
       this.data = this.data.map((row) => (row?.id === id ? updatedValue : row));
-      resolve(updatedValue);
+      resolve(updatedValue as DTO);
     });
   }
 

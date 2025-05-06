@@ -33,8 +33,8 @@ class PlayersRepository implements Repository<IPlayer, IPlayerDTO> {
     return data;
   }
 
-  async update(id: string, payload: IPlayerDTO) {
-    const data = await this.dbProvider.update<IPlayerDTO>(id, payload);
+  async update(id: string, payload: IPlayer) {
+    const data = await this.dbProvider.update<IPlayer, IPlayerDTO>(id, payload);
     return data;
   }
 }

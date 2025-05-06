@@ -101,14 +101,25 @@ export class FirestoreAdapterDB implements IDBProvider {
     return list[0];
   }
 
-  async update<T>(id: string, newData: T): Promise<T> {
-    await dataBase
+  async update<T, DTO>(id: string, newData: T): Promise<DTO> {
+    const data = await dataBase
       .firestore()
       .collection(`${basePath}/${this.path}`)
       .doc(id)
-      .update(newData as FirebaseFirestore.UpdateData);
+      .update(newData as FirebaseFirestore.UpdateData)
+      .then(() =>
+        dataBase
+          .firestore()
+          .collection(`${basePath}/${this.path}`)
+          .doc(id)
+          .get()
+      )
+      .then((snapshot) => ({
+        ...snapshot.data(),
+        id: snapshot.id
+      }));
 
-    return newData;
+    return data as DTO;
   }
 
   async delete(id: string): Promise<string> {
