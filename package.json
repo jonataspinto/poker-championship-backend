@@ -43,7 +43,6 @@
     "module-alias": "^2.2.3",
     "nodemailer": "^6.10.1",
     "typescript": "^5.0.4",
-    "uuid": "^8.3.2",
-    "uuidv4": "^6.2.0"
+    "uuid": "^8.3.2"
   }
 }
