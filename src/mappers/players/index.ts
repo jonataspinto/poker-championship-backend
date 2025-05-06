@@ -7,9 +7,9 @@ export class PlayerMapper {
       displayName: player?.displayName,
       dateBirth: player?.dateBirth,
       photoURL: player?.photoURL,
-      address: player?.address,
       points: player?.points,
-      isAdmin: player?.isAdmin
+      isAdmin: player?.isAdmin,
+      address: player?.address
     };
   }
 
