@@ -77,8 +77,15 @@ export class FirestoreAdapterDB implements IDBProvider {
       .collection(`${basePath}/${this.path}`)
       .doc(id)
       .get()
-      .then((snapshot) => ({ ...(snapshot.data() as T), id: snapshot.id }))
-      .catch((err: Error) => err);
+      .then((snapshot) => {
+        const value = snapshot.data();
+
+        if (!value) {
+          throw new Error("Document not found");
+        }
+
+        return { ...(value as T), id: snapshot.id };
+      });
 
     return data as T;
   }
