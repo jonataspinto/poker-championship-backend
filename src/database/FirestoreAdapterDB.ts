@@ -77,7 +77,7 @@ export class FirestoreAdapterDB implements IDBProvider {
       .collection(`${basePath}/${this.path}`)
       .doc(id)
       .get()
-      .then((snapshot) => snapshot.data() as T)
+      .then((snapshot) => ({ ...(snapshot.data() as T), id: snapshot.id }))
       .catch((err: Error) => err);
 
     return data as T;
