@@ -28,8 +28,8 @@ class JourneysRepository implements Repository<IJourney, IJourneyDTO> {
     return journeyId;
   }
 
-  async update(id: string, payload: IJourneyDTO) {
-    const updatedJourney = await this.dbProvider.update<IJourneyDTO>(
+  async update(id: string, payload: IJourney) {
+    const updatedJourney = await this.dbProvider.update<IJourney, IJourneyDTO>(
       id,
       payload
     );
