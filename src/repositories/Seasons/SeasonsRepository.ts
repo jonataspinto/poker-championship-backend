@@ -19,8 +19,11 @@ class SeasonRepository implements Repository<ISeason, ISeasonDTO> {
     return season;
   }
 
-  async update(id: string, payload: ISeasonDTO) {
-    const updatedSeason = await this.dbProvider.update<ISeasonDTO>(id, payload);
+  async update(id: string, payload: ISeason) {
+    const updatedSeason = await this.dbProvider.update<ISeason, ISeasonDTO>(
+      id,
+      payload
+    );
     return updatedSeason;
   }
 
