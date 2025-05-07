@@ -17,18 +17,18 @@ export class DeliveryPointsToPlayers {
 
   private biggestEliminator: string;
 
-  private dbAdapter: IDBProvider<IPlayer, IPlayerDTO>;
+  private dbAdapter: IDBProvider<Player, PlayerDTO>;
 
   constructor(journeyData: Journey) {
     this.podium = journeyData.podium || ({} as IPodium);
     this.bestHand = journeyData.bestHand || "";
     this.biggestEliminator = journeyData.biggestEliminator || "";
-    this.dbAdapter = new FirestoreAdapterDB<IPlayer, IPlayerDTO>("users");
+    this.dbAdapter = new FirestoreAdapterDB<Player, PlayerDTO>("users");
   }
 
   async deliveryPodium(): Promise<void> {
     const podium = Object.entries(this.podium) as [
-      keyof IPlayerPodium,
+      keyof PlayerPodium,
       string
     ][];
 

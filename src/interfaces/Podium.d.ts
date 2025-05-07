@@ -6,7 +6,7 @@ interface IPodium {
   fifth: string;
 }
 
-interface IPlayerPodium {
+interface PlayerPodium {
   first: number;
   second: number;
   third: number;

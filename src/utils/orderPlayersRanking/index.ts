@@ -1,4 +1,4 @@
-export function orderPlayersRanking(players: IPlayerDTO[]) {
+export function orderPlayersRanking(players: PlayerDTO[]) {
   const ordered = players
     .sort((a, b) => (b?.podiums?.fifth ?? 0) - (a?.podiums?.fifth ?? 0))
     .sort((a, b) => (b?.podiums?.fourth ?? 0) - (a?.podiums?.fourth ?? 0))

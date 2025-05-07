@@ -1,5 +1,5 @@
 export class PlayerMapper {
-  static toDomain(player: any): IPlayerDTO {
+  static toDomain(player: any): PlayerDTO {
     return {
       id: player?.id,
       name: player?.name,
@@ -21,7 +21,7 @@ export class PlayerMapper {
     };
   }
 
-  static toPersistence(player: IPlayer) {
+  static toPersistence(player: Player) {
     return {
       name: player?.name,
       email: player?.email,

@@ -1,14 +1,14 @@
 import { DATABASE_MOCK } from "../../__mock__/database";
 import { FirestoreAdapterDB } from "../../database/FirestoreAdapterDB";
 
-class PlayersRepository implements Repository<IPlayer, IPlayerDTO> {
+class PlayersRepository implements Repository<Player, PlayerDTO> {
   private dbProvider;
 
-  constructor(dbProvider: IDBProvider<IPlayer, IPlayerDTO>) {
+  constructor(dbProvider: IDBProvider<Player, PlayerDTO>) {
     this.dbProvider = dbProvider;
   }
 
-  async create(payload: IPlayer) {
+  async create(payload: Player) {
     const data = await this.dbProvider.save(payload);
     return data;
   }
@@ -33,7 +33,7 @@ class PlayersRepository implements Repository<IPlayer, IPlayerDTO> {
     return data;
   }
 
-  async update(id: string, payload: IPlayer) {
+  async update(id: string, payload: Player) {
     const data = await this.dbProvider.update(id, payload);
     return data;
   }

@@ -12,5 +12,5 @@ interface IUser {
 }
 
 interface IUserWithPodium extends IUser {
-  podiums: IPlayerPodium;
+  podiums: PlayerPodium;
 }

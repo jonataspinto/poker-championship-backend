@@ -1,4 +1,4 @@
-interface IPlayer {
+interface Player {
   name: string;
   email: string;
   displayName?: string;
@@ -7,10 +7,10 @@ interface IPlayer {
   address?: IAddress;
   points?: number;
   isAdmin?: boolean;
-  podiums: IPlayerPodium;
+  podiums?: PlayerPodium;
 }
 
-interface IPlayerDTO extends IPlayer {
+interface PlayerDTO extends Player {
   id: string;
-  podiums: IPlayerPodium;
+  podiums: PlayerPodium;
 }

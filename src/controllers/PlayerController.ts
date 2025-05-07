@@ -18,7 +18,7 @@ class PlayerController implements Controller {
   async store(request: Request, response: Response) {
     const payload = sanitizeObject(
       PlayerMapper.toPersistence(request.body)
-    ) as IPlayer;
+    ) as Player;
 
     if (!payload.name || !payload.email) {
       response.status(400).send({ error: "Name and Email is required" });
@@ -68,7 +68,7 @@ class PlayerController implements Controller {
 
     const payload = sanitizeObject(
       PlayerMapper.toPersistence(request.body)
-    ) as IPlayer;
+    ) as Player;
 
     const player = await PlayersRepository.update(id, payload);
 
