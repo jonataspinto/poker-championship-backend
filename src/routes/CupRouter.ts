@@ -2,11 +2,11 @@ import { Request, Response, Router } from "express";
 import { FirestoreAdapterDB } from "../database/FirestoreAdapterDB";
 import { FirebaseAuthAdapter, IdProviderAdapter } from "../adapters";
 import { CupController } from "../controllers/CupController";
-import { IsAuthenticated } from "../middlewares/Auth";
 import {
-  UpdateCupValidation,
-  CreateCupValidation
-} from "../middlewares/CupValidation";
+  IsAuthenticated,
+  CreateCupValidation,
+  UpdateCupValidation
+} from "../middlewares";
 
 class CupRoutes {
   private cupController: CupController;
