@@ -35,7 +35,9 @@ export class FirestoreAdapterDB implements IDBProvider {
 
     const response = await newData.get().then((snapshot) => ({
       ...(snapshot.data() as T),
-      id: snapshot.id
+      id: snapshot.id,
+      createdAt: snapshot.createTime?.toDate(),
+      updatedAt: snapshot.updateTime?.toDate()
     }));
 
     return response as DTO;
@@ -65,7 +67,9 @@ export class FirestoreAdapterDB implements IDBProvider {
     query.forEach((snapshot) =>
       list.push({
         ...(snapshot.data() as T),
-        id: snapshot.id
+        id: snapshot.id,
+        createdAt: snapshot.createTime?.toDate(),
+        updatedAt: snapshot.updateTime?.toDate()
       })
     );
     return list;
@@ -84,7 +88,12 @@ export class FirestoreAdapterDB implements IDBProvider {
           return null;
         }
 
-        return { ...(value as T), id: snapshot.id };
+        return {
+          ...(value as T),
+          id: snapshot.id,
+          createdAt: snapshot.createTime?.toDate(),
+          updatedAt: snapshot.updateTime?.toDate()
+        };
       });
 
     return data as T;
@@ -101,7 +110,9 @@ export class FirestoreAdapterDB implements IDBProvider {
     query.forEach((snapshot) =>
       list.push({
         ...(snapshot.data() as T),
-        id: snapshot.id
+        id: snapshot.id,
+        createdAt: snapshot.createTime?.toDate(),
+        updatedAt: snapshot.updateTime?.toDate()
       })
     );
 
@@ -123,7 +134,9 @@ export class FirestoreAdapterDB implements IDBProvider {
       )
       .then((snapshot) => ({
         ...snapshot.data(),
-        id: snapshot.id
+        id: snapshot.id,
+        createdAt: snapshot.createTime?.toDate(),
+        updatedAt: snapshot.updateTime?.toDate()
       }));
 
     return data as DTO;
