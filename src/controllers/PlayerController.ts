@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { Controller } from "./Controller";
+import { PlayerMapper } from "../mappers";
 import { playersRepository } from "../repositories";
-import { PlayerMapper } from "../mappers/players";
 import { sanitizeObject, orderPlayersRanking } from "../utils";
 
-class PlayerController implements Controller {
+export class PlayerController implements Controller {
   async index(request: Request, response: Response) {
     const players = await playersRepository.findAll();
 
@@ -90,5 +90,3 @@ class PlayerController implements Controller {
     response.sendStatus(204);
   }
 }
-
-export default new PlayerController();

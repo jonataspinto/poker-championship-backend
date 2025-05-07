@@ -1,5 +1,5 @@
 import { Router } from "express";
-import PlayerController from "../controllers/PlayerController";
+import { PlayerController } from "../controllers";
 import { IsAuthenticated } from "../middlewares/Auth";
 
 class PlayerRoutes {
@@ -7,23 +7,26 @@ class PlayerRoutes {
 
   private path = "players";
 
+  private playerController: PlayerController;
+
   constructor() {
     this.router = Router();
+    this.playerController = new PlayerController();
   }
 
   index() {
-    this.router.post(`/${this.path}`, PlayerController.store);
-    this.router.get(`/${this.path}`, PlayerController.index);
-    this.router.get(`/${this.path}/:id`, PlayerController.show);
+    this.router.post(`/${this.path}`, this.playerController.store);
+    this.router.get(`/${this.path}`, this.playerController.index);
+    this.router.get(`/${this.path}/:id`, this.playerController.show);
     this.router.put(
       `/${this.path}/:id`,
       IsAuthenticated,
-      PlayerController.update
+      this.playerController.update
     );
     this.router.delete(
       `/${this.path}/:id`,
       IsAuthenticated,
-      PlayerController.delete
+      this.playerController.delete
     );
 
     return this.router;
