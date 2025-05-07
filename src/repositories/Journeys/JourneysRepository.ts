@@ -1,39 +1,27 @@
 import DATABASE_MOCK from "../../__mock__/database";
 import { FirestoreAdapterDB } from "../../database/FirestoreAdapterDB";
 
-class JourneysRepository implements Repository<IJourney, IJourneyDTO> {
+class JourneysRepository implements Repository<Journey, JourneyDTO> {
   constructor(private dbProvider: IDBProvider) {}
 
-  async create(payload: IJourney) {
-    const journey = await this.dbProvider.save<IJourney, IJourneyDTO>(payload);
-
-    return journey;
+  async create(payload: Journey) {
+    return this.dbProvider.save<Journey, JourneyDTO>(payload);
   }
 
   async findAll() {
-    const journeys = await this.dbProvider.getAll<IJourneyDTO>();
-
-    return journeys;
+    return this.dbProvider.getAll<JourneyDTO>();
   }
 
   async findById(id: string) {
-    const journey = await this.dbProvider.getById<IJourneyDTO>(id);
-
-    return journey;
+    return this.dbProvider.getById<JourneyDTO>(id);
   }
 
   async delete(id: string) {
-    const journeyId = await this.dbProvider.delete(id);
-
-    return journeyId;
+    return this.dbProvider.delete(id);
   }
 
-  async update(id: string, payload: IJourney) {
-    const updatedJourney = await this.dbProvider.update<IJourney, IJourneyDTO>(
-      id,
-      payload
-    );
-    return updatedJourney;
+  async update(id: string, payload: Journey) {
+    return this.dbProvider.update<Journey, JourneyDTO>(id, payload);
   }
 }
 

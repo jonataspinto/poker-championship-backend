@@ -1,6 +1,6 @@
 import JourneysRepository from "./JourneysRepository";
 
-const journeyDataMock: IJourney = {
+const journeyDataMock: Journey = {
   tag: 1,
   hasClosed: false,
   players: [],
