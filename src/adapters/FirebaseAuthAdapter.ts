@@ -1,4 +1,5 @@
 import { auth } from "firebase-admin";
+import { firebaseApp } from "../clients/firebase";
 
 export class FirebaseAuthAdapter implements IAuth {
   private isAuhenticated: boolean;
@@ -11,7 +12,7 @@ export class FirebaseAuthAdapter implements IAuth {
   }
 
   async verifyToken(token: string): Promise<boolean> {
-    const result = await auth().verifyIdToken(token);
+    const result = await firebaseApp.auth().verifyIdToken(token);
 
     if (result) {
       this.isAuhenticated = true;
@@ -21,7 +22,9 @@ export class FirebaseAuthAdapter implements IAuth {
   }
 
   async getUuidByToken(token: string): Promise<string> {
-    const { user_id: userId } = await auth().verifyIdToken(token);
+    const user_id = await firebaseApp.auth().verifyIdToken(token);
+
+    const userId = await user_id?.uid;
 
     if (userId) {
       this.userId = userId;
