@@ -8,12 +8,8 @@
     "outDir": "dist",
     "strict": true,
     "noImplicitAny": true,
-    "strictPropertyInitialization": true,
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "strictPropertyInitialization": true
   },
-  "include": ["src/*", "src/**/*.d.ts"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "types/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
