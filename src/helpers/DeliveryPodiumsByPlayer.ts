@@ -1,21 +1,21 @@
-import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
+import { FirestoreAdapterDB } from "../database/FirestoreAdapterDB";
 
 export class DeliveryPodiumsByPlayer {
-  private dbAdapter: IDatabase<IJourney>;
+  private dbAdapter: IDBProvider<Journey, JourneyDTO>;
 
   constructor(private users: IUser[]) {
-    this.dbAdapter = new FirestoreAdapter<IJourney>("journeys");
+    this.dbAdapter = new FirestoreAdapterDB<Journey, JourneyDTO>("journeys");
   }
 
   async mapPodiumByPlayer(): Promise<IUserWithPodium[]> {
     const journeys = await this.dbAdapter.getAll();
 
-    const closedJouneys = Array.from(journeys as IJourney[]).filter(
+    const closedJourneys = Array.from(journeys).filter(
       (journey) => journey.hasClosed
     );
 
     const mappedUsers = this.users.map((user) => {
-      const { uuid } = user;
+      const { id } = user;
 
       const podiums: IPlayerPodium = {
         first: 0,
@@ -25,24 +25,24 @@ export class DeliveryPodiumsByPlayer {
         fifth: 0
       };
 
-      closedJouneys.forEach((journey) => {
-        if (uuid === journey.podium?.first) {
+      closedJourneys.forEach((journey) => {
+        if (id === journey.podium?.first) {
           podiums.first += 1;
         }
 
-        if (uuid === journey.podium?.second) {
+        if (id === journey.podium?.second) {
           podiums.second += 1;
         }
 
-        if (uuid === journey.podium?.third) {
+        if (id === journey.podium?.third) {
           podiums.third += 1;
         }
 
-        if (uuid === journey.podium?.fourth) {
+        if (id === journey.podium?.fourth) {
           podiums.fourth += 1;
         }
 
-        if (uuid === journey.podium?.fifth) {
+        if (id === journey.podium?.fifth) {
           podiums.fifth += 1;
         }
       });
@@ -59,7 +59,7 @@ export class DeliveryPodiumsByPlayer {
       .sort((a, b) => b.podiums.third - a.podiums.third)
       .sort((a, b) => b.podiums.second - a.podiums.second)
       .sort((a, b) => b.podiums.first - a.podiums.first)
-      .sort((a, b) => b.points - a.points);
+      .sort((a, b) => (b?.points ?? 0) - (a?.points ?? 0));
 
     return mappedUsersOrdered;
   }
