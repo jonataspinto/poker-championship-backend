@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { Controller } from "./Controller";
-import PlayersRepository from "../repositories/Players/PlayersRepository";
+import { playersRepository } from "../repositories";
 import { PlayerMapper } from "../mappers/players";
 import { sanitizeObject, orderPlayersRanking } from "../utils";
 
 class PlayerController implements Controller {
   async index(request: Request, response: Response) {
-    const players = await PlayersRepository.findAll();
+    const players = await playersRepository.findAll();
 
     const orderedListByPoints = orderPlayersRanking(players);
 
@@ -25,14 +25,14 @@ class PlayerController implements Controller {
       return;
     }
 
-    const playerExists = await PlayersRepository.findByEmail(payload.email);
+    const playerExists = await playersRepository.findByEmail(payload.email);
 
     if (playerExists) {
       response.status(400).send({ error: "This email is already in use" });
       return;
     }
 
-    const player = await PlayersRepository.create(payload);
+    const player = await playersRepository.create(payload);
 
     response.status(201).json(player);
   }
@@ -43,9 +43,9 @@ class PlayerController implements Controller {
     const { id } = request.params;
 
     if (id.includes("@")) {
-      player = await PlayersRepository.findByEmail(id);
+      player = await playersRepository.findByEmail(id);
     } else {
-      player = await PlayersRepository.findById(id);
+      player = await playersRepository.findById(id);
     }
 
     if (!player) {
@@ -59,7 +59,7 @@ class PlayerController implements Controller {
   async update(request: Request, response: Response) {
     const { id } = request.params;
 
-    const playerExists = await PlayersRepository.findById(id);
+    const playerExists = await playersRepository.findById(id);
 
     if (!playerExists) {
       response.status(404).send({ error: "Player not found" });
@@ -70,7 +70,7 @@ class PlayerController implements Controller {
       PlayerMapper.toPersistence(request.body)
     ) as Player;
 
-    const player = await PlayersRepository.update(id, payload);
+    const player = await playersRepository.update(id, payload);
 
     response.json(player);
   }
@@ -78,14 +78,14 @@ class PlayerController implements Controller {
   async delete(request: Request, response: Response) {
     const { id } = request.params;
 
-    const playerExists = await PlayersRepository.findById(id);
+    const playerExists = await playersRepository.findById(id);
 
     if (!playerExists) {
       response.status(404).send({ error: "Player not found" });
       return;
     }
 
-    await PlayersRepository.delete(id);
+    await playersRepository.delete(id);
 
     response.sendStatus(204);
   }

@@ -39,7 +39,7 @@ class PlayersRepository implements Repository<Player, PlayerDTO> {
   }
 }
 
-export default new PlayersRepository(
+export const playersRepository = new PlayersRepository(
   process.env.NODE_ENV === "test"
     ? new DATABASE_MOCK()
     : new FirestoreAdapterDB("users")

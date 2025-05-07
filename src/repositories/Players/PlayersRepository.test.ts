@@ -1,4 +1,4 @@
-import PlayersRepository from "./PlayersRepository";
+import { playersRepository } from "./PlayersRepository";
 
 const playerMock = {
   id: "1",
@@ -10,26 +10,26 @@ describe("PlayersRepository", () => {
   let playerIdMock = "";
 
   it("should create a player correctly", async () => {
-    const createdPlayer = await PlayersRepository.create(playerMock);
+    const createdPlayer = await playersRepository.create(playerMock);
     playerIdMock = createdPlayer.id;
     expect(createdPlayer.name).toEqual(playerMock.name);
     expect(createdPlayer.email).toEqual(playerMock.email);
   });
 
   it("should to return a list of players", async () => {
-    const list = await PlayersRepository.findAll();
+    const list = await playersRepository.findAll();
 
     expect(list).toHaveLength(1);
   });
 
   it("should to return a player", async () => {
-    const playerData = await PlayersRepository.findById(playerIdMock);
+    const playerData = await playersRepository.findById(playerIdMock);
 
     expect(playerData.name).toBe(playerMock.name);
   });
 
   it("should to return a player based on email value", async () => {
-    const playerData = await PlayersRepository.findByEmail(playerMock.email);
+    const playerData = await playersRepository.findByEmail(playerMock.email);
 
     expect(playerData.name).toBe(playerMock.name);
     expect(playerData.email).toBe(playerMock.email);
@@ -41,7 +41,7 @@ describe("PlayersRepository", () => {
       id: playerIdMock,
       name: "Michael"
     };
-    const response = await PlayersRepository.update(
+    const response = await playersRepository.update(
       playerIdMock,
       updatedPlayerValue
     );
@@ -50,7 +50,7 @@ describe("PlayersRepository", () => {
   });
 
   it("should to delete player value", async () => {
-    const response = await PlayersRepository.delete(playerIdMock);
+    const response = await playersRepository.delete(playerIdMock);
 
     expect(response).toBe(playerIdMock);
   });

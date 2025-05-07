@@ -3,7 +3,7 @@ import { Controller } from "./Controller";
 import JourneysRepository from "../repositories/Journeys/JourneysRepository";
 import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
 import JourneyTagsRepository from "../repositories/Tags/JourneyTagsRepository";
-import PlayersRepository from "../repositories/Players/PlayersRepository";
+import { playersRepository } from "../repositories";
 import { DeliveryPointsToPlayers } from "../helpers/DeliveryPointsToPlayers";
 
 class JourneyController implements Controller {
@@ -98,7 +98,7 @@ class JourneyController implements Controller {
       authorization.split("Bearer ")[1]
     );
 
-    const player = await PlayersRepository.findByEmail(useEmail);
+    const player = await playersRepository.findByEmail(useEmail);
 
     if (!player) {
       response.status(404).json({ error: "player not found" });
