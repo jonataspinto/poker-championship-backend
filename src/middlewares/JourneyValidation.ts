@@ -32,14 +32,7 @@ export const UpdateJourneyValidation = async (
   response: Response,
   next: NextFunction
 ) => {
-  const { hasClosed } = request.body;
-
   const { id } = request.params;
-
-  if (hasClosed) {
-    response.status(400).json({ message: "jornada fechada!" });
-    return;
-  }
 
   if (!id) {
     response.status(400).json({ message: "id é obrigatório! 😉" });

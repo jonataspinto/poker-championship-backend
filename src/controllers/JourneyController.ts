@@ -5,7 +5,13 @@ import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
 import JourneyTagsRepository from "../repositories/Tags/JourneyTagsRepository";
 
 class JourneyController implements Controller {
-  constructor(readonly auth: IAuth) {}
+  auth: IAuth;
+
+  constructor(auth: IAuth) {
+    this.auth = auth;
+
+    this.closeJourney = this.closeJourney.bind(this);
+  }
 
   async index(request: Request, response: Response) {
     const journeys = await JourneysRepository.findAll();
@@ -88,7 +94,7 @@ class JourneyController implements Controller {
 
     if (authorization) {
       const userId = await this.auth.getUuidByToken(
-        authorization.split(" ")[1]
+        authorization.split("Bearer ")[1]
       );
       journey.hasClosed = true;
       journey.closedBy = userId;

@@ -1,16 +1,27 @@
-interface IJourney {
-  players: string[];
-  bestHand: string;
-  biggestEliminator: string;
-  hasClosed: boolean;
-  closedBy: string;
-  podium?: IPodium;
+interface Journey {
   tag: number;
+  players: string[];
   seasonId: string;
+  hasClosed: boolean;
+  biggestEliminator?: string;
+  bestHand?: string;
+  closedBy?: string;
+  podium?: IPodium;
 }
 
-interface IJourneyDTO extends IJourney {
-  uuid: string;
+interface JourneyDTO extends Journey {
   id: string;
   createdAt: string;
+  updatedAt: string;
 }
+
+type JourneyTag = {
+  tagNumber?: number;
+  seasonId: string;
+};
+
+type JourneyTagDTO = {
+  id: string;
+  tagNumber: number;
+  seasonId: string;
+};
