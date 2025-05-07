@@ -2,13 +2,15 @@ import { Request, Response } from "express";
 import { Controller } from "./Controller";
 import PlayersRepository from "../repositories/Players/PlayersRepository";
 import { PlayerMapper } from "../mappers/players";
-import { sanitizeObject } from "../utils";
+import { sanitizeObject, orderPlayersRanking } from "../utils";
 
 class PlayerController implements Controller {
   async index(request: Request, response: Response) {
     const players = await PlayersRepository.findAll();
 
-    const data = players.map(PlayerMapper.toDomain);
+    const orderedListByPoints = orderPlayersRanking(players);
+
+    const data = orderedListByPoints.map(PlayerMapper.toDomain);
 
     response.json(data);
   }
