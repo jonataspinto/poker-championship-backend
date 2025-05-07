@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
 
-const Auth = new FirebaseAuthAdapter();
-
 export const IsAuthenticated = async (
   request: Request,
   response: Response,
@@ -12,9 +10,14 @@ export const IsAuthenticated = async (
     const { authorization } = request.headers;
 
     if (authorization) {
-      await Auth.verifyToken(authorization.split(" ")[1]);
+      const Auth = new FirebaseAuthAdapter();
 
-      next();
+      const isValid = await Auth.verifyToken(authorization.split(" ")[1]);
+
+      if (isValid) {
+        next();
+        return;
+      }
     }
 
     response.status(401).json({ message: "Vish! nada feito.. 🙁" });
