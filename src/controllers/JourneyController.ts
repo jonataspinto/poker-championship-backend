@@ -3,6 +3,7 @@ import { Controller } from "./Controller";
 import JourneysRepository from "../repositories/Journeys/JourneysRepository";
 import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
 import JourneyTagsRepository from "../repositories/Tags/JourneyTagsRepository";
+import PlayersRepository from "../repositories/Players/PlayersRepository";
 
 class JourneyController implements Controller {
   auth: IAuth;
@@ -93,11 +94,13 @@ class JourneyController implements Controller {
     // const deliveryPointsToPlayers = new DeliveryPointsToPlayers(journey);
 
     if (authorization) {
-      const userId = await this.auth.getUuidByToken(
+      const useEmail = await this.auth.getEmailByToken(
         authorization.split("Bearer ")[1]
       );
+
+      const player = await PlayersRepository.findByEmail(useEmail);
       journey.hasClosed = true;
-      journey.closedBy = userId;
+      journey.closedBy = player.id;
     }
 
     const updatedData = await JourneysRepository.update(id, journey);
