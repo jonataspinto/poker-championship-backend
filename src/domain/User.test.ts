@@ -1,5 +1,5 @@
-import { User } from "@/domain/User";
-import { idProviderMock, uuidMock } from "@/__mock__/idProviderMock";
+import { User } from "./User";
+import { idProviderMock } from "../__mock__/idProviderMock";
 
 const userDataMock: IUser = {
   name: "mark",

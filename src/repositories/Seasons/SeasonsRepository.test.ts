@@ -37,9 +37,7 @@ describe("SeasonRepository", () => {
   it("should to update season correctly", async () => {
     const updatedSeason = await SeasonRepository.update(createdSeasonId, {
       ...seasonDataMock,
-      hasClosed: false,
-      id: createdSeasonId,
-      createdAt: createdSeasonCreatedAt
+      hasClosed: false
     });
 
     expect(updatedSeason.hasClosed).toBeFalsy();
