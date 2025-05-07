@@ -11,10 +11,12 @@ export const UpdateSeasonValidation = async (
 
   if (hasClosed) {
     response.status(400).json({ message: "temporada fechada!" });
+    return;
   }
 
   if (!id) {
     response.status(400).json({ message: "id é obrigatório! 😉" });
+    return;
   }
 
   next();
