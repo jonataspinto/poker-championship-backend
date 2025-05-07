@@ -4,27 +4,27 @@ import { FirestoreAdapterDB } from "../../database/FirestoreAdapterDB";
 class PlayersRepository implements Repository<IPlayer, IPlayerDTO> {
   private dbProvider;
 
-  constructor(dbProvider: IDBProvider) {
+  constructor(dbProvider: IDBProvider<IPlayer, IPlayerDTO>) {
     this.dbProvider = dbProvider;
   }
 
   async create(payload: IPlayer) {
-    const data = await this.dbProvider.save<IPlayer, IPlayerDTO>(payload);
+    const data = await this.dbProvider.save(payload);
     return data;
   }
 
   async findAll() {
-    const data = await this.dbProvider.getAll<IPlayerDTO>();
+    const data = await this.dbProvider.getAll();
     return data;
   }
 
   async findById(id: string) {
-    const data = await this.dbProvider.getById<IPlayerDTO>(id);
+    const data = await this.dbProvider.getById(id);
     return data;
   }
 
   async findByEmail(email: string) {
-    const data = await this.dbProvider.getByEmail<IPlayerDTO>(email);
+    const data = await this.dbProvider.getByEmail(email);
     return data;
   }
 
@@ -34,7 +34,7 @@ class PlayersRepository implements Repository<IPlayer, IPlayerDTO> {
   }
 
   async update(id: string, payload: IPlayer) {
-    const data = await this.dbProvider.update<IPlayer, IPlayerDTO>(id, payload);
+    const data = await this.dbProvider.update(id, payload);
     return data;
   }
 }

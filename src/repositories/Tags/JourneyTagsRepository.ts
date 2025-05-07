@@ -2,10 +2,10 @@ import DATABASE_MOCK from "../../__mock__/database";
 import { FirestoreAdapterDB } from "../../database/FirestoreAdapterDB";
 
 class JourneyTagsRepository implements Repository<JourneyTag, JourneyTagDTO> {
-  constructor(private dbProvider: IDBProvider) {}
+  constructor(private dbProvider: IDBProvider<JourneyTag, JourneyTagDTO>) {}
 
   async create({ seasonId }: JourneyTag) {
-    const tags = await this.dbProvider.getAll<JourneyTagDTO>();
+    const tags = await this.dbProvider.getAll();
 
     const filteredTags = tags.filter((tag) => tag.seasonId === seasonId);
 
@@ -15,22 +15,22 @@ class JourneyTagsRepository implements Repository<JourneyTag, JourneyTagDTO> {
 
     const tagNumber = lastTag ? lastTag.tagNumber + 1 : 1;
 
-    return this.dbProvider.save<JourneyTag, JourneyTagDTO>({
+    return this.dbProvider.save({
       seasonId,
       tagNumber
     });
   }
 
   async findAll() {
-    return this.dbProvider.getAll<JourneyTagDTO>();
+    return this.dbProvider.getAll();
   }
 
   async findById(id: string) {
-    return this.dbProvider.getById<JourneyTagDTO>(id);
+    return this.dbProvider.getById(id);
   }
 
   async update(id: string, payload: JourneyTag) {
-    return this.dbProvider.update<JourneyTag, JourneyTagDTO>(id, payload);
+    return this.dbProvider.update(id, payload);
   }
 
   async delete(id: string) {
