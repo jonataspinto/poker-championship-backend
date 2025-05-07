@@ -7,7 +7,7 @@ enum Points {
   "fourth" = 2,
   "fifth" = 1,
   "bestHand" = 1,
-  "biggesteEliminator" = 1
+  "biggestEliminator" = 1
 }
 
 export class DeliveryPointsToPlayers {
@@ -53,11 +53,9 @@ export class DeliveryPointsToPlayers {
 
       await this.dbAdapter.update(id as string, {
         ...rest,
-        points: points + Points.biggesteEliminator
+        points: points + Points.biggestEliminator
       });
     }
-
-    await this.deliveryBestHandPoints();
   }
 
   async deliveryBestHandPoints(): Promise<void> {
@@ -71,7 +69,5 @@ export class DeliveryPointsToPlayers {
         points: points + Points.bestHand
       });
     }
-
-    await this.deliveryPodium();
   }
 }

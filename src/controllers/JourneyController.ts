@@ -4,6 +4,7 @@ import JourneysRepository from "../repositories/Journeys/JourneysRepository";
 import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
 import JourneyTagsRepository from "../repositories/Tags/JourneyTagsRepository";
 import PlayersRepository from "../repositories/Players/PlayersRepository";
+import { DeliveryPointsToPlayers } from "../helpers/DeliveryPointsToPlayers";
 
 class JourneyController implements Controller {
   auth: IAuth;
@@ -83,7 +84,7 @@ class JourneyController implements Controller {
 
   async closeJourney(request: Request, response: Response) {
     const { id } = request.params;
-    const { authorization } = request.headers;
+    const { authorization = "" } = request.headers;
 
     const journey = await JourneysRepository.findById(id);
 
@@ -91,21 +92,29 @@ class JourneyController implements Controller {
       response.status(400).json({ error: "this journey is closed" });
       return;
     }
-    // const deliveryPointsToPlayers = new DeliveryPointsToPlayers(journey);
+    const deliveryPointsToPlayers = new DeliveryPointsToPlayers(journey);
 
-    if (authorization) {
-      const useEmail = await this.auth.getEmailByToken(
-        authorization.split("Bearer ")[1]
-      );
+    const useEmail = await this.auth.getEmailByToken(
+      authorization.split("Bearer ")[1]
+    );
 
-      const player = await PlayersRepository.findByEmail(useEmail);
-      journey.hasClosed = true;
-      journey.closedBy = player.id;
+    const player = await PlayersRepository.findByEmail(useEmail);
+
+    if (!player) {
+      response.status(404).json({ error: "player not found" });
+      return;
     }
+
+    journey.hasClosed = true;
+    journey.closedBy = player.id;
 
     const updatedData = await JourneysRepository.update(id, journey);
 
-    // await deliveryPointsToPlayers.deliveryBiggestEliminator();
+    await Promise.all([
+      deliveryPointsToPlayers.deliveryPodium(),
+      deliveryPointsToPlayers.deliveryBestHandPoints(),
+      deliveryPointsToPlayers.deliveryBiggestEliminator()
+    ]);
 
     response.json(updatedData);
   }
