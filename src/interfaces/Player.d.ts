@@ -7,8 +7,10 @@ interface IPlayer {
   address?: IAddress;
   points?: number;
   isAdmin?: boolean;
+  podiums: IPlayerPodium;
 }
 
 interface IPlayerDTO extends IPlayer {
   id: string;
+  podiums: IPlayerPodium;
 }
