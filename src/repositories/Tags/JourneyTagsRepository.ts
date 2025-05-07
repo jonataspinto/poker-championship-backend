@@ -38,7 +38,7 @@ class JourneyTagsRepository implements Repository<JourneyTag, JourneyTagDTO> {
   }
 }
 
-export default new JourneyTagsRepository(
+export const journeyTagsRepository = new JourneyTagsRepository(
   process.env.NODE_ENV === "test"
     ? new DATABASE_MOCK()
     : new FirestoreAdapterDB("journey-tags")

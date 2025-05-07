@@ -25,7 +25,7 @@ class JourneysRepository implements Repository<Journey, JourneyDTO> {
   }
 }
 
-export default new JourneysRepository(
+export const journeysRepository = new JourneysRepository(
   process.env.NODE_ENV === "test"
     ? new DATABASE_MOCK()
     : new FirestoreAdapterDB("journeys")

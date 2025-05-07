@@ -1,22 +1,24 @@
 import { Request, Response } from "express";
 import { Controller } from "./Controller";
-import JourneysRepository from "../repositories/Journeys/JourneysRepository";
 import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
-import JourneyTagsRepository from "../repositories/Tags/JourneyTagsRepository";
-import { playersRepository } from "../repositories";
-import { DeliveryPointsToPlayers } from "../helpers/DeliveryPointsToPlayers";
+import { DeliveryPointsToPlayers } from "../helpers/";
+import {
+  journeysRepository,
+  journeyTagsRepository,
+  playersRepository
+} from "../repositories";
 
 class JourneyController implements Controller {
   auth: IAuth;
 
-  constructor(auth: IAuth) {
-    this.auth = auth;
+  constructor() {
+    this.auth = new FirebaseAuthAdapter();
 
     this.closeJourney = this.closeJourney.bind(this);
   }
 
   async index(request: Request, response: Response) {
-    const journeys = await JourneysRepository.findAll();
+    const journeys = await journeysRepository.findAll();
 
     const orderedList = Array.from(journeys).sort((a, b) => b.tag - a.tag);
 
@@ -26,9 +28,9 @@ class JourneyController implements Controller {
   async store(request: Request, response: Response) {
     const payload = request.body;
 
-    const tag = await JourneyTagsRepository.create(payload);
+    const tag = await journeyTagsRepository.create(payload);
 
-    const newJourney = await JourneysRepository.create({
+    const newJourney = await journeysRepository.create({
       ...payload,
       tag: tag.tagNumber,
       hasClosed: false,
@@ -44,7 +46,7 @@ class JourneyController implements Controller {
   async show(request: Request, response: Response) {
     const { id } = request.params;
 
-    const journey = await JourneysRepository.findById(id);
+    const journey = await journeysRepository.findById(id);
 
     if (!journey) {
       response.status(404).json({ error: "journey not found" });
@@ -57,7 +59,7 @@ class JourneyController implements Controller {
     const { id } = request.params;
     const payload = request.body;
 
-    const journeyExists = await JourneysRepository.findById(id);
+    const journeyExists = await journeysRepository.findById(id);
 
     if (!journeyExists) {
       response.status(404).json({ error: "journey not found" });
@@ -69,7 +71,7 @@ class JourneyController implements Controller {
       return;
     }
 
-    const updatedData = await JourneysRepository.update(id, payload);
+    const updatedData = await journeysRepository.update(id, payload);
 
     response.json(updatedData);
   }
@@ -77,7 +79,7 @@ class JourneyController implements Controller {
   async delete(request: Request, response: Response) {
     const { id } = request.params;
 
-    await JourneysRepository.delete(id);
+    await journeysRepository.delete(id);
 
     response.sendStatus(204);
   }
@@ -86,7 +88,7 @@ class JourneyController implements Controller {
     const { id } = request.params;
     const { authorization = "" } = request.headers;
 
-    const journey = await JourneysRepository.findById(id);
+    const journey = await journeysRepository.findById(id);
 
     if (journey.hasClosed) {
       response.status(400).json({ error: "this journey is closed" });
@@ -108,7 +110,7 @@ class JourneyController implements Controller {
     journey.hasClosed = true;
     journey.closedBy = player.id;
 
-    const updatedData = await JourneysRepository.update(id, journey);
+    const updatedData = await journeysRepository.update(id, journey);
 
     await Promise.all([
       deliveryPointsToPlayers.deliveryPodium(),
@@ -120,4 +122,4 @@ class JourneyController implements Controller {
   }
 }
 
-export default new JourneyController(new FirebaseAuthAdapter());
+export default new JourneyController();

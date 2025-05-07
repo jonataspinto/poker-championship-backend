@@ -1,4 +1,4 @@
-import JourneysRepository from "./JourneysRepository";
+import { journeysRepository } from "./JourneysRepository";
 
 const journeyDataMock: Journey = {
   tag: 1,
@@ -15,7 +15,7 @@ describe("JourneysRepository", () => {
   let createdJourneyCreatedAt = "";
 
   it("should create a journey correctly", async () => {
-    const journey = await JourneysRepository.create(journeyDataMock);
+    const journey = await journeysRepository.create(journeyDataMock);
 
     createdJourneyId = journey.id;
     createdJourneyCreatedAt = journey.createdAt;
@@ -25,24 +25,24 @@ describe("JourneysRepository", () => {
   });
 
   it("should to return a list of journeys", async () => {
-    const journeys = await JourneysRepository.findAll();
+    const journeys = await journeysRepository.findAll();
 
     expect(journeys).not.toHaveLength(0);
   });
 
   it("should to return a journey for id passed as param", async () => {
-    const journey = await JourneysRepository.findById(createdJourneyId);
+    const journey = await journeysRepository.findById(createdJourneyId);
 
     expect(journey.id).toBe(createdJourneyId);
     expect(journey.hasClosed).toBeFalsy();
   });
 
   it("should to delete journey", async () => {
-    const deletedJourneyId = await JourneysRepository.delete(createdJourneyId);
+    const deletedJourneyId = await journeysRepository.delete(createdJourneyId);
 
     expect(deletedJourneyId).toBe(createdJourneyId);
 
-    const journeys = await JourneysRepository.findAll();
+    const journeys = await journeysRepository.findAll();
 
     expect(journeys).toHaveLength(0);
   });
