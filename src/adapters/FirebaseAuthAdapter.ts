@@ -1,34 +1,39 @@
 import { firebaseApp } from "../clients/firebase";
 
 export class FirebaseAuthAdapter implements IAuth {
-  private isAuhenticated: boolean;
-
-  private userId: string;
-
-  constructor() {
-    this.isAuhenticated = false;
-    this.userId = "";
-  }
-
   async verifyToken(token: string): Promise<boolean> {
+    let isAuthenticated = false;
+
     const result = await firebaseApp.auth().verifyIdToken(token);
 
     if (result) {
-      this.isAuhenticated = true;
+      isAuthenticated = true;
     }
 
-    return this.isAuhenticated;
+    return isAuthenticated;
   }
 
   async getUuidByToken(token: string): Promise<string> {
-    const user_id = await firebaseApp.auth().verifyIdToken(token);
+    const user = await firebaseApp.auth().verifyIdToken(token);
 
-    const userId = await user_id?.uid;
+    const userUuid = user?.uid;
 
-    if (userId) {
-      this.userId = userId;
+    if (!userUuid) {
+      throw new Error("User not found");
     }
 
-    return this.userId;
+    return userUuid;
+  }
+
+  async getEmailByToken(token: string): Promise<string> {
+    const user = await firebaseApp.auth().verifyIdToken(token);
+
+    const userEmail = user?.email;
+
+    if (!userEmail) {
+      throw new Error("User email not found");
+    }
+
+    return userEmail;
   }
 }
