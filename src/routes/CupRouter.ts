@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { FirestoreAdapter } from "../adapters/FirebaseAdapter";
+import { FirestoreAdapterDB } from "../database/FirestoreAdapterDB";
 import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
 import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
 import { CupController } from "../controllers/CupController";
@@ -14,7 +14,7 @@ class CupRoutes {
 
   constructor(
     private cupRouter = Router(),
-    dbAdapter = new FirestoreAdapter<ICup>("journeys"),
+    dbAdapter = new FirestoreAdapterDB<ICup, ICupDTO>("journeys"),
     idProvider = new IdProviderAdapter()
   ) {
     this.cupController = new CupController(
@@ -60,7 +60,7 @@ class CupRoutes {
     );
 
     this.cupRouter.put(
-      "/cups/close/:id",
+      "/cups/:id/close",
       IsAuthenticated,
       UpdateCupValidation,
       (request: Request, response: Response) => {

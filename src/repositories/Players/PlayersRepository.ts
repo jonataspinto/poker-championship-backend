@@ -1,4 +1,4 @@
-import DATABASE_MOCK from "../../__mock__/database";
+import { DATABASE_MOCK } from "../../__mock__/database";
 import { FirestoreAdapterDB } from "../../database/FirestoreAdapterDB";
 
 class PlayersRepository implements Repository<IPlayer, IPlayerDTO> {
@@ -41,6 +41,6 @@ class PlayersRepository implements Repository<IPlayer, IPlayerDTO> {
 
 export default new PlayersRepository(
   process.env.NODE_ENV === "test"
-    ? DATABASE_MOCK
+    ? new DATABASE_MOCK()
     : new FirestoreAdapterDB("users")
 );

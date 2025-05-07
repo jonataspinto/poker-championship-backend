@@ -7,7 +7,7 @@ export class CupController implements BaseController<ICup> {
 
   constructor(
     idProvider: IIdProvider,
-    private dbAdapter: IDatabase<ICup>,
+    private dbAdapter: IDBProvider<ICup, ICupDTO>,
     private auth: IAuth
   ) {
     this.cupDomain = new Cup(idProvider);

@@ -10,3 +10,7 @@ interface ICup {
   closedBy: string;
   tag: number;
 }
+
+interface ICupDTO extends ICup {
+  id: string;
+}

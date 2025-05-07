@@ -1,8 +1,8 @@
-class DATABASE_MOCK implements IDBProvider {
+export class DATABASE_MOCK<T, DTO> implements IDBProvider<T, DTO> {
   private data: Array<any> = [];
 
-  async save<T, DTO>(payload: T): Promise<DTO> {
-    return new Promise((resolve) => {
+  async save(payload: T) {
+    return new Promise<DTO>((resolve) => {
       const value = {
         ...payload,
         id: this.getUUID()
@@ -12,34 +12,34 @@ class DATABASE_MOCK implements IDBProvider {
     });
   }
 
-  async getAll<T>(): Promise<Array<T>> {
-    return new Promise((resolve) => {
-      resolve(this.data as Array<T>);
+  async getAll() {
+    return new Promise<DTO[]>((resolve) => {
+      resolve(this.data);
     });
   }
 
-  async update<T, DTO>(id: string, payload: T): Promise<DTO> {
-    return new Promise((resolve) => {
+  async update(id: string, payload: T) {
+    return new Promise<DTO>((resolve) => {
       const updatedValue = { id, ...payload };
       this.data = this.data.map((row) => (row?.id === id ? updatedValue : row));
       resolve(updatedValue as DTO);
     });
   }
 
-  async getById<T>(id: string): Promise<T> {
-    return new Promise((resolve) => {
-      resolve(this.data.find((row) => row.id === id) as T);
+  async getById(id: string) {
+    return new Promise<DTO>((resolve) => {
+      resolve(this.data.find((row) => row.id === id));
     });
   }
 
-  async getByEmail<T>(email: string): Promise<T> {
-    return new Promise((resolve) => {
-      resolve(this.data.find((row) => row.email === email) as T);
+  async getByEmail(email: string) {
+    return new Promise<DTO>((resolve) => {
+      resolve(this.data.find((row) => row.email === email));
     });
   }
 
-  async delete(id: string): Promise<string> {
-    return new Promise((resolve) => {
+  async delete(id: string) {
+    return new Promise<string>((resolve) => {
       this.data = this.data.filter((row) => row.id !== id);
       resolve(id);
     });
@@ -49,5 +49,3 @@ class DATABASE_MOCK implements IDBProvider {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
   }
 }
-
-export default new DATABASE_MOCK();

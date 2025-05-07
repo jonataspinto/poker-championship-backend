@@ -1,4 +1,4 @@
-import DATABASE_MOCK from "../../__mock__/database";
+import { DATABASE_MOCK } from "../../__mock__/database";
 import { FirestoreAdapterDB } from "../../database/FirestoreAdapterDB";
 
 class JourneysRepository implements Repository<Journey, JourneyDTO> {
@@ -27,6 +27,6 @@ class JourneysRepository implements Repository<Journey, JourneyDTO> {
 
 export default new JourneysRepository(
   process.env.NODE_ENV === "test"
-    ? DATABASE_MOCK
+    ? new DATABASE_MOCK()
     : new FirestoreAdapterDB("journeys")
 );
