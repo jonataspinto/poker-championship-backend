@@ -1,4 +1,4 @@
-import SeasonRepository from "./SeasonsRepository";
+import { seasonsRepository } from "./SeasonsRepository";
 
 const seasonDataMock: ISeason = {
   tag: 1,
@@ -12,7 +12,7 @@ describe("SeasonRepository", () => {
   let createdSeasonCreatedAt = "";
 
   it("should create a season correctly", async () => {
-    const season = await SeasonRepository.create(seasonDataMock);
+    const season = await seasonsRepository.create(seasonDataMock);
 
     createdSeasonId = season.id;
     createdSeasonCreatedAt = season.createdAt;
@@ -22,20 +22,20 @@ describe("SeasonRepository", () => {
   });
 
   it("should to return a list with list of seasons", async () => {
-    const seasons = await SeasonRepository.findAll();
+    const seasons = await seasonsRepository.findAll();
 
     expect(seasons).not.toHaveLength(0);
   });
 
   it("should to return a season for id passed as param", async () => {
-    const season = await SeasonRepository.findById(createdSeasonId);
+    const season = await seasonsRepository.findById(createdSeasonId);
 
     expect(season.id).toBe(createdSeasonId);
     expect(season.hasClosed).toBeTruthy();
   });
 
   it("should to update season correctly", async () => {
-    const updatedSeason = await SeasonRepository.update(createdSeasonId, {
+    const updatedSeason = await seasonsRepository.update(createdSeasonId, {
       ...seasonDataMock,
       hasClosed: false
     });
@@ -44,11 +44,11 @@ describe("SeasonRepository", () => {
   });
 
   it("should to delete session", async () => {
-    const deletedSession = await SeasonRepository.delete(createdSeasonId);
+    const deletedSession = await seasonsRepository.delete(createdSeasonId);
 
     expect(deletedSession).toBe(createdSeasonId);
 
-    const seasons = await SeasonRepository.findAll();
+    const seasons = await seasonsRepository.findAll();
 
     expect(seasons).toHaveLength(0);
   });

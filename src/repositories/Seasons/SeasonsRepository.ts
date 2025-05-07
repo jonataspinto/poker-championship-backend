@@ -1,7 +1,7 @@
 import { DATABASE_MOCK } from "../../__mock__/database";
 import { FirestoreAdapterDB } from "../../database/FirestoreAdapterDB";
 
-class SeasonRepository implements Repository<ISeason, ISeasonDTO> {
+class SeasonsRepository implements Repository<ISeason, ISeasonDTO> {
   constructor(private dbProvider: IDBProvider<ISeason, ISeasonDTO>) {}
 
   async create(payload: ISeason) {
@@ -30,7 +30,7 @@ class SeasonRepository implements Repository<ISeason, ISeasonDTO> {
   }
 }
 
-export default new SeasonRepository(
+export const seasonsRepository = new SeasonsRepository(
   process.env.NODE_ENV === "test"
     ? new DATABASE_MOCK()
     : new FirestoreAdapterDB("seasons")

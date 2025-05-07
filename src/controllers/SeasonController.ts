@@ -1,13 +1,17 @@
 import { Request, Response } from "express";
 import { Controller } from "./Controller";
-import SeasonsRepository from "../repositories/Seasons/SeasonsRepository";
+import { seasonsRepository } from "../repositories";
 import { FirebaseAuthAdapter } from "../adapters";
 
-class SeasonController implements Controller {
-  constructor(readonly auth: IAuth) {}
+export class SeasonController implements Controller {
+  private auth: IAuth;
+
+  constructor() {
+    this.auth = new FirebaseAuthAdapter();
+  }
 
   async index(request: Request, response: Response) {
-    const seasons = await SeasonsRepository.findAll();
+    const seasons = await seasonsRepository.findAll();
 
     const orderedList = seasons.sort((a, b) => b.tag - a.tag);
 
@@ -17,7 +21,7 @@ class SeasonController implements Controller {
   async store(request: Request, response: Response) {
     const payload = request.body as ISeason;
 
-    const seasons = await SeasonsRepository.findAll();
+    const seasons = await seasonsRepository.findAll();
 
     const hasOpenSeason = !!seasons.find((season) => !season.hasClosed);
 
@@ -26,7 +30,7 @@ class SeasonController implements Controller {
       return;
     }
 
-    const newSeason = await SeasonsRepository.create(payload);
+    const newSeason = await seasonsRepository.create(payload);
 
     response.status(201).json(newSeason);
   }
@@ -34,7 +38,7 @@ class SeasonController implements Controller {
   async show(request: Request, response: Response) {
     const { id } = request.params;
 
-    const season = await SeasonsRepository.findById(id);
+    const season = await seasonsRepository.findById(id);
 
     if (!season) {
       response.status(404).send({ error: "season not found" });
@@ -48,7 +52,7 @@ class SeasonController implements Controller {
     const { id } = request.params;
     const payload = request.body;
 
-    const seasonExists = await SeasonsRepository.findById(id);
+    const seasonExists = await seasonsRepository.findById(id);
 
     if (!seasonExists) {
       response.status(404).send({ error: "season not found" });
@@ -60,7 +64,7 @@ class SeasonController implements Controller {
       return;
     }
 
-    const updatedSeason = await SeasonsRepository.update(id, payload);
+    const updatedSeason = await seasonsRepository.update(id, payload);
 
     response.json(updatedSeason);
   }
@@ -68,7 +72,7 @@ class SeasonController implements Controller {
   async delete(request: Request, response: Response) {
     const { id } = request.params;
 
-    await SeasonsRepository.delete(id);
+    await seasonsRepository.delete(id);
 
     response.sendStatus(204);
   }
@@ -77,7 +81,7 @@ class SeasonController implements Controller {
     const { id } = request.params;
     const { authorization } = request.headers;
 
-    const season = await SeasonsRepository.findById(id);
+    const season = await seasonsRepository.findById(id);
 
     if (!season) {
       response.status(404).send({ error: "Season not found" });
@@ -99,10 +103,8 @@ class SeasonController implements Controller {
     season.hasClosed = true;
     season.closedBy = userId;
 
-    const updatedSeason = await SeasonsRepository.update(id, season);
+    const updatedSeason = await seasonsRepository.update(id, season);
 
     response.json(updatedSeason);
   }
 }
-
-export default new SeasonController(new FirebaseAuthAdapter());

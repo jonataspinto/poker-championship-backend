@@ -1,7 +1,7 @@
 import { Express } from "express";
+import JourneyRoutes from "./JourneyRoutes";
 import PlayerRoutes from "./PlayerRoutes";
 import SeasonRoutes from "./SeasonRoutes";
-import JourneyRoutes from "./JourneyRoutes";
 
 export class Routes {
   static use(app: Express) {
