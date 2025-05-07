@@ -1,45 +1,48 @@
 import { Router } from "express";
+import { JourneyController } from "../controllers";
 import {
+  IsAuthenticated,
   UpdateJourneyValidation,
   CreateJourneyValidation
-} from "../middlewares/JourneyValidation";
-import { IsAuthenticated } from "../middlewares/Auth";
-import JourneyController from "../controllers/JourneyController";
+} from "../middlewares";
 
 class JourneyRoutes {
   private router: Router;
+
+  private journeyController: JourneyController;
 
   private path = "journeys";
 
   constructor() {
     this.router = Router();
+    this.journeyController = new JourneyController();
   }
 
   index() {
-    this.router.get(`/${this.path}`, JourneyController.index);
-    this.router.get(`/${this.path}/:id`, JourneyController.show);
+    this.router.get(`/${this.path}`, this.journeyController.index);
+    this.router.get(`/${this.path}/:id`, this.journeyController.show);
     this.router.delete(
       `/${this.path}/:id`,
       IsAuthenticated,
-      JourneyController.delete
+      this.journeyController.delete
     );
     this.router.post(
       `/${this.path}`,
       IsAuthenticated,
       CreateJourneyValidation,
-      JourneyController.store
+      this.journeyController.store
     );
     this.router.put(
       `/${this.path}/:id`,
       IsAuthenticated,
       UpdateJourneyValidation,
-      JourneyController.update
+      this.journeyController.update
     );
     this.router.put(
       `/${this.path}/:id/close`,
       IsAuthenticated,
       UpdateJourneyValidation,
-      JourneyController.closeJourney
+      this.journeyController.closeJourney
     );
 
     return this.router;

@@ -8,7 +8,7 @@ import {
   playersRepository
 } from "../repositories";
 
-class JourneyController implements Controller {
+export class JourneyController implements Controller {
   auth: IAuth;
 
   constructor() {
@@ -121,5 +121,3 @@ class JourneyController implements Controller {
     response.json(updatedData);
   }
 }
-
-export default new JourneyController();
