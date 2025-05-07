@@ -7,9 +7,17 @@ export class PlayerMapper {
       displayName: player?.displayName,
       dateBirth: player?.dateBirth,
       photoURL: player?.photoURL,
-      points: player?.points,
+      points: player?.points || 0,
       isAdmin: player?.isAdmin,
-      address: player?.address
+      // address: player?.address,
+      podiums: {
+        first: 0,
+        second: 0,
+        third: 0,
+        fourth: 0,
+        fifth: 0,
+        ...player?.podiums
+      }
     };
   }
 
@@ -20,9 +28,10 @@ export class PlayerMapper {
       displayName: player?.displayName,
       dateBirth: player?.dateBirth,
       photoURL: player?.photoURL,
-      address: player?.address,
+      // address: player?.address,
       points: player?.points,
-      isAdmin: player?.isAdmin
+      isAdmin: player?.isAdmin,
+      podiums: player?.podiums
     };
   }
 }
