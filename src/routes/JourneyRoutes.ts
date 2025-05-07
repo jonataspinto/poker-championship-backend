@@ -5,6 +5,7 @@ import {
   UpdateJourneyValidation,
   CreateJourneyValidation
 } from "../middlewares";
+import { FirebaseAuthAdapter } from "../adapters";
 
 class JourneyRoutes {
   private router: Router;
@@ -15,7 +16,7 @@ class JourneyRoutes {
 
   constructor() {
     this.router = Router();
-    this.journeyController = new JourneyController();
+    this.journeyController = new JourneyController(new FirebaseAuthAdapter());
   }
 
   index() {

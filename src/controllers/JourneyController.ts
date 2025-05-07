@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { Controller } from "./Controller";
-import { FirebaseAuthAdapter } from "../adapters";
 import { DeliveryPointsToPlayers } from "../helpers/";
 import {
   journeysRepository,
@@ -11,8 +10,8 @@ import {
 export class JourneyController implements Controller {
   auth: IAuth;
 
-  constructor() {
-    this.auth = new FirebaseAuthAdapter();
+  constructor(auth: IAuth) {
+    this.auth = auth;
 
     this.closeJourney = this.closeJourney.bind(this);
   }
