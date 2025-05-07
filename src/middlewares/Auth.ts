@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
+import { FirebaseAuthAdapter } from "../adapters";
 
 export const IsAuthenticated = async (
   request: Request,

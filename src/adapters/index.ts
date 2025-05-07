@@ -1,2 +1,2 @@
-// export { TestAdapter } from "./TestAdapter";
-// export { IdProviderAdapter } from "./IdProviderAdapter";
+export * from "./FirebaseAuthAdapter";
+export * from "./IdProviderAdapter";

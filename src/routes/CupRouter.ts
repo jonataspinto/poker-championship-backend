@@ -1,7 +1,6 @@
 import { Request, Response, Router } from "express";
 import { FirestoreAdapterDB } from "../database/FirestoreAdapterDB";
-import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
-import { IdProviderAdapter } from "../adapters/IdProviderAdapter";
+import { FirebaseAuthAdapter, IdProviderAdapter } from "../adapters";
 import { CupController } from "../controllers/CupController";
 import { IsAuthenticated } from "../middlewares/Auth";
 import {

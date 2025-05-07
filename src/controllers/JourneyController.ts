@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Controller } from "./Controller";
-import { FirebaseAuthAdapter } from "../adapters/FirebaseAuthAdapter";
+import { FirebaseAuthAdapter } from "../adapters";
 import { DeliveryPointsToPlayers } from "../helpers/";
 import {
   journeysRepository,
