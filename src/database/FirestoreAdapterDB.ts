@@ -4,14 +4,14 @@ const dataBase = firebaseApp;
 
 const basePath = "/root_collection/document";
 
-export class FirestoreAdapterDB implements IDBProvider {
+export class FirestoreAdapterDB<T, DTO> implements IDBProvider<T, DTO> {
   private path: string;
 
   constructor(reference: string) {
     this.path = reference;
   }
 
-  async save<T, DTO>(data: T): Promise<DTO> {
+  async save(data: T): Promise<DTO> {
     const newData = await dataBase
       .firestore()
       .collection(`${basePath}/${this.path}`)
@@ -103,12 +103,12 @@ export class FirestoreAdapterDB implements IDBProvider {
     return list[0];
   }
 
-  async update<T, DTO>(id: string, newData: T): Promise<DTO> {
+  async update(id: string, newData: T): Promise<DTO> {
     const data = await dataBase
       .firestore()
       .collection(`${basePath}/${this.path}`)
       .doc(id)
-      .update(newData as FirebaseFirestore.UpdateData)
+      .update(newData as Record<string, any>)
       .then(() =>
         dataBase
           .firestore()
