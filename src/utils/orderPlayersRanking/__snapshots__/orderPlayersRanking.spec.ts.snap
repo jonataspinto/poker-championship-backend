@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`orderPlayersRanking should order players by podiums in descending order when points are tied 1`] = `
+[
+  {
+    "email": "nick@gmail.com",
+    "id": "8o9naaJ2Na5I3Nw9MLN0",
+    "isAdmin": false,
+    "name": "nick",
+    "podiums": {
+      "fifth": 0,
+      "first": 6,
+      "fourth": 0,
+      "second": 0,
+      "third": 0,
+    },
+    "points": 5,
+  },
+  {
+    "email": "phil@gmail.com",
+    "id": "8o9naaJ2Na5I3Nw9MLN0",
+    "isAdmin": false,
+    "name": "phil",
+    "podiums": {
+      "fifth": 0,
+      "first": 2,
+      "fourth": 0,
+      "second": 0,
+      "third": 0,
+    },
+    "points": 5,
+  },
+]
+`;
+
+exports[`orderPlayersRanking should order players by points in descending order 1`] = `
+[
+  {
+    "email": "andrew@gmail.com",
+    "id": "6IvKHX7W1AHDOWvovKr9",
+    "isAdmin": true,
+    "name": "andrew",
+    "podiums": {
+      "fifth": 0,
+      "first": 0,
+      "fourth": 0,
+      "second": 1,
+      "third": 1,
+    },
+    "points": 20,
+  },
+  {
+    "email": "mark@gmail.com",
+    "id": "AuHRWSSZ7s6Y5WAOU2GG",
+    "isAdmin": false,
+    "name": "mark",
+    "podiums": {
+      "fifth": 0,
+      "first": 2,
+      "fourth": 0,
+      "second": 0,
+      "third": 0,
+    },
+    "points": 10,
+  },
+  {
+    "email": "nick@gmail.com",
+    "id": "8o9naaJ2Na5I3Nw9MLN0",
+    "isAdmin": false,
+    "name": "nick",
+    "podiums": {
+      "fifth": 0,
+      "first": 6,
+      "fourth": 0,
+      "second": 0,
+      "third": 0,
+    },
+    "points": 5,
+  },
+  {
+    "email": "phil@gmail.com",
+    "id": "8o9naaJ2Na5I3Nw9MLN0",
+    "isAdmin": false,
+    "name": "phil",
+    "podiums": {
+      "fifth": 0,
+      "first": 2,
+      "fourth": 0,
+      "second": 0,
+      "third": 0,
+    },
+    "points": 5,
+  },
+]
+`;
