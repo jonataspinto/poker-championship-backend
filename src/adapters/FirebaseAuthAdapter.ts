@@ -1,4 +1,3 @@
-import { auth } from "firebase-admin";
 import { firebaseApp } from "../clients/firebase";
 
 export class FirebaseAuthAdapter implements IAuth {
