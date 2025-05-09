@@ -27,11 +27,8 @@ export class FirestoreAdapterDB<T, DTO> implements IDBProvider<T, DTO> {
     return response as DTO;
   }
 
-  async getAll<T>(
-    key: string = "",
-    queryParam: string | number = ""
-  ): Promise<T[]> {
-    const list: T[] = [];
+  async getAll(key: string = "", queryParam: string | number = "") {
+    const list: DTO[] = [];
 
     let query;
 
@@ -50,7 +47,7 @@ export class FirestoreAdapterDB<T, DTO> implements IDBProvider<T, DTO> {
 
     query.forEach((snapshot) =>
       list.push({
-        ...(snapshot.data() as T),
+        ...(snapshot.data() as DTO),
         id: snapshot.id,
         createdAt: snapshot.createTime?.toDate(),
         updatedAt: snapshot.updateTime?.toDate()
@@ -59,8 +56,8 @@ export class FirestoreAdapterDB<T, DTO> implements IDBProvider<T, DTO> {
     return list;
   }
 
-  async getById<T>(id: string): Promise<T> {
-    const data: T | Error | null = await dataBase
+  async getById(id: string) {
+    const data = await dataBase
       .firestore()
       .collection(`${basePath}/${this.path}`)
       .doc(id)
@@ -73,18 +70,19 @@ export class FirestoreAdapterDB<T, DTO> implements IDBProvider<T, DTO> {
         }
 
         return {
-          ...(value as T),
+          ...value,
           id: snapshot.id,
           createdAt: snapshot.createTime?.toDate(),
           updatedAt: snapshot.updateTime?.toDate()
         };
       });
 
-    return data as T;
+    return data as DTO;
   }
 
-  async getByEmail<T>(email: string): Promise<T> {
-    const list: T[] = [];
+  async getByEmail(email: string) {
+    const list: DTO[] = [];
+
     const query = await dataBase
       .firestore()
       .collection(`${basePath}/${this.path}`)
@@ -93,17 +91,17 @@ export class FirestoreAdapterDB<T, DTO> implements IDBProvider<T, DTO> {
 
     query.forEach((snapshot) =>
       list.push({
-        ...(snapshot.data() as T),
+        ...(snapshot.data() as DTO),
         id: snapshot.id,
         createdAt: snapshot.createTime?.toDate(),
         updatedAt: snapshot.updateTime?.toDate()
       })
     );
-
+    //TODO: pq array?
     return list[0];
   }
 
-  async update(id: string, newData: T): Promise<DTO> {
+  async update(id: string, newData: T) {
     const data = await dataBase
       .firestore()
       .collection(`${basePath}/${this.path}`)
@@ -126,7 +124,7 @@ export class FirestoreAdapterDB<T, DTO> implements IDBProvider<T, DTO> {
     return data as DTO;
   }
 
-  async delete(id: string): Promise<string> {
+  async delete(id: string) {
     await dataBase
       .firestore()
       .collection(`${basePath}/${this.path}`)
