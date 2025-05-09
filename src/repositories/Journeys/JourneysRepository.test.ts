@@ -1,4 +1,5 @@
-import { journeysRepository } from "./JourneysRepository";
+import { DATABASE_MOCK } from "../../__mock__/database";
+import { JourneysRepository } from "./JourneysRepository";
 
 const journeyDataMock: Journey = {
   tag: 1,
@@ -11,6 +12,7 @@ const journeyDataMock: Journey = {
 };
 
 describe("JourneysRepository", () => {
+  const journeysRepository = new JourneysRepository(new DATABASE_MOCK());
   let createdJourneyId = "";
   let createdJourneyCreatedAt = "";
 
