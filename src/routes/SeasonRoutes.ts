@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { SeasonController } from "../controllers";
 import { IsAuthenticated } from "../middlewares";
+import { SeasonsRepository } from "../repositories";
+import { FirestoreAdapterDB } from "../database";
+import { FirebaseAuthAdapter } from "../adapters";
 
 class SeasonRoutes {
   private router: Router;
@@ -10,8 +13,13 @@ class SeasonRoutes {
   private seasonController: SeasonController;
 
   constructor() {
+    const auth = new FirebaseAuthAdapter();
+    const seasonsRepository = new SeasonsRepository(
+      new FirestoreAdapterDB("seasons")
+    );
+
     this.router = Router();
-    this.seasonController = new SeasonController();
+    this.seasonController = new SeasonController(auth, seasonsRepository);
   }
 
   index() {

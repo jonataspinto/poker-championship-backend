@@ -1,10 +1,7 @@
-import { DATABASE_MOCK } from "../../__mock__/database";
-import { FirestoreAdapterDB } from "../../database/FirestoreAdapterDB";
+export class SeasonsRepository implements Repository<Season, SeasonDTO> {
+  constructor(private dbProvider: IDBProvider<Season, SeasonDTO>) {}
 
-class SeasonsRepository implements Repository<ISeason, ISeasonDTO> {
-  constructor(private dbProvider: IDBProvider<ISeason, ISeasonDTO>) {}
-
-  async create(payload: ISeason) {
+  async create(payload: Season) {
     const data = await this.dbProvider.save(payload);
     return data;
   }
@@ -19,7 +16,7 @@ class SeasonsRepository implements Repository<ISeason, ISeasonDTO> {
     return season;
   }
 
-  async update(id: string, payload: ISeason) {
+  async update(id: string, payload: Season) {
     const updatedSeason = await this.dbProvider.update(id, payload);
     return updatedSeason;
   }
@@ -29,9 +26,3 @@ class SeasonsRepository implements Repository<ISeason, ISeasonDTO> {
     return deletedSeasonId;
   }
 }
-
-export const seasonsRepository = new SeasonsRepository(
-  process.env.NODE_ENV === "test"
-    ? new DATABASE_MOCK()
-    : new FirestoreAdapterDB("seasons")
-);

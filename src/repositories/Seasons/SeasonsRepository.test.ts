@@ -1,6 +1,9 @@
-import { seasonsRepository } from "./SeasonsRepository";
+import { DATABASE_MOCK } from "../../__mock__/database";
+import { SeasonsRepository } from "./SeasonsRepository";
 
-const seasonDataMock: ISeason = {
+const seasonsRepository = new SeasonsRepository(new DATABASE_MOCK());
+
+const seasonDataMock: Season = {
   tag: 1,
   hasClosed: true,
   journeys: [],
