@@ -6,6 +6,12 @@ import {
   CreateJourneyValidation
 } from "../middlewares";
 import { FirebaseAuthAdapter } from "../adapters";
+import { FirestoreAdapterDB } from "../database";
+import {
+  JourneysRepository,
+  JourneyTagsRepository,
+  PlayersRepository
+} from "../repositories";
 
 class JourneyRoutes {
   private router: Router;
@@ -16,7 +22,27 @@ class JourneyRoutes {
 
   constructor() {
     this.router = Router();
-    this.journeyController = new JourneyController(new FirebaseAuthAdapter());
+
+    const auth = new FirebaseAuthAdapter();
+
+    const journeysRepository = new JourneysRepository(
+      new FirestoreAdapterDB("journeys")
+    );
+
+    const journeyTagsRepository = new JourneyTagsRepository(
+      new FirestoreAdapterDB("journey-tags")
+    );
+
+    const playersRepository = new PlayersRepository(
+      new FirestoreAdapterDB("users")
+    );
+
+    this.journeyController = new JourneyController(
+      auth,
+      journeysRepository,
+      journeyTagsRepository,
+      playersRepository
+    );
   }
 
   index() {
