@@ -1,11 +1,11 @@
-interface ISeason {
+interface Season {
   tag: number;
   hasClosed: boolean;
   journeys: string[];
   closedBy?: string;
 }
 
-interface ISeasonDTO extends ISeason {
+interface SeasonDTO extends Season {
   id: string;
   createdAt: string;
 }
