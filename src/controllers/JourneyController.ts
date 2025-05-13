@@ -1,35 +1,39 @@
 import { Request, Response } from "express";
 import { Controller } from "./Controller";
 import { DeliveryPointsToPlayers } from "../helpers/";
-import {
-  journeysRepository,
-  journeyTagsRepository,
-  playersRepository
-} from "../repositories";
 
 export class JourneyController implements Controller {
-  auth: IAuth;
+  private auth: IAuth;
+  private journeysRepository: Repository<Journey, JourneyDTO>;
+  private journeyTagsRepository: Repository<JourneyTag, JourneyTagDTO>;
+  private playersRepository: Repository<Player, PlayerDTO>;
 
-  constructor(auth: IAuth) {
+  constructor(
+    auth: IAuth,
+    journeysRepository: Repository<Journey, JourneyDTO>,
+    journeyTagsRepository: Repository<JourneyTag, JourneyTagDTO>,
+    playersRepository: Repository<Player, PlayerDTO>
+  ) {
     this.auth = auth;
-
-    this.closeJourney = this.closeJourney.bind(this);
+    this.journeysRepository = journeysRepository;
+    this.journeyTagsRepository = journeyTagsRepository;
+    this.playersRepository = playersRepository;
   }
 
-  async index(request: Request, response: Response) {
-    const journeys = await journeysRepository.findAll();
+  index = async (request: Request, response: Response) => {
+    const journeys = await this.journeysRepository.findAll();
 
-    const orderedList = Array.from(journeys).sort((a, b) => b.tag - a.tag);
+    const orderedList = journeys?.sort((a, b) => b.tag - a.tag);
 
     response.json(orderedList);
-  }
+  };
 
-  async store(request: Request, response: Response) {
+  store = async (request: Request, response: Response) => {
     const payload = request.body;
 
-    const tag = await journeyTagsRepository.create(payload);
+    const tag = await this.journeyTagsRepository.create(payload);
 
-    const newJourney = await journeysRepository.create({
+    const newJourney = await this.journeysRepository.create({
       ...payload,
       tag: tag.tagNumber,
       hasClosed: false,
@@ -40,25 +44,25 @@ export class JourneyController implements Controller {
     });
 
     response.status(201).json(newJourney);
-  }
+  };
 
-  async show(request: Request, response: Response) {
+  show = async (request: Request, response: Response) => {
     const { id } = request.params;
 
-    const journey = await journeysRepository.findById(id);
+    const journey = await this.journeysRepository.findById(id);
 
     if (!journey) {
       response.status(404).json({ error: "journey not found" });
       return;
     }
     response.json(journey);
-  }
+  };
 
-  async update(request: Request, response: Response) {
+  update = async (request: Request, response: Response) => {
     const { id } = request.params;
     const payload = request.body;
 
-    const journeyExists = await journeysRepository.findById(id);
+    const journeyExists = await this.journeysRepository.findById(id);
 
     if (!journeyExists) {
       response.status(404).json({ error: "journey not found" });
@@ -70,24 +74,24 @@ export class JourneyController implements Controller {
       return;
     }
 
-    const updatedData = await journeysRepository.update(id, payload);
+    const updatedData = await this.journeysRepository.update(id, payload);
 
     response.json(updatedData);
-  }
+  };
 
-  async delete(request: Request, response: Response) {
+  delete = async (request: Request, response: Response) => {
     const { id } = request.params;
 
-    await journeysRepository.delete(id);
+    await this.journeysRepository.delete(id);
 
     response.sendStatus(204);
-  }
+  };
 
-  async closeJourney(request: Request, response: Response) {
+  closeJourney = async (request: Request, response: Response) => {
     const { id } = request.params;
     const { authorization = "" } = request.headers;
 
-    const journey = await journeysRepository.findById(id);
+    const journey = await this.journeysRepository.findById(id);
 
     if (journey.hasClosed) {
       response.status(400).json({ error: "this journey is closed" });
@@ -99,7 +103,7 @@ export class JourneyController implements Controller {
       authorization.split("Bearer ")[1]
     );
 
-    const player = await playersRepository.findByEmail(useEmail);
+    const player = await this.playersRepository?.findByEmail?.(useEmail);
 
     if (!player) {
       response.status(404).json({ error: "player not found" });
@@ -109,7 +113,7 @@ export class JourneyController implements Controller {
     journey.hasClosed = true;
     journey.closedBy = player.id;
 
-    const updatedData = await journeysRepository.update(id, journey);
+    const updatedData = await this.journeysRepository.update(id, journey);
 
     await Promise.all([
       deliveryPointsToPlayers.deliveryPodium(),
@@ -118,5 +122,5 @@ export class JourneyController implements Controller {
     ]);
 
     response.json(updatedData);
-  }
+  };
 }

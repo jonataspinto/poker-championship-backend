@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-interface Controller {
+interface Controller<T = void> {
   index: (request: Request, response: Response) => Promise<void>;
 
   store: (request: Request, response: Response) => Promise<void>;
