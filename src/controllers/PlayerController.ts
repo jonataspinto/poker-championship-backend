@@ -1,21 +1,26 @@
 import { Request, Response } from "express";
 import { Controller } from "./Controller";
 import { PlayerMapper } from "../mappers";
-import { playersRepository } from "../repositories";
 import { sanitizeObject, orderPlayersRanking } from "../utils";
 
 export class PlayerController implements Controller {
-  async index(request: Request, response: Response) {
-    const players = await playersRepository.findAll();
+  private playersRepository: Repository<Player, PlayerDTO>;
+
+  constructor(playersRepository: Repository<Player, PlayerDTO>) {
+    this.playersRepository = playersRepository;
+  }
+
+  index = async (request: Request, response: Response) => {
+    const players = await this.playersRepository.findAll();
 
     const orderedListByPoints = orderPlayersRanking(players);
 
     const data = orderedListByPoints.map(PlayerMapper.toDomain);
 
     response.json(data);
-  }
+  };
 
-  async store(request: Request, response: Response) {
+  store = async (request: Request, response: Response) => {
     const payload = sanitizeObject(
       PlayerMapper.toPersistence(request.body)
     ) as Player;
@@ -25,27 +30,29 @@ export class PlayerController implements Controller {
       return;
     }
 
-    const playerExists = await playersRepository.findByEmail(payload.email);
+    const playerExists = await this.playersRepository.findByEmail?.(
+      payload.email
+    );
 
     if (playerExists) {
       response.status(400).send({ error: "This email is already in use" });
       return;
     }
 
-    const player = await playersRepository.create(payload);
+    const player = await this.playersRepository.create(payload);
 
     response.status(201).json(player);
-  }
+  };
 
-  async show(request: Request, response: Response) {
+  show = async (request: Request, response: Response) => {
     let player = null;
 
     const { id } = request.params;
 
     if (id.includes("@")) {
-      player = await playersRepository.findByEmail(id);
+      player = await this.playersRepository.findByEmail?.(id);
     } else {
-      player = await playersRepository.findById(id);
+      player = await this.playersRepository.findById(id);
     }
 
     if (!player) {
@@ -54,12 +61,12 @@ export class PlayerController implements Controller {
     }
 
     response.json(PlayerMapper.toDomain(player));
-  }
+  };
 
-  async update(request: Request, response: Response) {
+  update = async (request: Request, response: Response) => {
     const { id } = request.params;
 
-    const playerExists = await playersRepository.findById(id);
+    const playerExists = await this.playersRepository.findById(id);
 
     if (!playerExists) {
       response.status(404).send({ error: "Player not found" });
@@ -70,23 +77,23 @@ export class PlayerController implements Controller {
       PlayerMapper.toPersistence(request.body)
     ) as Player;
 
-    const player = await playersRepository.update(id, payload);
+    const player = await this.playersRepository.update(id, payload);
 
     response.json(player);
-  }
+  };
 
-  async delete(request: Request, response: Response) {
+  delete = async (request: Request, response: Response) => {
     const { id } = request.params;
 
-    const playerExists = await playersRepository.findById(id);
+    const playerExists = await this.playersRepository.findById(id);
 
     if (!playerExists) {
       response.status(404).send({ error: "Player not found" });
       return;
     }
 
-    await playersRepository.delete(id);
+    await this.playersRepository.delete(id);
 
     response.sendStatus(204);
-  }
+  };
 }

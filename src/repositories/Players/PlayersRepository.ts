@@ -1,6 +1,3 @@
-import { DATABASE_MOCK } from "../../__mock__/database";
-import { FirestoreAdapterDB } from "../../database/FirestoreAdapterDB";
-
 export class PlayersRepository implements Repository<Player, PlayerDTO> {
   private dbProvider;
 
@@ -38,9 +35,3 @@ export class PlayersRepository implements Repository<Player, PlayerDTO> {
     return data;
   }
 }
-
-export const playersRepository = new PlayersRepository(
-  process.env.NODE_ENV === "test"
-    ? new DATABASE_MOCK()
-    : new FirestoreAdapterDB("users")
-);

@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { PlayerController } from "../controllers";
-import { IsAuthenticated } from "../middlewares/Auth";
+import { IsAuthenticated } from "../middlewares";
+import { PlayersRepository } from "../repositories";
+import { FirestoreAdapterDB } from "../database";
 
 class PlayerRoutes {
   private router: Router;
@@ -10,8 +12,12 @@ class PlayerRoutes {
   private playerController: PlayerController;
 
   constructor() {
+    const playersRepository = new PlayersRepository(
+      new FirestoreAdapterDB("users")
+    );
+
     this.router = Router();
-    this.playerController = new PlayerController();
+    this.playerController = new PlayerController(playersRepository);
   }
 
   index() {

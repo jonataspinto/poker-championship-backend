@@ -1,4 +1,7 @@
-import { playersRepository } from "./PlayersRepository";
+import { DATABASE_MOCK } from "../../__mock__/database";
+import { PlayersRepository } from "./PlayersRepository";
+
+const playersRepository = new PlayersRepository(new DATABASE_MOCK());
 
 const playerMock = {
   id: "1",
