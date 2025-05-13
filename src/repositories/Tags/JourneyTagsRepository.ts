@@ -1,7 +1,6 @@
-import { DATABASE_MOCK } from "../../__mock__/database";
-import { FirestoreAdapterDB } from "../../database/FirestoreAdapterDB";
-
-class JourneyTagsRepository implements Repository<JourneyTag, JourneyTagDTO> {
+export class JourneyTagsRepository
+  implements Repository<JourneyTag, JourneyTagDTO>
+{
   constructor(private dbProvider: IDBProvider<JourneyTag, JourneyTagDTO>) {}
 
   async create({ seasonId }: JourneyTag) {
@@ -37,9 +36,3 @@ class JourneyTagsRepository implements Repository<JourneyTag, JourneyTagDTO> {
     return this.dbProvider.delete(id);
   }
 }
-
-export const journeyTagsRepository = new JourneyTagsRepository(
-  process.env.NODE_ENV === "test"
-    ? new DATABASE_MOCK()
-    : new FirestoreAdapterDB("journey-tags")
-);

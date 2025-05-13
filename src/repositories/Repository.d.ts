@@ -4,4 +4,5 @@ interface Repository<T, DTO> {
   findById: (id: string) => Promise<DTO>;
   delete: (id: string) => Promise<string>;
   update: (id: string, payload: T) => Promise<DTO>;
+  findByEmail?: (email: string) => Promise<DTO>;
 }

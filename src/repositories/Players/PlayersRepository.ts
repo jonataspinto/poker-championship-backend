@@ -1,7 +1,7 @@
 import { DATABASE_MOCK } from "../../__mock__/database";
 import { FirestoreAdapterDB } from "../../database/FirestoreAdapterDB";
 
-class PlayersRepository implements Repository<Player, PlayerDTO> {
+export class PlayersRepository implements Repository<Player, PlayerDTO> {
   private dbProvider;
 
   constructor(dbProvider: IDBProvider<Player, PlayerDTO>) {
