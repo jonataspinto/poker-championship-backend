@@ -7,17 +7,20 @@ export class JourneyController implements Controller {
   private journeysRepository: Repository<Journey, JourneyDTO>;
   private journeyTagsRepository: Repository<JourneyTag, JourneyTagDTO>;
   private playersRepository: Repository<Player, PlayerDTO>;
+  private seasonsRepository: Repository<Season, SeasonDTO>;
 
   constructor(
     auth: IAuth,
     journeysRepository: Repository<Journey, JourneyDTO>,
     journeyTagsRepository: Repository<JourneyTag, JourneyTagDTO>,
-    playersRepository: Repository<Player, PlayerDTO>
+    playersRepository: Repository<Player, PlayerDTO>,
+    seasonsRepository: Repository<Season, SeasonDTO>
   ) {
     this.auth = auth;
     this.journeysRepository = journeysRepository;
     this.journeyTagsRepository = journeyTagsRepository;
     this.playersRepository = playersRepository;
+    this.seasonsRepository = seasonsRepository;
   }
 
   index = async (request: Request, response: Response) => {
@@ -30,6 +33,13 @@ export class JourneyController implements Controller {
 
   store = async (request: Request, response: Response) => {
     const payload = request.body;
+
+    const season = await this.seasonsRepository.findById(payload.seasonId);
+
+    if (season.hasClosed) {
+      response.status(400).json({ error: "this season is closed" });
+      return;
+    }
 
     const tag = await this.journeyTagsRepository.create(payload);
 

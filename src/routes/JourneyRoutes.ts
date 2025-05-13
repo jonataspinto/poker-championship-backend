@@ -10,7 +10,8 @@ import { FirestoreAdapterDB } from "../database";
 import {
   JourneysRepository,
   JourneyTagsRepository,
-  PlayersRepository
+  PlayersRepository,
+  SeasonsRepository
 } from "../repositories";
 
 class JourneyRoutes {
@@ -37,11 +38,16 @@ class JourneyRoutes {
       new FirestoreAdapterDB("users")
     );
 
+    const seasonsRepository = new SeasonsRepository(
+      new FirestoreAdapterDB("seasons")
+    );
+
     this.journeyController = new JourneyController(
       auth,
       journeysRepository,
       journeyTagsRepository,
-      playersRepository
+      playersRepository,
+      seasonsRepository
     );
   }
 
