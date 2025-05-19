@@ -1,1 +1,9 @@
+Dockerfile
+.dockerignore
 node_modules
+README.md
+.git
+.editorconfig
+.eslintrc.json
+.prettierrc.json
+.vscode
