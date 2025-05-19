@@ -14,4 +14,4 @@ services:
       FIREBASE_DATABASE_URL: ${FIREBASE_DATABASE_URL}
       FIREBASE_STORAGE_BUCKET: ${FIREBASE_STORAGE_BUCKET}
     volumes:
-      - ./src:/app/src
+      - ./:/app/
