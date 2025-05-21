@@ -4,9 +4,9 @@ import { PlayerMapper } from "../mappers";
 import { sanitizeObject, orderPlayersRanking } from "../utils";
 
 export class PlayerController implements Controller {
-  private playersRepository: Repository<Player, PlayerDTO>;
+  private playersRepository;
 
-  constructor(playersRepository: Repository<Player, PlayerDTO>) {
+  constructor(playersRepository: PlayerRepository<Player, PlayerDTO>) {
     this.playersRepository = playersRepository;
   }
 

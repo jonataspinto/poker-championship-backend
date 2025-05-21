@@ -6,14 +6,14 @@ export class JourneyController implements Controller {
   private auth: IAuth;
   private journeysRepository: Repository<Journey, JourneyDTO>;
   private journeyTagsRepository: Repository<JourneyTag, JourneyTagDTO>;
-  private playersRepository: Repository<Player, PlayerDTO>;
+  private playersRepository: PlayerRepository<Player, PlayerDTO>;
   private seasonsRepository: Repository<Season, SeasonDTO>;
 
   constructor(
     auth: IAuth,
     journeysRepository: Repository<Journey, JourneyDTO>,
     journeyTagsRepository: Repository<JourneyTag, JourneyTagDTO>,
-    playersRepository: Repository<Player, PlayerDTO>,
+    playersRepository: PlayerRepository<Player, PlayerDTO>,
     seasonsRepository: Repository<Season, SeasonDTO>
   ) {
     this.auth = auth;

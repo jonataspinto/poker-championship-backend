@@ -1,4 +1,4 @@
-export class PlayersRepository implements Repository<Player, PlayerDTO> {
+export class PlayersRepository implements PlayerRepository<Player, PlayerDTO> {
   private dbProvider;
 
   constructor(dbProvider: IDBProvider<Player, PlayerDTO>) {
