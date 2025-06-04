@@ -27,16 +27,21 @@ export class FirestoreAdapterDB<T, DTO> implements IDBProvider<T, DTO> {
     return response as DTO;
   }
 
-  async getAll(key: string = "", queryParam: string | number = "") {
+  async getAll(
+    key: string = "",
+    queryParam: string | number | Array<any> = ""
+  ) {
     const list: DTO[] = [];
 
     let query;
 
     if (key && queryParam) {
+      const isQueryArray = Array.isArray(queryParam);
+
       query = await dataBase
         .firestore()
         .collection(`${basePath}/${this.path}`)
-        .where(`${key}`, "==", queryParam)
+        .where(`${key}`, isQueryArray ? "array-contains-any" : "==", queryParam)
         .get();
     } else {
       query = await dataBase
