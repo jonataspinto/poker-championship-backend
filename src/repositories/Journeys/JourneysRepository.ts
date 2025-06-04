@@ -5,8 +5,10 @@ export class JourneysRepository implements Repository<Journey, JourneyDTO> {
     return this.dbProvider.save(payload);
   }
 
-  async findAll() {
-    return this.dbProvider.getAll();
+  async findAll(query?: Record<string, any>) {
+    const [queryKey, queryValue] = Object.entries(query || {})?.[0] ?? [];
+
+    return this.dbProvider.getAll(queryKey, queryValue);
   }
 
   async findById(id: string) {
