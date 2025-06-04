@@ -24,7 +24,11 @@ export class JourneyController implements Controller {
   }
 
   index = async (request: Request, response: Response) => {
-    const journeys = await this.journeysRepository.findAll();
+    const { playerId } = request.query;
+
+    const journeys = await this.journeysRepository.findAll({
+      ...(!!playerId && { players: [playerId] })
+    });
 
     const orderedList = journeys?.sort((a, b) => b.tag - a.tag);
 
