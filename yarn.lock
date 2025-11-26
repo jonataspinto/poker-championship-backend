@@ -1618,12 +1618,7 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-2.1.0.tgz#052aa67a48eccc4309d7f0191b7e41434b90bb78"
   integrity sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==
 
-"@types/node@*", "@types/node@>=13.7.0":
-  version "18.7.15"
-  resolved "https://registry.npmjs.org/@types/node/-/node-18.7.15.tgz"
-  integrity sha512-XnjpaI8Bgc3eBag2Aw4t2Uj/49lLBSStHWfqKvIuXD7FIrZyMLWp8KuAFHAqxMZYTF9l08N1ctUn9YNybZJVmQ==
-
-"@types/node@^22.8.7":
+"@types/node@*", "@types/node@>=13.7.0", "@types/node@^22.8.7":
   version "22.15.15"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-22.15.15.tgz#8877c05c18e552e738438e477d7ba22c5d73a57c"
   integrity sha512-R5muMcZob3/Jjchn5LcO8jdKwSCbzqmPB6ruBxMcf9kbxtniZHP327s6C37iOfuw8mbKK3cAQa7sEl7afLrQ8A==
@@ -2977,16 +2972,17 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
-firebase-admin@^13.3.0:
-  version "13.3.0"
-  resolved "https://registry.yarnpkg.com/firebase-admin/-/firebase-admin-13.3.0.tgz#82e1378d88da5a6226f4e5899abfb0ae5ff75e6f"
-  integrity sha512-MFxv86Aw2rjM/TpKwU86jN7YUFfN1jy6mREYZTLL1aW1rCpZFi4c70b9U12J9Xa4RbJkiXpWBAwth9IVSqR91A==
+firebase-admin@^13.6.0:
+  version "13.6.0"
+  resolved "https://registry.yarnpkg.com/firebase-admin/-/firebase-admin-13.6.0.tgz#4953c5f6a474525a811d60c8d89c24165ec5c5e7"
+  integrity sha512-GdPA/t0+Cq8p1JnjFRBmxRxAGvF/kl2yfdhALl38PrRp325YxyQ5aNaHui0XmaKcKiGRFIJ/EgBNWFoDP0onjw==
   dependencies:
     "@fastify/busboy" "^3.0.0"
     "@firebase/database-compat" "^2.0.0"
     "@firebase/database-types" "^1.0.6"
     "@types/node" "^22.8.7"
     farmhash-modern "^1.1.0"
+    fast-deep-equal "^3.1.1"
     google-auth-library "^9.14.2"
     jsonwebtoken "^9.0.0"
     jwks-rsa "^3.1.0"
